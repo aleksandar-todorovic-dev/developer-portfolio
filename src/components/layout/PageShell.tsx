@@ -1,5 +1,6 @@
 import type { PropsWithChildren } from "react";
 
+import { cn } from "../../utils/cn";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
 
@@ -13,10 +14,10 @@ export function PageShell({ children, className = "" }: PageShellProps) {
       <Header />
 
       <main
-        className={[
-          "mx-auto w-full max-w-6xl flex-1 px-6 py-16",
+        className={cn(
+          "mx-auto w-full max-w-6xl flex-1 px-5 py-12 sm:px-6 sm:py-14 lg:py-16",
           className,
-        ].join(" ")}
+        )}
       >
         {children}
       </main>

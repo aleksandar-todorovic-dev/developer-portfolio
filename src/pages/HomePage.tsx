@@ -5,7 +5,7 @@ export function HomePage() {
         Developer Portfolio
       </p>
 
-      <h1 className="max-w-3xl text-4xl font-semibold tracking-tight sm:text-6xl">
+      <h1 className="max-w-3xl text-4xl font-semibold leading-tight tracking-tight sm:text-5xl lg:text-6xl">
         React, TypeScript & Firebase developer building product-focused web
         apps.
       </h1>
