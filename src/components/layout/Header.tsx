@@ -38,21 +38,21 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-[#2B2340]/70 bg-[#07060B]/90 backdrop-blur">
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-4 sm:px-6">
+      <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-5 py-3.5 sm:px-6 sm:py-4">
         <NavLink
           to="/"
           onClick={closeMenu}
           className="group flex min-w-0 items-center gap-3"
         >
-          <span className="flex size-11 shrink-0 items-center justify-center rounded-xl border border-[#8B5CF6]/40 bg-[#181423] text-sm font-bold text-[#C4B5FD] shadow-[0_0_24px_rgba(139,92,246,0.18)] sm:size-9">
+          <span className="flex size-10 shrink-0 items-center justify-center rounded-xl border border-[#8B5CF6]/40 bg-[#181423] text-sm font-bold text-[#C4B5FD] shadow-[0_0_24px_rgba(139,92,246,0.18)] sm:size-9">
             AT
           </span>
 
           <span className="flex min-w-0 flex-col leading-tight">
-            <span className="truncate text-base font-semibold text-[#F5F2FF] sm:text-sm">
+            <span className="truncate text-sm font-semibold text-[#F5F2FF] sm:text-sm">
               Aleksandar Todorovic
             </span>
-            <span className="truncate text-sm text-[#A9A1BA] sm:text-xs">
+            <span className="truncate text-xs text-[#A9A1BA]">
               React · TypeScript · Firebase
             </span>
           </span>
@@ -60,7 +60,7 @@ export function Header() {
 
         <button
           type="button"
-          className="inline-flex items-center justify-center rounded-full border border-[#2B2340] bg-[#11101A] px-4 py-2 text-sm font-medium text-[#F5F2FF] transition hover:border-[#8B5CF6]/70 hover:bg-[#181423] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8B5CF6] focus-visible:ring-offset-2 focus-visible:ring-offset-[#07060B] md:hidden"
+          className="inline-flex shrink-0 items-center justify-center rounded-full border border-[#2B2340] bg-[#11101A] px-3.5 py-2 text-sm font-medium text-[#F5F2FF] transition hover:border-[#8B5CF6]/70 hover:bg-[#181423] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8B5CF6] focus-visible:ring-offset-2 focus-visible:ring-offset-[#07060B] md:hidden"
           aria-label={
             isMenuOpen ? "Close navigation menu" : "Open navigation menu"
           }
