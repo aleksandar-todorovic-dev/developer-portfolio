@@ -49,7 +49,7 @@ export function Header() {
           </span>
 
           <span className="flex min-w-0 flex-col leading-tight">
-            <span className="truncate text-sm font-semibold text-[#F5F2FF] sm:text-sm">
+            <span className="truncate text-sm font-semibold text-[#F5F2FF]">
               Aleksandar Todorovic
             </span>
             <span className="truncate text-xs text-[#A9A1BA]">
