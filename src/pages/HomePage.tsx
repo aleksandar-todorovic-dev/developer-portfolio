@@ -18,7 +18,7 @@ export function HomePage() {
           </h1>
 
           <p className="mt-6 max-w-2xl text-lg leading-8 text-[#A9A1BA]">
-            My main projects demonstrate Firebase engineering, local-first
+            My main projects demonstrate Firebase engineering, structured
             product thinking, and typed React interface work.
           </p>
         </div>

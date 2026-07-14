@@ -21,11 +21,8 @@ export function ProjectProofPanel({ projects }: ProjectProofPanelProps) {
 
       <ul className="mt-5 divide-y divide-[#2B2340]">
         {projects.map((project) => (
-          <li key={project.slug}>
-            <Link
-              to={`/projects/${project.slug}`}
-              className="group block py-4 first:pt-0 last:pb-0"
-            >
+          <li key={project.slug} className="py-4 first:pt-0 last:pb-0">
+            <Link to={`/projects/${project.slug}`} className="group block">
               <div className="flex items-start justify-between gap-4">
                 <div>
                   <p className="font-medium text-[#F5F2FF]">{project.title}</p>
