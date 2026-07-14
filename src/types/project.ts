@@ -13,6 +13,11 @@ export type ProjectLink = {
   href: string;
 };
 
+export type ProjectEvidence = {
+  label: string;
+  detail: string;
+};
+
 export type Project = {
   slug: ProjectSlug;
   title: string;
@@ -23,5 +28,6 @@ export type Project = {
   keyDecision: string;
   tradeoff: string;
   techStack: string[];
+  evidence: ProjectEvidence[];
   links: ProjectLink[];
 };
