@@ -1,22 +1,6 @@
 import { Link } from "react-router";
 
-const projectLinks = [
-  {
-    slug: "liferecompiled",
-    title: "LifeRecompiled",
-    description: "React/Firebase engineering case study.",
-  },
-  {
-    slug: "training-app",
-    title: "Training App",
-    description: "Mobile-first local-first React MVP.",
-  },
-  {
-    slug: "taskflow",
-    title: "TaskFlow",
-    description: "React + TypeScript Kanban board.",
-  },
-];
+import { projects } from "../data/projects";
 
 export function ProjectsPage() {
   return (
@@ -30,15 +14,20 @@ export function ProjectsPage() {
       </h1>
 
       <div className="mt-10 grid gap-4 sm:grid-cols-3">
-        {projectLinks.map((project) => (
+        {projects.map((project) => (
           <Link
             key={project.slug}
             to={`/projects/${project.slug}`}
             className="rounded-2xl border border-[#2B2340] bg-[#11101A] p-5 transition hover:border-[#8B5CF6]"
           >
-            <h2 className="text-xl font-semibold">{project.title}</h2>
+            <p className="text-xs font-medium uppercase tracking-[0.2em] text-[#C4B5FD]">
+              {project.proofLabel}
+            </p>
+
+            <h2 className="mt-3 text-xl font-semibold">{project.title}</h2>
+
             <p className="mt-3 text-sm leading-6 text-[#A9A1BA]">
-              {project.description}
+              {project.shortDescription}
             </p>
           </Link>
         ))}
