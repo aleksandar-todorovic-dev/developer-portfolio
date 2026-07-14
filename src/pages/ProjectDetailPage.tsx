@@ -117,9 +117,10 @@ export function ProjectDetailPage() {
             href={link.href}
             target="_blank"
             rel="noreferrer"
-            className="rounded-lg bg-[#8B5CF6] px-4 py-2 font-medium text-white transition hover:bg-[#A855F7]"
+            className="rounded-lg bg-[#7C3AED] px-4 py-2 font-medium text-white transition hover:bg-[#6D28D9]"
           >
             {link.label}
+            <span className="sr-only"> (opens in a new tab)</span>
           </a>
         ))}
       </div>

@@ -14,6 +14,7 @@ export function ProjectCard({
   variant = "detailed",
 }: ProjectCardProps) {
   const isDetailed = variant === "detailed";
+  const TitleTag = isDetailed ? "h2" : "h3";
 
   return (
     <article className="group flex h-full flex-col rounded-2xl border border-[#2B2340] bg-[#11101A] p-6 transition duration-200 hover:-translate-y-1 hover:border-[#8B5CF6]">
@@ -21,9 +22,9 @@ export function ProjectCard({
         {project.proofLabel}
       </p>
 
-      <h2 className="mt-3 text-2xl font-semibold text-[#F5F2FF]">
+      <TitleTag className="mt-3 text-2xl font-semibold text-[#F5F2FF]">
         {project.title}
-      </h2>
+      </TitleTag>
 
       <p className="mt-3 leading-7 text-[#A9A1BA]">
         {project.shortDescription}
@@ -79,7 +80,7 @@ export function ProjectCard({
 
       <Link
         to={`/projects/${project.slug}`}
-        className="mt-8 inline-flex items-center gap-2 font-medium text-[#C4B5FD] transition group-hover:text-[#F5F2FF]"
+        className="mt-auto inline-flex items-center gap-2 pt-8 font-medium text-[#C4B5FD] transition group-hover:text-[#F5F2FF]"
       >
         Open case file
         <span aria-hidden="true">→</span>
