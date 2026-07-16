@@ -1,6 +1,7 @@
 import { ProjectCard } from "../components/projects/ProjectCard";
 import { ProjectProofPanel } from "../components/projects/ProjectProofPanel";
 import { BuildProcessSection } from "../components/home/BuildProcessSection";
+import { ProjectStackSection } from "../components/home/ProjectStackSection";
 import { projects } from "../data/projects";
 
 export function HomePage() {
@@ -52,6 +53,7 @@ export function HomePage() {
       </section>
 
       <BuildProcessSection />
+      <ProjectStackSection />
     </>
   );
 }
