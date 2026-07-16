@@ -68,7 +68,7 @@ export const projects: Project[] = [
       {
         label: "Continuity across the cycle",
         detail:
-          "A stable D1–D6 order inside a flexible 9-day rhythm, partial-day support, and previous-value carry-over preserve progress when real-life schedules change.",
+          "A stable D1-D6 order inside a flexible 9-day rhythm, partial-day support, and previous-value carry-over preserve progress when real-life schedules change.",
       },
     ],
     techStack: [
