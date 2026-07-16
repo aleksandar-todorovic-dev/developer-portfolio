@@ -18,6 +18,26 @@ export type ProjectEvidence = {
   detail: string;
 };
 
+export type CaseStudySectionType =
+  | "overview"
+  | "role-scope"
+  | "decision"
+  | "implementation"
+  | "architecture"
+  | "product-flow"
+  | "tradeoff"
+  | "validation"
+  | "learning"
+  | "future";
+
+export type CaseStudySection = {
+  id: string;
+  type: CaseStudySectionType;
+  title: string;
+  paragraphs: string[];
+  bullets?: string[];
+};
+
 export type Project = {
   slug: ProjectSlug;
   title: string;
@@ -30,4 +50,5 @@ export type Project = {
   techStack: string[];
   evidence: ProjectEvidence[];
   links: ProjectLink[];
+  caseStudySections: CaseStudySection[];
 };
