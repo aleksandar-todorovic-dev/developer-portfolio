@@ -3,6 +3,7 @@ import { ProjectProofPanel } from "../components/projects/ProjectProofPanel";
 import { BuildProcessSection } from "../components/home/BuildProcessSection";
 import { ProjectStackSection } from "../components/home/ProjectStackSection";
 import { BackgroundCredibilitySection } from "../components/home/BackgroundCredibilitySection";
+import { ContactVerificationSection } from "../components/home/ContactVerificationSection";
 import { projects } from "../data/projects";
 
 export function HomePage() {
@@ -56,6 +57,7 @@ export function HomePage() {
       <BuildProcessSection />
       <ProjectStackSection />
       <BackgroundCredibilitySection />
+      <ContactVerificationSection />
     </>
   );
 }
