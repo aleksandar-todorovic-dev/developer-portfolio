@@ -1,6 +1,7 @@
 import { Link, useParams } from "react-router";
 
 import { getProjectBySlug } from "../utils/getProjectBySlug";
+import { CaseStudySection } from "../components/projects/CaseStudySection";
 
 export function ProjectDetailPage() {
   const { slug } = useParams();
@@ -124,6 +125,14 @@ export function ProjectDetailPage() {
           </a>
         ))}
       </div>
+
+      {project.caseStudySections.length > 0 && (
+        <div className="mt-16">
+          {project.caseStudySections.map((section) => (
+            <CaseStudySection key={section.id} section={section} />
+          ))}
+        </div>
+      )}
     </section>
   );
 }
