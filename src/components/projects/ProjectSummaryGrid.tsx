@@ -10,24 +10,59 @@ export function ProjectSummaryGrid({
   tradeoff,
 }: ProjectSummaryGridProps) {
   return (
-    <div className="mt-10 grid gap-6 lg:grid-cols-2">
-      <article className="rounded-2xl border border-[#2B2340] bg-[#11101A] p-6">
-        <h2 className="text-lg font-semibold">What it proves</h2>
+    <section
+      aria-label="Project summary"
+      className="mt-12 border-y border-[#2B2340]"
+    >
+      <div className="grid divide-y divide-[#2B2340] lg:grid-cols-3 lg:divide-x lg:divide-y-0">
+        <article className="py-8 lg:pr-8">
+          <div className="flex items-center justify-between gap-4">
+            <p className="text-xs font-medium uppercase tracking-[0.22em] text-[#C4B5FD]">
+              Proof
+            </p>
 
-        <p className="mt-3 leading-7 text-[#A9A1BA]">{proofSummary}</p>
-      </article>
+            <span className="font-mono text-sm text-[#5F5870]">01</span>
+          </div>
 
-      <article className="rounded-2xl border border-[#2B2340] bg-[#11101A] p-6">
-        <h2 className="text-lg font-semibold">Key decision</h2>
+          <h2 className="mt-5 text-xl font-semibold text-[#F5F2FF]">
+            What it demonstrates
+          </h2>
 
-        <p className="mt-3 leading-7 text-[#A9A1BA]">{keyDecision}</p>
-      </article>
+          <p className="mt-4 leading-7 text-[#A9A1BA]">{proofSummary}</p>
+        </article>
 
-      <article className="rounded-2xl border border-[#2B2340] bg-[#11101A] p-6">
-        <h2 className="text-lg font-semibold">Tradeoff</h2>
+        <article className="py-8 lg:px-8">
+          <div className="flex items-center justify-between gap-4">
+            <p className="text-xs font-medium uppercase tracking-[0.22em] text-[#C4B5FD]">
+              Decision
+            </p>
 
-        <p className="mt-3 leading-7 text-[#A9A1BA]">{tradeoff}</p>
-      </article>
-    </div>
+            <span className="font-mono text-sm text-[#5F5870]">02</span>
+          </div>
+
+          <h2 className="mt-5 text-xl font-semibold text-[#F5F2FF]">
+            The choice that mattered
+          </h2>
+
+          <p className="mt-4 leading-7 text-[#A9A1BA]">{keyDecision}</p>
+        </article>
+
+        <article className="py-8 lg:pl-8">
+          <div className="flex items-center justify-between gap-4">
+            <p className="text-xs font-medium uppercase tracking-[0.22em] text-[#C4B5FD]">
+              Tradeoff
+            </p>
+
+            <span className="font-mono text-sm text-[#5F5870]">03</span>
+          </div>
+
+          <h2 className="mt-5 text-xl font-semibold text-[#F5F2FF]">
+            What the scope accepts
+          </h2>
+
+          <p className="mt-4 leading-7 text-[#A9A1BA]">{tradeoff}</p>
+        </article>
+      </div>
+    </section>
   );
 }
