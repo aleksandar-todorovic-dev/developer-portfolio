@@ -6,6 +6,7 @@ import { ProjectHero } from "../components/projects/ProjectHero";
 import { ProjectLinks } from "../components/projects/ProjectLinks";
 import { ProjectSummaryGrid } from "../components/projects/ProjectSummaryGrid";
 import { ProjectSectionIndex } from "../components/projects/ProjectSectionIndex";
+import { ProjectVisualEvidence } from "../components/projects/ProjectVisualEvidence";
 import { TechStackList } from "../components/projects/TechStackList";
 import { getProjectBySlug } from "../utils/getProjectBySlug";
 
@@ -61,6 +62,8 @@ export function ProjectDetailPage() {
         keyDecision={project.keyDecision}
         tradeoff={project.tradeoff}
       />
+
+      <ProjectVisualEvidence screenshots={project.screenshots} />
 
       <div className="mt-14 space-y-12">
         <TechStackList technologies={project.techStack} />

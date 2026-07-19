@@ -38,6 +38,12 @@ export type CaseStudySection = {
   bullets?: string[];
 };
 
+export type ProjectScreenshot = {
+  src: string;
+  alt: string;
+  caption: string;
+};
+
 export type Project = {
   slug: ProjectSlug;
   title: string;
@@ -49,6 +55,7 @@ export type Project = {
   tradeoff: string;
   techStack: string[];
   evidence: ProjectEvidence[];
+  screenshots: ProjectScreenshot[];
   links: ProjectLink[];
   caseStudySections: CaseStudySection[];
 };
