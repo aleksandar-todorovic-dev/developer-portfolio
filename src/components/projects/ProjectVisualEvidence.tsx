@@ -20,6 +20,22 @@ export function ProjectVisualEvidence({
     setLightboxScreenshot(null);
   }, []);
 
+  const openScreenshot = useCallback((screenshot: ProjectScreenshot) => {
+    const isNarrowViewport = window.innerWidth < 1024;
+
+    if (screenshot.format === "desktop" && isNarrowViewport) {
+      const imageWindow = window.open(screenshot.src, "_blank");
+
+      if (imageWindow) {
+        imageWindow.opener = null;
+      }
+
+      return;
+    }
+
+    setLightboxScreenshot(screenshot);
+  }, []);
+
   const [initialScreenshot] = screenshots;
 
   if (!initialScreenshot) {
@@ -65,7 +81,7 @@ export function ProjectVisualEvidence({
             <button
               type="button"
               aria-label={`Open full image: ${activeScreenshot.label}`}
-              onClick={() => setLightboxScreenshot(activeScreenshot)}
+              onClick={() => openScreenshot(activeScreenshot)}
               className="flex min-h-150 w-full items-center justify-center bg-[#0D0B14] p-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#8B5CF6] lg:p-8"
             >
               <img
@@ -147,7 +163,7 @@ export function ProjectVisualEvidence({
 
               <button
                 type="button"
-                onClick={() => setLightboxScreenshot(activeScreenshot)}
+                onClick={() => openScreenshot(activeScreenshot)}
                 className="mt-9 inline-flex w-fit items-center gap-3 border-b border-[#4C4161] pb-2 text-sm font-medium text-[#D8D2E8] transition hover:border-[#8B5CF6] hover:text-[#C4B5FD] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8B5CF6]"
               >
                 Open full image
@@ -170,7 +186,7 @@ export function ProjectVisualEvidence({
 
               <button
                 type="button"
-                onClick={() => setLightboxScreenshot(activeScreenshot)}
+                onClick={() => openScreenshot(activeScreenshot)}
                 className="inline-flex items-center gap-2 text-sm font-medium text-[#C4B5FD] transition hover:text-[#F5F2FF] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8B5CF6]"
               >
                 Open full image
@@ -181,7 +197,7 @@ export function ProjectVisualEvidence({
             <button
               type="button"
               aria-label={`Open full image: ${activeScreenshot.label}`}
-              onClick={() => setLightboxScreenshot(activeScreenshot)}
+              onClick={() => openScreenshot(activeScreenshot)}
               className="block w-full bg-[#0D0B14] p-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#8B5CF6] sm:p-4"
             >
               <img
