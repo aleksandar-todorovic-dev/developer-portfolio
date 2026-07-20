@@ -18,8 +18,6 @@ export function ProjectImageLightbox({
   const titleId = useId();
   const descriptionId = useId();
 
-  const isDesktopScreenshot = screenshot?.format === "desktop";
-
   useEffect(() => {
     if (!screenshot) {
       return;
@@ -119,25 +117,15 @@ export function ProjectImageLightbox({
             className="inline-flex min-h-11 items-center gap-2 border border-[#3A3150] px-4 text-sm font-medium text-[#D8D2E8] transition hover:border-[#8B5CF6] hover:text-[#F5F2FF] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8B5CF6]"
           >
             Close
-            <span aria-hidden="true">x</span>
+            <span aria-hidden="true">×</span>
           </button>
         </header>
 
-        <div
-          className={`min-h-0 flex-1 p-3 sm:p-6 ${
-            isDesktopScreenshot
-              ? "overflow-auto overscroll-contain lg:flex lg:items-center lg:justify-center"
-              : "flex items-center justify-center overflow-hidden"
-          }`}
-        >
+        <div className="flex min-h-0 flex-1 items-center justify-center overflow-hidden p-3 sm:p-6">
           <img
             src={screenshot.src}
             alt={screenshot.alt}
-            className={
-              isDesktopScreenshot
-                ? "block h-auto w-240 max-w-none lg:max-h-full lg:w-auto lg:max-w-full lg:object-contain"
-                : "max-h-full max-w-full object-contain"
-            }
+            className="max-h-full max-w-full object-contain"
           />
         </div>
 
@@ -148,11 +136,6 @@ export function ProjectImageLightbox({
           >
             {screenshot.caption}
           </p>
-          {isDesktopScreenshot && (
-            <p className="mt-3 text-xs font-medium uppercase tracking-[0.14em] text-[#6F687E] lg:hidden">
-              Swipe horizontally to inspect the desktop interface.
-            </p>
-          )}
         </footer>
       </div>
     </div>,
