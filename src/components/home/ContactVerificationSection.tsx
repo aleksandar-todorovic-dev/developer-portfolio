@@ -17,7 +17,8 @@ export function ContactVerificationSection() {
 
           <p className="mt-5 max-w-xl leading-7 text-[#A9A1BA]">
             Review the projects, inspect the code, or contact me about a clearly
-            scoped frontend, web, or product-facing opportunity.
+            scoped frontend, web, implementation, or software-facing
+            opportunity.
           </p>
         </div>
 

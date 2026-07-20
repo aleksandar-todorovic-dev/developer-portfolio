@@ -53,7 +53,7 @@ export function Header() {
               Aleksandar Todorovic
             </span>
             <span className="truncate text-xs text-[#A9A1BA]">
-              React · TypeScript · Firebase
+              React · TypeScript · Web Applications
             </span>
           </span>
         </NavLink>

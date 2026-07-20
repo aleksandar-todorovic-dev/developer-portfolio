@@ -16,13 +16,15 @@ export function HomePage() {
           </p>
 
           <h1 className="max-w-3xl text-4xl font-semibold leading-tight tracking-tight sm:text-5xl lg:text-6xl">
-            I build React, TypeScript and Firebase projects around real product
-            flows and practical engineering decisions.
+            I build responsive web applications and product interfaces around
+            real user flows, practical engineering decisions, and clearly scoped
+            delivery.
           </h1>
 
           <p className="mt-6 max-w-2xl text-lg leading-8 text-[#A9A1BA]">
-            My main projects demonstrate Firebase engineering, structured
-            product thinking, and typed React interface work.
+            My strongest current project evidence is in React, TypeScript,
+            JavaScript and Firebase, demonstrated through Firebase engineering,
+            product-focused MVP work, and typed interactive interfaces.
           </p>
         </div>
 
