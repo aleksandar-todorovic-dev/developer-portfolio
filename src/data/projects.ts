@@ -233,6 +233,56 @@ export const projects: Project[] = [
         ],
       },
     ],
+    screenshots: [
+      {
+        src: "/images/projects/liferecompiled/home-feed.png",
+        alt: "LifeRecompiled public feed showing seeded posts, authors, categories, tags, reactions, and filtering controls.",
+        label: "Public feed",
+        caption:
+          "The public feed presents the community surface through controlled demo content, filtering, post metadata, reactions, and resilient card rendering.",
+        format: "desktop",
+      },
+      {
+        src: "/images/projects/liferecompiled/dashboard-stats.png",
+        alt: "LifeRecompiled authenticated statistics dashboard showing posting activity and restore-versus-delete data.",
+        label: "Dashboard stats",
+        caption:
+          "The authenticated dashboard turns backend-maintained activity and Trash lifecycle data into a focused account overview.",
+        format: "desktop",
+      },
+      {
+        src: "/images/projects/liferecompiled/post-detail.png",
+        alt: "LifeRecompiled post detail page showing author data, reactions, saved state, nested comments, and moderation controls.",
+        label: "Post detail",
+        caption:
+          "The post detail surface brings together enriched author data, reactions, badge state, saving, nested discussion, and role-aware actions.",
+        format: "desktop",
+      },
+      {
+        src: "/images/projects/liferecompiled/saved-posts.png",
+        alt: "LifeRecompiled saved-posts dashboard showing a private reading list with sorting and saved reference metadata.",
+        label: "Saved posts",
+        caption:
+          "Saved posts form a private reading layer with snapshot metadata, resilient joins, sorting, and recoverable optimistic actions.",
+        format: "desktop",
+      },
+      {
+        src: "/images/projects/liferecompiled/trash.png",
+        alt: "LifeRecompiled Trash dashboard showing deleted posts, retention filters, restore actions, and permanent deletion.",
+        label: "Trash lifecycle",
+        caption:
+          "The Trash workspace exposes the soft-delete lifecycle through retention windows, restore controls, and privileged permanent deletion.",
+        format: "desktop",
+      },
+      {
+        src: "/images/projects/liferecompiled/mobile-comments.png",
+        alt: "LifeRecompiled mobile discussion sheet showing nested replies, likes, author context, and a collapsed comment composer.",
+        label: "Mobile comments",
+        caption:
+          "The mobile discussion sheet keeps realtime nested conversations usable through focused overlay behavior and compact reply context.",
+        format: "mobile",
+      },
+    ],
   },
   {
     slug: "training-app",
@@ -439,6 +489,48 @@ export const projects: Project[] = [
           "Installable PWA experience",
           "Expanded progress summaries",
         ],
+      },
+    ],
+    screenshots: [
+      {
+        src: "/images/projects/training-app/cycle.png",
+        alt: "Training App cycle dashboard showing the active day, cycle progress, and upcoming training days.",
+        label: "Cycle overview",
+        caption:
+          "The cycle dashboard keeps the next meaningful step visible and preserves continuity across the training order.",
+        format: "mobile",
+      },
+      {
+        src: "/images/projects/training-app/exercise.png",
+        alt: "Training App exercise screen showing targets, previous values, prescribed method, and set-by-set logging.",
+        label: "Exercise execution",
+        caption:
+          "Exercise execution combines targets, previous values, prescribed method guidance, and live logging in one focused screen.",
+        format: "mobile",
+      },
+      {
+        src: "/images/projects/training-app/partial-day.png",
+        alt: "Training App finish-day confirmation showing partial completion rules and carry-over guidance.",
+        label: "Partial day",
+        caption:
+          "Partial-day support is a deliberate product rule: checked work counts, unfinished work remains honest, and the cycle still moves forward.",
+        format: "mobile",
+      },
+      {
+        src: "/images/projects/training-app/guide.png",
+        alt: "Training App coach library screen showing guide sections such as Start here, Training rules, and Plan structure.",
+        label: "Coach library",
+        caption:
+          "The guide system supports deeper education when requested, without interrupting the main workout flow.",
+        format: "mobile",
+      },
+      {
+        src: "/images/projects/training-app/core.png",
+        alt: "Training App core training screen showing a dedicated core block with cues, targets, and set logging.",
+        label: "Core work",
+        caption:
+          "Core work has its own structured flow, proving the app is a broader training system rather than only a main-lift logger.",
+        format: "mobile",
       },
     ],
   },
@@ -652,6 +744,32 @@ export const projects: Project[] = [
           "Shared boards and collaboration",
           "Explicit status metadata instead of title-based Done logic",
         ],
+      },
+    ],
+    screenshots: [
+      {
+        src: "/images/projects/taskflow/board.png",
+        alt: "TaskFlow desktop Kanban board showing four workflow columns, demo cards, board statistics, actions, and local persistence status.",
+        label: "Board overview",
+        caption:
+          "The complete board surface shows the typed Kanban model, local persistence, workflow actions, and product-level interface polish.",
+        format: "desktop",
+      },
+      {
+        src: "/images/projects/taskflow/card-drag.png",
+        alt: "TaskFlow card being dragged from the Backlog column toward the In Progress column.",
+        label: "Card movement",
+        caption:
+          "Card movement between columns demonstrates typed drag results and immutable updates across nested board state.",
+        format: "desktop",
+      },
+      {
+        src: "/images/projects/taskflow/mobile.png",
+        alt: "TaskFlow mobile layout showing board statistics, local persistence status, controls, and horizontally scrollable Kanban columns.",
+        label: "Mobile board",
+        caption:
+          "The mobile layout preserves the full board workflow through responsive controls and horizontal column navigation.",
+        format: "mobile",
       },
     ],
   },

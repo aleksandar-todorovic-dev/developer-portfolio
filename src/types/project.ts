@@ -38,6 +38,16 @@ export type CaseStudySection = {
   bullets?: string[];
 };
 
+export type ProjectScreenshotFormat = "desktop" | "mobile";
+
+export type ProjectScreenshot = {
+  src: string;
+  alt: string;
+  label: string;
+  caption: string;
+  format: ProjectScreenshotFormat;
+};
+
 export type Project = {
   slug: ProjectSlug;
   title: string;
@@ -49,6 +59,7 @@ export type Project = {
   tradeoff: string;
   techStack: string[];
   evidence: ProjectEvidence[];
+  screenshots: ProjectScreenshot[];
   links: ProjectLink[];
   caseStudySections: CaseStudySection[];
 };

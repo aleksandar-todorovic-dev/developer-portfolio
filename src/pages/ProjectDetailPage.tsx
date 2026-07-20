@@ -1,7 +1,14 @@
 import { Link, useParams } from "react-router";
 
-import { getProjectBySlug } from "../utils/getProjectBySlug";
 import { CaseStudySection } from "../components/projects/CaseStudySection";
+import { ProjectEvidenceList } from "../components/projects/ProjectEvidenceList";
+import { ProjectHero } from "../components/projects/ProjectHero";
+import { ProjectLinks } from "../components/projects/ProjectLinks";
+import { ProjectSummaryGrid } from "../components/projects/ProjectSummaryGrid";
+import { ProjectSectionIndex } from "../components/projects/ProjectSectionIndex";
+import { ProjectVisualEvidence } from "../components/projects/ProjectVisualEvidence";
+import { TechStackList } from "../components/projects/TechStackList";
+import { getProjectBySlug } from "../utils/getProjectBySlug";
 
 export function ProjectDetailPage() {
   const { slug } = useParams();
@@ -41,96 +48,66 @@ export function ProjectDetailPage() {
         ← Back to projects
       </Link>
 
-      <p className="mt-8 text-sm font-medium uppercase tracking-[0.3em] text-[#C4B5FD]">
-        {project.proofLabel}
-      </p>
+      <ProjectHero
+        proofLabel={project.proofLabel}
+        title={project.title}
+        shortDescription={project.shortDescription}
+        slug={project.slug}
+        category={project.category}
+        sectionCount={project.caseStudySections.length}
+      />
 
-      <h1 className="mt-4 text-4xl font-semibold tracking-tight sm:text-5xl">
-        {project.title}
-      </h1>
+      <ProjectSummaryGrid
+        proofSummary={project.proofSummary}
+        keyDecision={project.keyDecision}
+        tradeoff={project.tradeoff}
+      />
 
-      <p className="mt-6 max-w-2xl text-lg leading-8 text-[#A9A1BA]">
-        {project.shortDescription}
-      </p>
+      <ProjectVisualEvidence
+        key={project.slug}
+        screenshots={project.screenshots}
+      />
 
-      <div className="mt-10 grid gap-6 lg:grid-cols-2">
-        <article className="rounded-2xl border border-[#2B2340] bg-[#11101A] p-6">
-          <h2 className="text-lg font-semibold">What it proves</h2>
+      <div className="mt-14 space-y-12">
+        <TechStackList technologies={project.techStack} />
 
-          <p className="mt-3 leading-7 text-[#A9A1BA]">
-            {project.proofSummary}
-          </p>
-        </article>
-
-        <article className="rounded-2xl border border-[#2B2340] bg-[#11101A] p-6">
-          <h2 className="text-lg font-semibold">Key decision</h2>
-
-          <p className="mt-3 leading-7 text-[#A9A1BA]">{project.keyDecision}</p>
-        </article>
-
-        <article className="rounded-2xl border border-[#2B2340] bg-[#11101A] p-6">
-          <h2 className="text-lg font-semibold">Tradeoff</h2>
-
-          <p className="mt-3 leading-7 text-[#A9A1BA]">{project.tradeoff}</p>
-        </article>
-
-        <article className="rounded-2xl border border-[#2B2340] bg-[#11101A] p-6">
-          <h2 className="text-lg font-semibold">Technology</h2>
-
-          <ul className="mt-3 flex flex-wrap gap-2">
-            {project.techStack.map((technology) => (
-              <li
-                key={technology}
-                className="rounded-full border border-[#2B2340] px-3 py-1 text-sm text-[#C4B5FD]"
-              >
-                {technology}
-              </li>
-            ))}
-          </ul>
-        </article>
-
-        <article className="rounded-2xl border border-[#2B2340] bg-[#11101A] p-6 lg:col-span-2">
-          <h2 className="text-lg font-semibold">Evidence</h2>
-
-          <ul className="mt-4 grid gap-4 sm:grid-cols-2">
-            {project.evidence.map((item) => (
-              <li
-                key={item.label}
-                className="rounded-xl border border-[#2B2340] bg-[#181423] p-4"
-              >
-                <p className="text-sm font-medium text-[#C4B5FD]">
-                  {item.label}
-                </p>
-
-                <p className="mt-2 text-sm leading-6 text-[#A9A1BA]">
-                  {item.detail}
-                </p>
-              </li>
-            ))}
-          </ul>
-        </article>
+        <ProjectEvidenceList evidence={project.evidence} />
       </div>
 
-      <div className="mt-8 flex flex-wrap gap-4">
-        {project.links.map((link) => (
-          <a
-            key={link.type}
-            href={link.href}
-            target="_blank"
-            rel="noreferrer"
-            className="rounded-lg bg-[#7C3AED] px-4 py-2 font-medium text-white transition hover:bg-[#6D28D9]"
-          >
-            {link.label}
-            <span className="sr-only"> (opens in a new tab)</span>
-          </a>
-        ))}
-      </div>
+      <ProjectLinks links={project.links} />
+      <ProjectSectionIndex sections={project.caseStudySections} />
 
       {project.caseStudySections.length > 0 && (
-        <div className="mt-16">
-          {project.caseStudySections.map((section) => (
-            <CaseStudySection key={section.id} section={section} />
-          ))}
+        <div className="mt-20">
+          <div className="border-t border-[#2B2340] pt-10">
+            <div className="grid gap-5 lg:grid-cols-[180px_minmax(0,1fr)]">
+              <p className="text-xs font-medium uppercase tracking-[0.22em] text-[#8B849A]">
+                Case study
+              </p>
+
+              <div>
+                <h2 className="text-3xl font-semibold tracking-[-0.02em] text-[#F5F2FF] sm:text-4xl">
+                  Project record
+                </h2>
+
+                <p className="mt-4 max-w-2xl leading-7 text-[#A9A1BA]">
+                  A structured breakdown of the decisions, implementation,
+                  constraints, validation, and lessons behind the project.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-10">
+            {project.caseStudySections.map((section, index) => (
+              <CaseStudySection
+                key={section.id}
+                section={section}
+                index={index}
+                total={project.caseStudySections.length}
+              />
+            ))}
+          </div>
         </div>
       )}
     </section>
