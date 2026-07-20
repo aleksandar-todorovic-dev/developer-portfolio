@@ -63,7 +63,10 @@ export function ProjectDetailPage() {
         tradeoff={project.tradeoff}
       />
 
-      <ProjectVisualEvidence screenshots={project.screenshots} />
+      <ProjectVisualEvidence
+        key={project.slug}
+        screenshots={project.screenshots}
+      />
 
       <div className="mt-14 space-y-12">
         <TechStackList technologies={project.techStack} />

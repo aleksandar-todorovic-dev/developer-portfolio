@@ -38,10 +38,14 @@ export type CaseStudySection = {
   bullets?: string[];
 };
 
+export type ProjectScreenshotFormat = "desktop" | "mobile";
+
 export type ProjectScreenshot = {
   src: string;
   alt: string;
+  label: string;
   caption: string;
+  format: ProjectScreenshotFormat;
 };
 
 export type Project = {
