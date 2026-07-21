@@ -125,7 +125,7 @@ export function ContactPage() {
 
           <div className="mt-8 max-w-3xl space-y-5 text-lg leading-8 text-[#A9A1BA]">
             <p>
-              I am open to frontend and web-development opportunities, smaller
+              I am open to frontend and web development opportunities, smaller
               clearly scoped deliverables, and software-facing roles where
               technical investigation and reliable follow-through matter.
             </p>
@@ -134,7 +134,7 @@ export function ContactPage() {
               My strongest current project evidence is in React, TypeScript,
               JavaScript and Firebase. I am also comfortable working through
               existing frontend code, documented APIs, managed services and
-              nearby web technologies when the scope can be understood, tested
+              related web technologies when the scope can be understood, tested
               and verified.
             </p>
           </div>
@@ -177,8 +177,8 @@ export function ContactPage() {
       <section className="mt-24">
         <SectionHeader
           eyebrow="Good working fit"
-          title="The role can vary. The responsibility still needs to be clear."
-          description="I am most useful where the requested outcome can be understood, the change can be kept controlled, and the result can be tested."
+          title="I work best when the goal is clear and the result can be tested."
+          description="The requested result should be easy to understand, the work should stay focused, and there should be a clear way to confirm that the outcome works."
         />
 
         <div className="mt-10 border-y border-[#2B2340]">
@@ -238,7 +238,7 @@ export function ContactPage() {
       <section className="mt-24">
         <SectionHeader
           eyebrow="Contact and verification"
-          title="Choose the channel that gives you the context you need."
+          title="Choose the easiest way to reach me or review my work."
           description="Contact me directly, review the work, inspect the code or download the current CV."
         />
 

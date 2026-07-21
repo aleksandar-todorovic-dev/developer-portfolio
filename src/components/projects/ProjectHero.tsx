@@ -42,12 +42,12 @@ export function ProjectHero({
 
         <aside className="border-t border-[#2B2340] pt-6 lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0">
           <p className="text-xs font-medium uppercase tracking-[0.22em] text-[#8B849A]">
-            Project dossier
+            Project overview
           </p>
 
           <dl className="mt-6 divide-y divide-[#2B2340] border-y border-[#2B2340]">
             <div className="flex items-start justify-between gap-6 py-4">
-              <dt className="text-sm text-[#8B849A]">File</dt>
+              <dt className="text-sm text-[#8B849A]">Project</dt>
 
               <dd className="text-right font-medium text-[#D8D2E8]">{slug}</dd>
             </div>

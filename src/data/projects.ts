@@ -239,7 +239,7 @@ export const projects: Project[] = [
         alt: "LifeRecompiled public feed showing seeded posts, authors, categories, tags, reactions, and filtering controls.",
         label: "Public feed",
         caption:
-          "The public feed presents the community surface through controlled demo content, filtering, post metadata, reactions, and resilient card rendering.",
+          "The public feed brings together demo posts, filtering, post metadata, reactions, and card states for unavailable content.",
         format: "desktop",
       },
       {
@@ -247,7 +247,7 @@ export const projects: Project[] = [
         alt: "LifeRecompiled authenticated statistics dashboard showing posting activity and restore-versus-delete data.",
         label: "Dashboard stats",
         caption:
-          "The authenticated dashboard turns backend-maintained activity and Trash lifecycle data into a focused account overview.",
+          "The authenticated dashboard summarizes posting activity and Trash lifecycle data in a focused account overview.",
         format: "desktop",
       },
       {
@@ -263,7 +263,7 @@ export const projects: Project[] = [
         alt: "LifeRecompiled saved-posts dashboard showing a private reading list with sorting and saved reference metadata.",
         label: "Saved posts",
         caption:
-          "Saved posts form a private reading layer with snapshot metadata, resilient joins, sorting, and recoverable optimistic actions.",
+          "The saved-posts view gives each user a private reading list with sorting, fallback details when source posts change, and actions that can be undone.",
         format: "desktop",
       },
       {
@@ -529,7 +529,7 @@ export const projects: Project[] = [
         alt: "Training App core training screen showing a dedicated core block with cues, targets, and set logging.",
         label: "Core work",
         caption:
-          "Core work has its own structured flow, proving the app is a broader training system rather than only a main-lift logger.",
+          "The dedicated core flow brings cues, targets, and set logging into the same structured training system as the main workout.",
         format: "mobile",
       },
     ],
@@ -752,7 +752,7 @@ export const projects: Project[] = [
         alt: "TaskFlow desktop Kanban board showing four workflow columns, demo cards, board statistics, actions, and local persistence status.",
         label: "Board overview",
         caption:
-          "The complete board surface shows the typed Kanban model, local persistence, workflow actions, and product-level interface polish.",
+          "The main board brings four workflow columns, demo cards, board statistics, actions, and local persistence into one workspace.",
         format: "desktop",
       },
       {
@@ -760,7 +760,7 @@ export const projects: Project[] = [
         alt: "TaskFlow card being dragged from the Backlog column toward the In Progress column.",
         label: "Card movement",
         caption:
-          "Card movement between columns demonstrates typed drag results and immutable updates across nested board state.",
+          "Cards can move within and between columns while the board updates and saves the new order.",
         format: "desktop",
       },
       {

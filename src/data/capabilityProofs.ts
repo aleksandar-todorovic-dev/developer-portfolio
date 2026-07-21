@@ -10,11 +10,11 @@ export const capabilityProofs: CapabilityProof[] = [
   {
     title: "Firebase engineering",
     description:
-      "Building authentication, Firestore data models, Cloud Functions, security boundaries, aggregate maintenance, and deletion lifecycles.",
+      "Building authentication, Firestore data models, Cloud Functions, access boundaries, aggregate maintenance, and deletion lifecycles.",
     projectSlugs: ["liferecompiled"],
   },
   {
-    title: "TypeScript architecture",
+    title: "TypeScript in React",
     description:
       "Using typed props, Context contracts, generic hooks, reusable helpers, events, refs, and explicit board data models.",
     projectSlugs: ["taskflow"],

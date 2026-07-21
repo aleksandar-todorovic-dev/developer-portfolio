@@ -22,9 +22,9 @@ export function HomePage() {
           </h1>
 
           <p className="mt-6 max-w-2xl text-lg leading-8 text-[#A9A1BA]">
-            My strongest current project evidence is in React, TypeScript,
-            JavaScript and Firebase, demonstrated through Firebase engineering,
-            product-focused MVP work, and typed interactive interfaces.
+            My strongest work so far is in React, TypeScript, JavaScript and
+            Firebase, across backend-connected applications, product-focused
+            MVPs and typed interactive interfaces.
           </p>
         </div>
 

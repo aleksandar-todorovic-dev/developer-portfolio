@@ -91,7 +91,8 @@ export function AboutPage() {
           </p>
 
           <h1 className="mt-5 max-w-4xl text-4xl font-semibold leading-tight tracking-[-0.03em] text-[#F5F2FF] sm:text-5xl lg:text-6xl">
-            I build from a frontend center, not from a fixed technology box.
+            Frontend is where I work best, but it is not the edge of what I can
+            work through.
           </h1>
 
           <div className="mt-8 max-w-3xl space-y-5 text-lg leading-8 text-[#A9A1BA]">
@@ -140,8 +141,8 @@ export function AboutPage() {
       <section className="mt-24">
         <SectionHeader
           eyebrow="How I work"
-          title="A practical delivery process, not a claim to know everything."
-          description="The goal is to understand enough of the real problem to make a controlled change, verify it and communicate the result honestly."
+          title="I keep the work clear, controlled and testable."
+          description="I start by understanding the real problem, make a focused change, test it carefully and explain the result clearly."
         />
 
         <div className="mt-10 border-y border-[#2B2340]">
@@ -217,7 +218,7 @@ export function AboutPage() {
 
             <p className="mt-5 max-w-2xl leading-7 text-[#A9A1BA]">
               Review the case studies, download the current CV, or contact me
-              about a frontend, web, product-supporting or clearly bounded
+              about a frontend, web, product-facing or clearly bounded
               technical opportunity.
             </p>
           </div>
