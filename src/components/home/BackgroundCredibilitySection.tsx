@@ -5,7 +5,7 @@ export function BackgroundCredibilitySection() {
   return (
     <section className="mt-24">
       <SectionHeader
-        eyebrow="Background as credibility"
+        eyebrow="Professional background"
         title="The way I work did not start with code."
         description="Previous responsibility, troubleshooting experience, and independent project work shape how I approach technical problems today."
       />

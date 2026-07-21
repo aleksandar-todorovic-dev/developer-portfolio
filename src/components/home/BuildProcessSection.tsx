@@ -6,7 +6,7 @@ export function BuildProcessSection() {
     <section className="mt-24">
       <SectionHeader
         eyebrow="How I build"
-        title="A practical path from project idea to verifiable result."
+        title="A practical path from project idea to a tested result."
         description="The projects are different, but the decision process behind them follows the same core pattern."
       />
 

@@ -111,7 +111,7 @@ export function ProjectVisualEvidence({
 
               <div className="mt-9 border-y border-[#2B2340]">
                 <p className="py-4 text-xs font-medium uppercase tracking-[0.18em] text-[#8B849A]">
-                  Evidence set
+                  Screenshot list
                 </p>
 
                 <ol className="divide-y divide-[#2B2340] border-t border-[#2B2340]">

@@ -4,7 +4,7 @@ export const capabilityProofs: CapabilityProof[] = [
   {
     title: "Product thinking",
     description:
-      "Translating real training rules into a clear product flow with controlled flexibility, honest partial completion, and deliberate MVP scope.",
+      "Turning real training rules into a clear product flow with flexible scheduling, honest partial completion and a focused first version.",
     projectSlugs: ["training-app"],
   },
   {

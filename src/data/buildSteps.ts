@@ -21,7 +21,7 @@ export const buildSteps: BuildStep[] = [
     number: "03",
     title: "Choose honest tradeoffs",
     description:
-      "I keep scope controlled, document limitations, and avoid adding backend or architecture complexity without a real reason.",
+      "I keep the first version focused, document limitations, and avoid adding backend or architectural complexity without a clear reason.",
   },
   {
     number: "04",

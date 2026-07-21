@@ -13,14 +13,14 @@ export function ProjectEvidenceList({ evidence }: ProjectEvidenceListProps) {
       <div className="grid gap-6 md:grid-cols-[180px_minmax(0,1fr)]">
         <div>
           <p className="text-xs font-medium uppercase tracking-[0.22em] text-[#8B849A]">
-            Evidence
+            Project highlights
           </p>
 
           <h2
             id="evidence-heading"
             className="mt-3 text-xl font-semibold text-[#F5F2FF]"
           >
-            What can be inspected
+            Key implementation details
           </h2>
         </div>
 

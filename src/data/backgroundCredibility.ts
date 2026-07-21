@@ -15,8 +15,8 @@ export const backgroundCredibilityItems: BackgroundCredibilityItem[] = [
   },
   {
     label: "Frontend development",
-    title: "Proof through completed projects",
+    title: "Turning experience into working projects",
     description:
-      "Independent React, TypeScript, JavaScript, and Firebase projects turned that working style into visible technical proof through deployed applications, documentation, and validation.",
+      "Independent React, TypeScript, JavaScript and Firebase projects gave me a practical way to apply that working style through deployed applications, documentation and validation.",
   },
 ];

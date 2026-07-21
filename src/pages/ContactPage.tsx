@@ -33,7 +33,7 @@ const availabilitySignals: AvailabilitySignal[] = [
   },
   {
     label: "Primary direction",
-    value: "Frontend, React, TypeScript and web development",
+    value: "Frontend and web development, primarily with React and TypeScript",
   },
   {
     label: "Also open to",
@@ -49,8 +49,8 @@ const opportunityAreas: OpportunityArea[] = [
       "React pages, responsive interfaces, dashboards, forms, state and data flows, Firebase-backed features and frontend product work.",
   },
   {
-    label: "Contained delivery",
-    title: "Smaller web problems with a clear result",
+    label: "Focused web work",
+    title: "Smaller web tasks with a clear result",
     description:
       "Existing codebase improvements, responsive fixes, maintenance, documented API integrations, UI cleanup, deployment and technical handoff.",
   },
@@ -66,7 +66,7 @@ const contactLinks: ContactLink[] = [
   {
     label: "Email",
     description:
-      "The most direct way to contact me about a role, project, paid trial or clearly scoped technical problem.",
+      "The most direct way to contact me about a role, project, paid trial or clearly defined technical task.",
     href: "mailto:aleksandar.todorovic.rs@gmail.com",
     kind: "email",
   },
@@ -87,7 +87,7 @@ const contactLinks: ContactLink[] = [
   {
     label: "Case studies",
     description:
-      "Review the implementation decisions, evidence, limitations and lessons behind the main projects.",
+      "Review the implementation decisions, limitations and lessons behind the main projects.",
     href: "/projects",
     kind: "internal",
   },
@@ -104,7 +104,7 @@ const usefulContext = [
   "What needs to be built, improved or investigated",
   "The current stack, repository or product context",
   "The expected result and important constraints",
-  "Any timeline, access or ownership boundaries",
+  "Any timeline, access needs or parts of the system that should remain untouched",
 ];
 
 const contactLinkClassName =
@@ -125,17 +125,16 @@ export function ContactPage() {
 
           <div className="mt-8 max-w-3xl space-y-5 text-lg leading-8 text-[#A9A1BA]">
             <p>
-              I am open to frontend and web development opportunities, smaller
-              clearly scoped deliverables, and software-facing roles where
-              technical investigation and reliable follow-through matter.
+              I am open to frontend and web development opportunities, smaller,
+              clearly defined web tasks, and software-facing roles where
+              technical troubleshooting and reliable follow-through matter.
             </p>
 
             <p>
-              My strongest current project evidence is in React, TypeScript,
-              JavaScript and Firebase. I am also comfortable working through
-              existing frontend code, documented APIs, managed services and
-              related web technologies when the scope can be understood, tested
-              and verified.
+              My strongest work so far is in React, TypeScript, JavaScript and
+              Firebase. I am also comfortable working in existing frontend
+              codebases, following documented APIs and using related web
+              technologies when the task is clear and I can test the result.
             </p>
           </div>
 
@@ -176,9 +175,9 @@ export function ContactPage() {
 
       <section className="mt-24">
         <SectionHeader
-          eyebrow="Good working fit"
+          eyebrow="Where I can help"
           title="I work best when the goal is clear and the result can be tested."
-          description="The requested result should be easy to understand, the work should stay focused, and there should be a clear way to confirm that the outcome works."
+          description="I am most useful when the goal is clear, the work can stay focused and there is a practical way to test the result."
         />
 
         <div className="mt-10 border-y border-[#2B2340]">
@@ -237,7 +236,7 @@ export function ContactPage() {
 
       <section className="mt-24">
         <SectionHeader
-          eyebrow="Contact and verification"
+          eyebrow="Contact and project links"
           title="Choose the easiest way to reach me or review my work."
           description="Contact me directly, review the work, inspect the code or download the current CV."
         />

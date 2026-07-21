@@ -30,12 +30,12 @@ const profileSignals: ProfileSignal[] = [
     value: "Frontend-first web development",
   },
   {
-    label: "Strongest project proof",
+    label: "Strongest current work",
     value: "React, TypeScript, JavaScript and Firebase",
   },
   {
     label: "Open to",
-    value: "Roles, trial work and clearly scoped web problems",
+    value: "Roles, trial work and clearly defined web tasks",
   },
 ];
 
@@ -44,13 +44,13 @@ const workingPrinciples: WorkingPrinciple[] = [
     label: "Current direction",
     title: "Frontend-first, without treating one stack as a wall.",
     description:
-      "My strongest current evidence comes from React, TypeScript, JavaScript and Firebase because that is where I have built the deepest projects so far. I also work comfortably through existing frontend code, documented APIs, managed services and nearby web technologies when the scope is clear and the result can be verified.",
+      "I am most experienced in the tools shown across these projects, but I am also comfortable working in existing frontend codebases and following documented APIs when the task is clear and I can test the result.",
   },
   {
     label: "Working approach",
     title: "Understand the flow before changing the code.",
     description:
-      "I prefer to clarify the real outcome, inspect the relevant state and data flow, keep the implementation contained, and then validate normal and edge-case behavior. I use documentation and AI-assisted tools to investigate faster, but I still need to understand the final change, test it and explain what was delivered.",
+      "I start by clarifying the goal and tracing the relevant state or data flow. Then I keep the change focused and test both the normal path and likely edge cases. I use documentation and AI-assisted tools to investigate faster, but I do not ship a change unless I understand it, test it and can explain it.",
   },
   {
     label: "Previous foundation",
@@ -71,7 +71,7 @@ const projectProofLinks: ProjectProofLink[] = [
     slug: "training-app",
     title: "Training App",
     proof:
-      "Product thinking, mobile-first execution and deliberate local-first MVP scope.",
+      "Product thinking, mobile-first execution and a focused local-first MVP.",
   },
   {
     slug: "taskflow",
@@ -91,22 +91,22 @@ export function AboutPage() {
           </p>
 
           <h1 className="mt-5 max-w-4xl text-4xl font-semibold leading-tight tracking-[-0.03em] text-[#F5F2FF] sm:text-5xl lg:text-6xl">
-            Frontend is where I work best, but it is not the edge of what I can
-            work through.
+            Frontend is where I work best, but I do not limit every project to
+            one exact stack.
           </h1>
 
           <div className="mt-8 max-w-3xl space-y-5 text-lg leading-8 text-[#A9A1BA]">
             <p>
               I am Aleksandar, a frontend-first web developer focused on
-              building responsive applications, product interfaces and clearly
-              scoped web features.
+              responsive applications, product interfaces and practical web
+              features.
             </p>
 
             <p>
-              React, TypeScript, JavaScript and Firebase are the strongest parts
-              of my current project evidence. They describe where I have worked
-              most deeply so far, not the only kind of technical problem I am
-              willing to approach.
+              Most of my work so far has been in React, TypeScript, JavaScript
+              and Firebase. Those are the tools behind my strongest current
+              projects, but I am also comfortable working with existing
+              codebases, documented APIs and related web technologies.
             </p>
           </div>
         </div>
@@ -141,7 +141,7 @@ export function AboutPage() {
       <section className="mt-24">
         <SectionHeader
           eyebrow="How I work"
-          title="I keep the work clear, controlled and testable."
+          title="I keep the work focused, understandable and testable."
           description="I start by understanding the real problem, make a focused change, test it carefully and explain the result clearly."
         />
 
@@ -169,9 +169,9 @@ export function AboutPage() {
 
       <section className="mt-24">
         <SectionHeader
-          eyebrow="Current proof"
+          eyebrow="Selected projects"
           title="The projects show different parts of the same working direction."
-          description="Each project exists in the portfolio because it makes a different kind of technical or product decision visible."
+          description="Each one highlights a different kind of technical or product work."
         />
 
         <div className="mt-10 border-y border-[#2B2340]">
@@ -218,8 +218,8 @@ export function AboutPage() {
 
             <p className="mt-5 max-w-2xl leading-7 text-[#A9A1BA]">
               Review the case studies, download the current CV, or contact me
-              about a frontend, web, product-facing or clearly bounded
-              technical opportunity.
+              about a frontend, web, product-facing, implementation or
+              software-facing opportunity.
             </p>
           </div>
 

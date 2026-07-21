@@ -44,7 +44,7 @@ export function ProjectCard({
         <>
           <div className="mt-5">
             <p className="text-xs font-medium uppercase tracking-[0.16em] text-[#A9A1BA]">
-              Evidence
+              Highlights
             </p>
 
             <ul className="mt-3 space-y-2">

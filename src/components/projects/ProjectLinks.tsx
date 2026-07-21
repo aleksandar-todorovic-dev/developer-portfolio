@@ -18,11 +18,11 @@ export function ProjectLinks({ links }: ProjectLinksProps) {
       <div className="grid lg:grid-cols-[180px_minmax(0,1fr)]">
         <div className="py-7 lg:border-r lg:border-[#2B2340] lg:pr-8">
           <p className="text-xs font-medium uppercase tracking-[0.22em] text-[#8B849A]">
-            Verification
+            Project links
           </p>
 
           <h2 className="mt-3 text-xl font-semibold text-[#F5F2FF]">
-            Inspect the work
+            View the project
           </h2>
         </div>
 

@@ -4,7 +4,7 @@ export const verificationLinks: VerificationLink[] = [
   {
     label: "Case studies",
     description:
-      "Review the projects, implementation decisions, evidence, and honest tradeoffs.",
+      "Review the projects, implementation decisions, limitations and honest tradeoffs.",
     href: "/projects",
   },
   {
@@ -24,7 +24,7 @@ export const verificationLinks: VerificationLink[] = [
   {
     label: "Email",
     description:
-      "Contact me directly about a role, project, trial task, or clearly scoped web problem.",
+      "Contact me directly about a role, project, trial task or clearly defined web task.",
     href: "mailto:aleksandar.todorovic.rs@gmail.com",
   },
   {

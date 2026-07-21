@@ -5,7 +5,7 @@ export const projects: Project[] = [
     slug: "liferecompiled",
     title: "LifeRecompiled",
     shortDescription:
-      "A production-style React and Firebase engineering case study built around a community/blog app surface.",
+      "A production-style React and Firebase case study built around a community and blog application.",
     category: "firebase-engineering",
     proofLabel: "Firebase engineering",
     proofSummary:
@@ -13,7 +13,7 @@ export const projects: Project[] = [
     keyDecision:
       "Used Cloud Functions for higher-risk operations such as aggregate maintenance, privileged deletion, and scheduled cleanup.",
     tradeoff:
-      "Some MVP policies still remain UI-level and would need stricter backend enforcement before a real production release.",
+      "Some MVP policies remain UI-level and would need stricter backend enforcement before a real production release.",
     evidence: [
       {
         label: "Backend correctness",
@@ -51,7 +51,7 @@ export const projects: Project[] = [
         type: "overview",
         title: "What this project is",
         paragraphs: [
-          "LifeRecompiled is a production-style React and Firebase engineering case study built around a community and blog application surface.",
+          "LifeRecompiled explores how a community-style product can be structured across a React frontend and Firebase services.",
           "The project combines authentication, posts, comments, reactions, saved content, profiles, dashboards, moderation, reporting, and deletion lifecycles inside one connected application.",
         ],
       },
@@ -146,7 +146,7 @@ export const projects: Project[] = [
       {
         id: "content-deletion-lifecycle",
         type: "implementation",
-        title: "Deletion as a controlled lifecycle",
+        title: "A staged deletion process",
         paragraphs: [
           "Content deletion is modeled as a lifecycle instead of one immediate destructive action. A post can first be soft-deleted, remain available inside Trash, be restored, or later be removed permanently.",
           "Permanent deletion runs through a privileged backend flow that removes related application data, while scheduled cleanup handles expired trash content without requiring the user to return to the application.",
@@ -255,7 +255,7 @@ export const projects: Project[] = [
         alt: "LifeRecompiled post detail page showing author data, reactions, saved state, nested comments, and moderation controls.",
         label: "Post detail",
         caption:
-          "The post detail surface brings together enriched author data, reactions, badge state, saving, nested discussion, and role-aware actions.",
+          "The post page brings together author details, reactions, saving, nested comments and moderation actions.",
         format: "desktop",
       },
       {
@@ -271,7 +271,7 @@ export const projects: Project[] = [
         alt: "LifeRecompiled Trash dashboard showing deleted posts, retention filters, restore actions, and permanent deletion.",
         label: "Trash lifecycle",
         caption:
-          "The Trash workspace exposes the soft-delete lifecycle through retention windows, restore controls, and privileged permanent deletion.",
+          "The Trash view shows retention windows and lets users restore posts or remove them permanently.",
         format: "desktop",
       },
       {
@@ -279,7 +279,7 @@ export const projects: Project[] = [
         alt: "LifeRecompiled mobile discussion sheet showing nested replies, likes, author context, and a collapsed comment composer.",
         label: "Mobile comments",
         caption:
-          "The mobile discussion sheet keeps realtime nested conversations usable through focused overlay behavior and compact reply context.",
+          "The mobile comments sheet keeps real-time nested replies, likes and reply context usable on smaller screens.",
         format: "mobile",
       },
     ],
@@ -292,7 +292,7 @@ export const projects: Project[] = [
     category: "product-mvp",
     proofLabel: "Product-focused MVP",
     proofSummary:
-      "Demonstrates product thinking through information hierarchy, guided execution, controlled flexibility, honest partial-completion modeling, and deliberate MVP scope.",
+      "Shows product thinking through clear information hierarchy, guided workout flow, flexible scheduling, honest partial completion and a focused first version.",
     keyDecision:
       "Designed the product around two connected values: clarity during the workout and continuity across the cycle, using a stable training order instead of a rigid calendar-based schedule.",
     tradeoff:
@@ -513,7 +513,7 @@ export const projects: Project[] = [
         alt: "Training App finish-day confirmation showing partial completion rules and carry-over guidance.",
         label: "Partial day",
         caption:
-          "Partial-day support is a deliberate product rule: checked work counts, unfinished work remains honest, and the cycle still moves forward.",
+          "Checked work counts, unfinished work is not marked as complete, and the cycle can still move forward.",
         format: "mobile",
       },
       {
