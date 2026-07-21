@@ -10,7 +10,7 @@ const recoveryLinks: RecoveryLink[] = [
   {
     label: "Home",
     description:
-      "Return to the main portfolio journey and the three-project proof map.",
+      "Return to the homepage and main project overview.",
     href: "/",
   },
   {
@@ -39,7 +39,7 @@ export function NotFoundPage() {
           </p>
 
           <h1 className="mt-5 max-w-4xl text-4xl font-semibold leading-tight tracking-[-0.03em] text-[#F5F2FF] sm:text-5xl lg:text-6xl">
-            This route does not lead to a project file.
+            This page could not be found.
           </h1>
 
           <p className="mt-8 max-w-3xl text-lg leading-8 text-[#A9A1BA]">
@@ -91,7 +91,7 @@ export function NotFoundPage() {
               </dt>
 
               <dd className="mt-2 leading-6 text-[#D8D2E8]">
-                Choose one of the verified routes below.
+                Choose one of the links below.
               </dd>
             </div>
           </dl>
@@ -105,7 +105,7 @@ export function NotFoundPage() {
           </p>
 
           <h2 className="mt-3 max-w-2xl text-3xl font-semibold tracking-[-0.02em] text-[#F5F2FF] sm:text-4xl">
-            Continue through a known part of the portfolio.
+            Continue from one of the main pages.
           </h2>
         </div>
 

@@ -87,7 +87,7 @@ export function ProjectDetailPage() {
 
               <div>
                 <h2 className="text-3xl font-semibold tracking-[-0.02em] text-[#F5F2FF] sm:text-4xl">
-                  Project record
+                  Inside the project
                 </h2>
 
                 <p className="mt-4 max-w-2xl leading-7 text-[#A9A1BA]">

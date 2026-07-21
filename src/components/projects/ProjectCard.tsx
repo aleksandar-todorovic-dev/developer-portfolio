@@ -44,7 +44,7 @@ export function ProjectCard({
         <>
           <div className="mt-5">
             <p className="text-xs font-medium uppercase tracking-[0.16em] text-[#A9A1BA]">
-              Evidence
+              Highlights
             </p>
 
             <ul className="mt-3 space-y-2">
@@ -82,7 +82,7 @@ export function ProjectCard({
         to={`/projects/${project.slug}`}
         className="mt-auto inline-flex items-center gap-2 pt-8 font-medium text-[#C4B5FD] transition group-hover:text-[#F5F2FF]"
       >
-        Open case file
+        View case study
         <span aria-hidden="true">→</span>
       </Link>
     </article>

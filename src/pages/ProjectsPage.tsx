@@ -5,7 +5,7 @@ export function ProjectsPage() {
   return (
     <section>
       <p className="mb-4 text-sm font-medium uppercase tracking-[0.3em] text-[#C4B5FD]">
-        Three projects, three proofs
+        Selected project work
       </p>
 
       <h1 className="max-w-3xl text-4xl font-semibold tracking-tight sm:text-5xl">

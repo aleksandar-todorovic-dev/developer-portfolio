@@ -8,17 +8,16 @@ export function ContactVerificationSection() {
       <div className="grid gap-10 lg:grid-cols-[1fr_1.4fr] lg:gap-16">
         <div>
           <p className="text-sm font-medium uppercase tracking-[0.16em] text-[#A78BFA]">
-            Contact and verification
+            Contact and project links
           </p>
 
           <h2 className="mt-4 max-w-xl text-3xl font-semibold tracking-tight text-[#F5F2FF] sm:text-4xl">
-            The work is available to inspect.
+            You can review the work directly.
           </h2>
 
           <p className="mt-5 max-w-xl leading-7 text-[#A9A1BA]">
-            Review the projects, inspect the code, or contact me about a clearly
-            scoped frontend, web, implementation, or software-facing
-            opportunity.
+            Review the projects, inspect the code, or contact me about frontend,
+            web, implementation or software-facing work.
           </p>
         </div>
 

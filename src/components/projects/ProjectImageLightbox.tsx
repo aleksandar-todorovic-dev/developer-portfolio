@@ -99,7 +99,7 @@ export function ProjectImageLightbox({
         <header className="flex items-start justify-between gap-6 border-b border-[#2B2340] px-5 py-4 sm:px-6">
           <div>
             <p className="text-xs font-medium uppercase tracking-[0.18em] text-[#8B849A]">
-              Full visual evidence
+              Full-size screenshot
             </p>
 
             <h2

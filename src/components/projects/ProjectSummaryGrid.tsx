@@ -57,7 +57,7 @@ export function ProjectSummaryGrid({
           </div>
 
           <h2 className="mt-5 text-xl font-semibold text-[#F5F2FF]">
-            What the scope accepts
+            What this choice leaves out
           </h2>
 
           <p className="mt-4 leading-7 text-[#A9A1BA]">{tradeoff}</p>

@@ -16,15 +16,14 @@ export function HomePage() {
           </p>
 
           <h1 className="max-w-3xl text-4xl font-semibold leading-tight tracking-tight sm:text-5xl lg:text-6xl">
-            I build responsive web applications and product interfaces around
-            real user flows, practical engineering decisions, and clearly scoped
-            delivery.
+            I build responsive web applications and product interfaces with
+            clear user flows and practical engineering decisions behind them.
           </h1>
 
           <p className="mt-6 max-w-2xl text-lg leading-8 text-[#A9A1BA]">
-            My strongest current project evidence is in React, TypeScript,
-            JavaScript and Firebase, demonstrated through Firebase engineering,
-            product-focused MVP work, and typed interactive interfaces.
+            My strongest work so far is in React, TypeScript, JavaScript and
+            Firebase, across backend-connected applications, product-focused
+            MVPs and typed interactive interfaces.
           </p>
         </div>
 
@@ -33,7 +32,7 @@ export function HomePage() {
 
       <section className="mt-24">
         <p className="text-sm font-medium uppercase tracking-[0.3em] text-[#C4B5FD]">
-          Three projects, three proofs
+          Three projects, three strengths
         </p>
 
         <h2 className="mt-4 max-w-3xl text-3xl font-semibold tracking-tight sm:text-4xl">

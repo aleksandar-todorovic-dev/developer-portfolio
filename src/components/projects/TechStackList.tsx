@@ -18,7 +18,7 @@ export function TechStackList({ technologies }: TechStackListProps) {
             id="technology-heading"
             className="mt-3 text-xl font-semibold text-[#F5F2FF]"
           >
-            Technology used
+            Technologies used
           </h2>
         </div>
 

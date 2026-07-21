@@ -4,17 +4,17 @@ export const capabilityProofs: CapabilityProof[] = [
   {
     title: "Product thinking",
     description:
-      "Translating real training rules into a clear product flow with controlled flexibility, honest partial completion, and deliberate MVP scope.",
+      "Turning real training rules into a clear product flow with flexible scheduling, honest partial completion and a focused first version.",
     projectSlugs: ["training-app"],
   },
   {
     title: "Firebase engineering",
     description:
-      "Building authentication, Firestore data models, Cloud Functions, security boundaries, aggregate maintenance, and deletion lifecycles.",
+      "Building authentication, Firestore data models, Cloud Functions, access boundaries, aggregate maintenance, and deletion lifecycles.",
     projectSlugs: ["liferecompiled"],
   },
   {
-    title: "TypeScript architecture",
+    title: "TypeScript in React",
     description:
       "Using typed props, Context contracts, generic hooks, reusable helpers, events, refs, and explicit board data models.",
     projectSlugs: ["taskflow"],

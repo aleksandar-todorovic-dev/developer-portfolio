@@ -59,19 +59,18 @@ export function ProjectVisualEvidence({
     >
       <div className="border-b border-[#2B2340] pb-8">
         <p className="text-xs font-medium uppercase tracking-[0.22em] text-[#8B849A]">
-          Visual evidence
+          Interface screenshots
         </p>
 
         <h2
           id="visual-evidence-heading"
           className="mt-3 text-3xl font-semibold tracking-[-0.02em] text-[#F5F2FF]"
         >
-          Product surfaces
+          Real project screens
         </h2>
 
         <p className="mt-4 max-w-xl leading-7 text-[#A9A1BA]">
-          Inspect the real interface states selected to support the project
-          proof.
+          Explore the main interfaces and product states.
         </p>
       </div>
 
@@ -112,7 +111,7 @@ export function ProjectVisualEvidence({
 
               <div className="mt-9 border-y border-[#2B2340]">
                 <p className="py-4 text-xs font-medium uppercase tracking-[0.18em] text-[#8B849A]">
-                  Evidence set
+                  Screenshot list
                 </p>
 
                 <ol className="divide-y divide-[#2B2340] border-t border-[#2B2340]">

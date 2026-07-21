@@ -11,7 +11,7 @@ export function ProjectProofPanel({ projects }: ProjectProofPanelProps) {
     <aside className="rounded-2xl border border-[#2B2340] bg-[#11101A] p-5">
       <div className="flex items-center justify-between gap-4">
         <p className="text-xs font-medium uppercase tracking-[0.2em] text-[#A9A1BA]">
-          Current proof stack
+          Selected projects
         </p>
 
         <span className="text-xs text-[#C4B5FD]">
