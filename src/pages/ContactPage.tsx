@@ -1,6 +1,6 @@
 import { Link } from "react-router";
 
-import { SectionHeader } from "../components/ui";
+import { NewTabNotice, SectionHeader } from "../components/ui";
 
 type AvailabilitySignal = {
   label: string;
@@ -284,8 +284,14 @@ export function ContactPage() {
                     aria-hidden="true"
                     className="text-[#8B849A] transition group-hover:translate-x-1 group-hover:text-[#C4B5FD]"
                   >
-                    ↗
+                    {item.kind === "external"
+                      ? "↗"
+                      : item.kind === "download"
+                        ? "↓"
+                        : "→"}
                   </span>
+
+                  {item.kind === "external" ? <NewTabNotice /> : null}
                 </a>
               )}
             </li>

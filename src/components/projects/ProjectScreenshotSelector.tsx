@@ -2,12 +2,17 @@ import { useRef, useState } from "react";
 import type { KeyboardEvent } from "react";
 
 import type { ProjectScreenshot } from "../../types/project";
+import { cn } from "../../utils/cn";
+
+type ProjectScreenshotSelectorVariant = "grid" | "rail";
 
 type ProjectScreenshotSelectorProps = {
   screenshots: ProjectScreenshot[];
   activeIndex: number;
   panelId: string;
   tabIdPrefix: string;
+  variant?: ProjectScreenshotSelectorVariant;
+  className?: string;
   onSelect: (index: number) => void;
 };
 
@@ -16,11 +21,15 @@ export function ProjectScreenshotSelector({
   activeIndex,
   panelId,
   tabIdPrefix,
+  variant = "grid",
+  className = "",
   onSelect,
 }: ProjectScreenshotSelectorProps) {
   const [focusedIndex, setFocusedIndex] = useState(activeIndex);
 
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
+
+  const isRail = variant === "rail";
 
   function focusTab(index: number) {
     setFocusedIndex(index);
@@ -35,10 +44,12 @@ export function ProjectScreenshotSelector({
 
     switch (event.key) {
       case "ArrowRight":
+      case "ArrowDown":
         nextIndex = (index + 1) % screenshots.length;
         break;
 
       case "ArrowLeft":
+      case "ArrowUp":
         nextIndex = (index - 1 + screenshots.length) % screenshots.length;
         break;
 
@@ -62,7 +73,13 @@ export function ProjectScreenshotSelector({
     <div
       role="tablist"
       aria-label="Select project screenshot"
-      className="mt-6 grid border-y border-[#2B2340] sm:grid-cols-2 xl:grid-cols-3"
+      aria-orientation={isRail ? "vertical" : "horizontal"}
+      className={cn(
+        isRail
+          ? "border-y border-[#2B2340]"
+          : "grid border-y border-[#2B2340] sm:grid-cols-2 xl:grid-cols-3",
+        className,
+      )}
     >
       {screenshots.map((screenshot, index) => {
         const isActive = index === activeIndex;
@@ -86,7 +103,11 @@ export function ProjectScreenshotSelector({
               setFocusedIndex(index);
               onSelect(index);
             }}
-            className={`grid grid-cols-[40px_minmax(0,1fr)] gap-3 border-b border-[#2B2340] px-4 py-4 text-left transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#8B5CF6] sm:border-r sm:even:border-r-0 xl:even:border-r xl:nth-[3n]:border-r-0 ${
+            className={`${
+              isRail
+                ? "grid w-full grid-cols-[40px_minmax(0,1fr)] gap-3 border-b border-[#2B2340] px-4 py-4 text-left last:border-b-0"
+                : "grid grid-cols-[40px_minmax(0,1fr)] gap-3 border-b border-[#2B2340] px-4 py-4 text-left sm:border-r sm:even:border-r-0 xl:even:border-r xl:nth-[3n]:border-r-0"
+            } transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#8B5CF6] ${
               isActive
                 ? "bg-[#181423] text-[#F5F2FF]"
                 : "text-[#A9A1BA] hover:bg-[#11101A] hover:text-[#D8D2E8]"

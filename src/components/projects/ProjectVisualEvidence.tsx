@@ -1,6 +1,8 @@
 import { useCallback, useId, useState } from "react";
 
 import type { ProjectScreenshot } from "../../types/project";
+import { cn } from "../../utils/cn";
+import { NewTabNotice } from "../ui";
 import { ProjectImageLightbox } from "./ProjectImageLightbox";
 import { ProjectScreenshotSelector } from "./ProjectScreenshotSelector";
 
@@ -81,15 +83,19 @@ export function ProjectVisualEvidence({
         id={viewerId}
         role="tabpanel"
         aria-labelledby={activeTabId}
-        className="mt-8"
+        className={cn(
+          "mt-8",
+          isMobileScreenshot &&
+            "overflow-hidden border border-[#2B2340] bg-[#11101A] lg:grid lg:grid-cols-[minmax(340px,420px)_minmax(0,1fr)] lg:grid-rows-[auto_auto_1fr_auto]",
+        )}
       >
         {isMobileScreenshot ? (
-          <figure className="overflow-hidden border border-[#2B2340] bg-[#11101A] lg:grid lg:grid-cols-[minmax(340px,420px)_minmax(0,1fr)]">
+          <>
             <button
               type="button"
               aria-label={`Open full image: ${activeScreenshot.label}`}
               onClick={() => openScreenshot(activeScreenshot)}
-              className="flex min-h-150 w-full items-center justify-center bg-[#0D0B14] p-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#8B5CF6] lg:p-8"
+              className="flex min-h-150 w-full items-center justify-center bg-[#0D0B14] p-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#8B5CF6] lg:col-start-1 lg:row-start-1 lg:row-span-4 lg:h-full lg:border-r lg:border-[#2B2340] lg:p-8"
             >
               <img
                 src={activeScreenshot.src}
@@ -98,16 +104,14 @@ export function ProjectVisualEvidence({
               />
             </button>
 
-            <figcaption className="flex flex-col border-t border-[#2B2340] p-7 lg:border-l lg:border-t-0 lg:p-9">
-              <div>
-                <p className="font-mono text-sm text-[#5F5870]">
-                  {currentNumber} / {totalNumber}
-                </p>
+            <figcaption className="border-t border-[#2B2340] p-7 lg:col-start-2 lg:row-start-1 lg:border-t-0 lg:p-9 lg:pb-7">
+              <p className="font-mono text-sm text-[#5F5870]">
+                {currentNumber} / {totalNumber}
+              </p>
 
-                <p className="mt-5 text-xs font-medium uppercase tracking-[0.2em] text-[#C4B5FD]">
-                  Mobile interface
-                </p>
-              </div>
+              <p className="mt-5 text-xs font-medium uppercase tracking-[0.2em] text-[#C4B5FD]">
+                Mobile interface
+              </p>
 
               <h3 className="mt-3 text-2xl font-semibold text-[#F5F2FF]">
                 {activeScreenshot.label}
@@ -116,17 +120,12 @@ export function ProjectVisualEvidence({
               <p className="mt-6 max-w-xl leading-7 text-[#A9A1BA]">
                 {activeScreenshot.caption}
               </p>
-
-              <button
-                type="button"
-                onClick={() => openScreenshot(activeScreenshot)}
-                className="mt-9 inline-flex w-fit items-center gap-3 border-b border-[#4C4161] pb-2 text-sm font-medium text-[#D8D2E8] transition hover:border-[#8B5CF6] hover:text-[#C4B5FD] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8B5CF6]"
-              >
-                Open full image
-                <span aria-hidden="true">↗</span>
-              </button>
             </figcaption>
-          </figure>
+
+            <p className="border-t border-[#2B2340] px-7 pb-4 pt-6 text-xs font-medium uppercase tracking-[0.2em] text-[#8B849A] lg:col-start-2 lg:row-start-2 lg:px-9">
+              Screenshot list
+            </p>
+          </>
         ) : (
           <figure className="overflow-hidden border border-[#2B2340] bg-[#11101A]">
             <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[#2B2340] px-5 py-4 sm:px-6">
@@ -146,7 +145,7 @@ export function ProjectVisualEvidence({
                 className="inline-flex items-center gap-2 text-sm font-medium text-[#C4B5FD] transition hover:text-[#F5F2FF] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8B5CF6]"
               >
                 Open full image
-                <span aria-hidden="true">↗</span>
+                <NewTabNotice className="lg:hidden" />
               </button>
             </div>
 
@@ -174,15 +173,33 @@ export function ProjectVisualEvidence({
             </figcaption>
           </figure>
         )}
-      </div>
 
-      <ProjectScreenshotSelector
-        screenshots={screenshots}
-        activeIndex={activeIndex}
-        panelId={viewerId}
-        tabIdPrefix={tabIdPrefix}
-        onSelect={setActiveIndex}
-      />
+        <ProjectScreenshotSelector
+          screenshots={screenshots}
+          activeIndex={activeIndex}
+          panelId={viewerId}
+          tabIdPrefix={tabIdPrefix}
+          variant={isMobileScreenshot ? "rail" : "grid"}
+          className={
+            isMobileScreenshot
+              ? "lg:col-start-2 lg:row-start-3 lg:self-start"
+              : "mt-6"
+          }
+          onSelect={setActiveIndex}
+        />
+
+        {isMobileScreenshot ? (
+          <div className="border-t border-[#2B2340] px-7 py-6 lg:col-start-2 lg:row-start-4 lg:px-9">
+            <button
+              type="button"
+              onClick={() => openScreenshot(activeScreenshot)}
+              className="inline-flex w-fit items-center border-b border-[#4C4161] pb-2 text-sm font-medium text-[#D8D2E8] transition hover:border-[#8B5CF6] hover:text-[#C4B5FD] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8B5CF6]"
+            >
+              Open full image
+            </button>
+          </div>
+        ) : null}
+      </div>
 
       <p className="sr-only" aria-live="polite" aria-atomic="true">
         Showing {activeScreenshot.label}, screenshot {activeIndex + 1} of{" "}

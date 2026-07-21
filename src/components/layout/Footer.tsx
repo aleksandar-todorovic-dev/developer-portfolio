@@ -1,3 +1,5 @@
+import { NewTabNotice } from "../ui";
+
 export function Footer() {
   return (
     <footer className="border-t border-[#2B2340]/70">
@@ -12,6 +14,7 @@ export function Footer() {
             className="transition hover:text-[#F5F2FF] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8B5CF6] focus-visible:ring-offset-2 focus-visible:ring-offset-[#07060B]"
           >
             GitHub
+            <NewTabNotice />
           </a>
 
           <a
@@ -21,6 +24,7 @@ export function Footer() {
             className="transition hover:text-[#F5F2FF] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8B5CF6] focus-visible:ring-offset-2 focus-visible:ring-offset-[#07060B]"
           >
             LinkedIn
+            <NewTabNotice />
           </a>
         </div>
       </div>
