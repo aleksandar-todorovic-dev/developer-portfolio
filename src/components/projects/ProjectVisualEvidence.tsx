@@ -2,6 +2,7 @@ import { useCallback, useId, useState } from "react";
 
 import type { ProjectScreenshot } from "../../types/project";
 import { ProjectImageLightbox } from "./ProjectImageLightbox";
+import { ProjectScreenshotSelector } from "./ProjectScreenshotSelector";
 
 type ProjectVisualEvidenceProps = {
   screenshots: ProjectScreenshot[];
@@ -11,10 +12,12 @@ export function ProjectVisualEvidence({
   screenshots,
 }: ProjectVisualEvidenceProps) {
   const [activeIndex, setActiveIndex] = useState(0);
+
   const [lightboxScreenshot, setLightboxScreenshot] =
     useState<ProjectScreenshot | null>(null);
 
   const viewerId = useId();
+  const tabIdPrefix = useId();
 
   const closeLightbox = useCallback(() => {
     setLightboxScreenshot(null);
@@ -28,8 +31,10 @@ export function ProjectVisualEvidence({
 
       if (imageWindow) {
         imageWindow.opener = null;
+        return;
       }
 
+      window.location.assign(screenshot.src);
       return;
     }
 
@@ -48,9 +53,7 @@ export function ProjectVisualEvidence({
   const currentNumber = String(activeIndex + 1).padStart(2, "0");
   const totalNumber = String(screenshots.length).padStart(2, "0");
 
-  const hasMixedFormats = screenshots.some(
-    (screenshot) => screenshot.format !== initialScreenshot.format,
-  );
+  const activeTabId = `${tabIdPrefix}-${activeIndex}`;
 
   return (
     <section
@@ -74,7 +77,12 @@ export function ProjectVisualEvidence({
         </p>
       </div>
 
-      <div id={viewerId} aria-live="polite" className="mt-8">
+      <div
+        id={viewerId}
+        role="tabpanel"
+        aria-labelledby={activeTabId}
+        className="mt-8"
+      >
         {isMobileScreenshot ? (
           <figure className="overflow-hidden border border-[#2B2340] bg-[#11101A] lg:grid lg:grid-cols-[minmax(340px,420px)_minmax(0,1fr)]">
             <button
@@ -108,57 +116,6 @@ export function ProjectVisualEvidence({
               <p className="mt-6 max-w-xl leading-7 text-[#A9A1BA]">
                 {activeScreenshot.caption}
               </p>
-
-              <div className="mt-9 border-y border-[#2B2340]">
-                <p className="py-4 text-xs font-medium uppercase tracking-[0.18em] text-[#8B849A]">
-                  Screenshot list
-                </p>
-
-                <ol className="divide-y divide-[#2B2340] border-t border-[#2B2340]">
-                  {screenshots.map((screenshot, index) => {
-                    const isActive = index === activeIndex;
-                    const number = String(index + 1).padStart(2, "0");
-
-                    return (
-                      <li key={screenshot.src}>
-                        <button
-                          type="button"
-                          aria-pressed={isActive}
-                          aria-controls={viewerId}
-                          onClick={() => setActiveIndex(index)}
-                          className={`grid w-full items-center gap-3 px-3 py-4 text-left transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#8B5CF6] ${
-                            hasMixedFormats
-                              ? "grid-cols-[40px_minmax(0,1fr)_auto]"
-                              : "grid-cols-[40px_minmax(0,1fr)]"
-                          } ${
-                            isActive
-                              ? "bg-[#181423] text-[#F5F2FF]"
-                              : "text-[#A9A1BA] hover:bg-[#0D0B14] hover:text-[#D8D2E8]"
-                          }`}
-                        >
-                          <span
-                            className={`font-mono text-sm ${
-                              isActive ? "text-[#C4B5FD]" : "text-[#5F5870]"
-                            }`}
-                          >
-                            {number}
-                          </span>
-
-                          <span className="font-medium">
-                            {screenshot.label}
-                          </span>
-
-                          {hasMixedFormats && (
-                            <span className="text-[0.65rem] uppercase tracking-[0.14em] text-[#6F687E]">
-                              {screenshot.format}
-                            </span>
-                          )}
-                        </button>
-                      </li>
-                    );
-                  })}
-                </ol>
-              </div>
 
               <button
                 type="button"
@@ -219,56 +176,18 @@ export function ProjectVisualEvidence({
         )}
       </div>
 
-      {!isMobileScreenshot && (
-        <nav
-          aria-label="Select project screenshot"
-          className="mt-6 border-y border-[#2B2340]"
-        >
-          <ol className="grid sm:grid-cols-2 xl:grid-cols-3">
-            {screenshots.map((screenshot, index) => {
-              const isActive = index === activeIndex;
-              const number = String(index + 1).padStart(2, "0");
+      <ProjectScreenshotSelector
+        screenshots={screenshots}
+        activeIndex={activeIndex}
+        panelId={viewerId}
+        tabIdPrefix={tabIdPrefix}
+        onSelect={setActiveIndex}
+      />
 
-              return (
-                <li
-                  key={screenshot.src}
-                  className="border-b border-[#2B2340] last:border-b-0 sm:border-r sm:even:border-r-0 xl:even:border-r xl:nth-[3n]:border-r-0"
-                >
-                  <button
-                    type="button"
-                    aria-pressed={isActive}
-                    aria-controls={viewerId}
-                    onClick={() => setActiveIndex(index)}
-                    className={`grid w-full grid-cols-[40px_minmax(0,1fr)] gap-3 px-4 py-4 text-left transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#8B5CF6] ${
-                      isActive
-                        ? "bg-[#181423] text-[#F5F2FF]"
-                        : "text-[#A9A1BA] hover:bg-[#11101A] hover:text-[#D8D2E8]"
-                    }`}
-                  >
-                    <span
-                      className={`font-mono text-sm ${
-                        isActive ? "text-[#C4B5FD]" : "text-[#5F5870]"
-                      }`}
-                    >
-                      {number}
-                    </span>
-
-                    <span>
-                      <span className="block font-medium">
-                        {screenshot.label}
-                      </span>
-
-                      <span className="mt-1 block text-xs uppercase tracking-[0.14em] text-[#6F687E]">
-                        {screenshot.format}
-                      </span>
-                    </span>
-                  </button>
-                </li>
-              );
-            })}
-          </ol>
-        </nav>
-      )}
+      <p className="sr-only" aria-live="polite" aria-atomic="true">
+        Showing {activeScreenshot.label}, screenshot {activeIndex + 1} of{" "}
+        {screenshots.length}.
+      </p>
 
       <ProjectImageLightbox
         screenshot={lightboxScreenshot}
