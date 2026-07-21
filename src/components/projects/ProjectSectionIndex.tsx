@@ -17,7 +17,7 @@ export function ProjectSectionIndex({ sections }: ProjectSectionIndexProps) {
           </p>
 
           <h2 className="mt-3 text-xl font-semibold text-[#F5F2FF]">
-            Inside this project
+            Case study sections
           </h2>
         </div>
 

@@ -36,7 +36,7 @@ export const projects: Project[] = [
     links: [
       {
         type: "live",
-        label: "Live project",
+        label: "Open LifeRecompiled",
         href: "https://liferecompiled.com",
       },
       {
@@ -320,7 +320,7 @@ export const projects: Project[] = [
     links: [
       {
         type: "live",
-        label: "Live project",
+        label: "Open Training App",
         href: "https://training-app-mvp.web.app",
       },
       {
@@ -569,7 +569,7 @@ export const projects: Project[] = [
     links: [
       {
         type: "live",
-        label: "Live project",
+        label: "Open TaskFlow",
         href: "https://taskflow-kanban-kappa.vercel.app",
       },
       {

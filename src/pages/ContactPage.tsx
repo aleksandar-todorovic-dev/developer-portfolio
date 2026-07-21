@@ -177,7 +177,7 @@ export function ContactPage() {
         <SectionHeader
           eyebrow="Where I can help"
           title="I work best when the goal is clear and the result can be tested."
-          description="I am most useful when the goal is clear, the work can stay focused and there is a practical way to test the result."
+          description="That can mean building a frontend feature, improving an existing codebase or tracing a software issue through to a working result."
         />
 
         <div className="mt-10 border-y border-[#2B2340]">
