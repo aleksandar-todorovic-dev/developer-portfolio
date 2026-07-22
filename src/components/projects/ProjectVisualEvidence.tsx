@@ -80,9 +80,6 @@ export function ProjectVisualEvidence({
       </div>
 
       <div
-        id={viewerId}
-        role="tabpanel"
-        aria-labelledby={activeTabId}
         className={cn(
           "mt-8",
           isMobileScreenshot &&
@@ -91,20 +88,31 @@ export function ProjectVisualEvidence({
       >
         {isMobileScreenshot ? (
           <>
-            <button
-              type="button"
-              aria-label={`Open full image: ${activeScreenshot.label}`}
-              onClick={() => openScreenshot(activeScreenshot)}
-              className="flex min-h-150 w-full items-center justify-center bg-[#0D0B14] p-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#8B5CF6] lg:col-start-1 lg:row-start-1 lg:row-span-4 lg:h-full lg:border-r lg:border-[#2B2340] lg:p-8"
+            <div
+              id={viewerId}
+              role="tabpanel"
+              aria-labelledby={activeTabId}
+              className="lg:col-start-1 lg:row-start-1 lg:row-span-4 lg:h-full lg:border-r lg:border-[#2B2340]"
             >
-              <img
-                src={activeScreenshot.src}
-                alt={activeScreenshot.alt}
-                className="max-h-170 w-auto max-w-full object-contain"
-              />
-            </button>
+              <button
+                type="button"
+                onClick={() => openScreenshot(activeScreenshot)}
+                className="flex min-h-150 w-full items-center justify-center bg-[#0D0B14] p-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#8B5CF6] lg:h-full lg:p-8"
+              >
+                <span className="sr-only">
+                  Open full image: {activeScreenshot.label}.{" "}
+                  {activeScreenshot.alt}
+                </span>
 
-            <figcaption className="border-t border-[#2B2340] p-7 lg:col-start-2 lg:row-start-1 lg:border-t-0 lg:p-9 lg:pb-7">
+                <img
+                  src={activeScreenshot.src}
+                  alt=""
+                  className="max-h-170 w-auto max-w-full object-contain"
+                />
+              </button>
+            </div>
+
+            <div className="border-t border-[#2B2340] p-7 lg:col-start-2 lg:row-start-1 lg:border-t-0 lg:p-9 lg:pb-7">
               <p className="font-mono text-sm text-[#5F5870]">
                 {currentNumber} / {totalNumber}
               </p>
@@ -120,14 +128,14 @@ export function ProjectVisualEvidence({
               <p className="mt-6 max-w-xl leading-7 text-[#A9A1BA]">
                 {activeScreenshot.caption}
               </p>
-            </figcaption>
+            </div>
 
             <p className="border-t border-[#2B2340] px-7 pb-4 pt-6 text-xs font-medium uppercase tracking-[0.2em] text-[#8B849A] lg:col-start-2 lg:row-start-2 lg:px-9">
               Screenshot list
             </p>
           </>
         ) : (
-          <figure className="overflow-hidden border border-[#2B2340] bg-[#11101A]">
+          <div className="overflow-hidden border border-[#2B2340] bg-[#11101A]">
             <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[#2B2340] px-5 py-4 sm:px-6">
               <div>
                 <p className="text-xs font-medium uppercase tracking-[0.18em] text-[#8B849A]">
@@ -149,20 +157,28 @@ export function ProjectVisualEvidence({
               </button>
             </div>
 
-            <button
-              type="button"
-              aria-label={`Open full image: ${activeScreenshot.label}`}
-              onClick={() => openScreenshot(activeScreenshot)}
-              className="block w-full bg-[#0D0B14] p-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#8B5CF6] sm:p-4"
-            >
-              <img
-                src={activeScreenshot.src}
-                alt={activeScreenshot.alt}
-                className="block h-auto w-full object-contain"
-              />
-            </button>
+            <div id={viewerId} role="tabpanel" aria-labelledby={activeTabId}>
+              <button
+                type="button"
+                onClick={() => openScreenshot(activeScreenshot)}
+                className="block w-full bg-[#0D0B14] p-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#8B5CF6] sm:p-4"
+              >
+                <span className="sr-only">
+                  Open full image: {activeScreenshot.label}.{" "}
+                  {activeScreenshot.alt}
+                </span>
 
-            <figcaption className="grid gap-3 border-t border-[#2B2340] px-5 py-5 sm:grid-cols-[48px_minmax(0,1fr)] sm:px-6">
+                <NewTabNotice className="lg:hidden" />
+
+                <img
+                  src={activeScreenshot.src}
+                  alt=""
+                  className="block h-auto w-full object-contain"
+                />
+              </button>
+            </div>
+
+            <div className="grid gap-3 border-t border-[#2B2340] px-5 py-5 sm:grid-cols-[48px_minmax(0,1fr)] sm:px-6">
               <span className="font-mono text-sm text-[#5F5870]">
                 {currentNumber}
               </span>
@@ -170,8 +186,8 @@ export function ProjectVisualEvidence({
               <p className="max-w-4xl leading-7 text-[#A9A1BA]">
                 {activeScreenshot.caption}
               </p>
-            </figcaption>
-          </figure>
+            </div>
+          </div>
         )}
 
         <ProjectScreenshotSelector

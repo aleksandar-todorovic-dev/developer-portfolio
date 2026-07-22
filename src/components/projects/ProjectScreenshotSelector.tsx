@@ -44,12 +44,34 @@ export function ProjectScreenshotSelector({
 
     switch (event.key) {
       case "ArrowRight":
-      case "ArrowDown":
+        if (isRail) {
+          return;
+        }
+
         nextIndex = (index + 1) % screenshots.length;
         break;
 
       case "ArrowLeft":
+        if (isRail) {
+          return;
+        }
+
+        nextIndex = (index - 1 + screenshots.length) % screenshots.length;
+        break;
+
+      case "ArrowDown":
+        if (!isRail) {
+          return;
+        }
+
+        nextIndex = (index + 1) % screenshots.length;
+        break;
+
       case "ArrowUp":
+        if (!isRail) {
+          return;
+        }
+
         nextIndex = (index - 1 + screenshots.length) % screenshots.length;
         break;
 

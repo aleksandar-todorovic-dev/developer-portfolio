@@ -45,6 +45,7 @@ export function ContactVerificationSection() {
                   <span className="leading-7 text-[#A9A1BA]">
                     {item.description}
                   </span>
+                  {item.external ? <NewTabNotice /> : null}
                 </a>
               ) : (
                 <Link
@@ -58,7 +59,6 @@ export function ContactVerificationSection() {
                   <span className="leading-7 text-[#A9A1BA]">
                     {item.description}
                   </span>
-                  {item.external ? <NewTabNotice /> : null}
                 </Link>
               )}
             </li>
