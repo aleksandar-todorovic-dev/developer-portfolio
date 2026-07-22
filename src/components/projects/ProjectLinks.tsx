@@ -1,4 +1,5 @@
 import type { ProjectLink } from "../../types/project";
+import { NewTabNotice } from "../ui";
 
 type ProjectLinksProps = {
   links: ProjectLink[];
@@ -56,7 +57,7 @@ export function ProjectLinks({ links }: ProjectLinksProps) {
                 ↗
               </span>
 
-              <span className="sr-only">Opens in a new tab</span>
+              <NewTabNotice />
             </a>
           ))}
         </div>

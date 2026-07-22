@@ -1,6 +1,7 @@
 import { Link } from "react-router";
 
 import { verificationLinks } from "../../data/verificationLinks";
+import { NewTabNotice } from "../ui";
 
 export function ContactVerificationSection() {
   return (
@@ -44,6 +45,7 @@ export function ContactVerificationSection() {
                   <span className="leading-7 text-[#A9A1BA]">
                     {item.description}
                   </span>
+                  {item.external ? <NewTabNotice /> : null}
                 </a>
               ) : (
                 <Link
