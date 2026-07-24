@@ -28,7 +28,11 @@ export function ProjectDetailPage() {
           Project not found
         </p>
 
-        <h1 className="mt-4 text-4xl font-semibold tracking-tight sm:text-5xl">
+        <h1
+          id="page-heading"
+          tabIndex={-1}
+          className="mt-4 text-4xl font-semibold tracking-tight sm:text-5xl"
+        >
           This project does not exist.
         </h1>
 

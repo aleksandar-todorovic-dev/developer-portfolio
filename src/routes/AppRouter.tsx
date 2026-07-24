@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router";
+import { RouteBehavior } from "./RouteBehavior";
 
 import { PageShell } from "../components/layout/PageShell";
 import { AboutPage } from "../pages/AboutPage";
@@ -11,6 +12,7 @@ import { ProjectsPage } from "../pages/ProjectsPage";
 export function AppRouter() {
   return (
     <BrowserRouter>
+      <RouteBehavior />
       <PageShell>
         <Routes>
           <Route path="/" element={<HomePage />} />

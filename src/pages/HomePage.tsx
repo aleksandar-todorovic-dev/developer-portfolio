@@ -15,7 +15,11 @@ export function HomePage() {
             Frontend Developer
           </p>
 
-          <h1 className="max-w-3xl text-4xl font-semibold leading-tight tracking-tight sm:text-5xl lg:text-6xl">
+          <h1
+            id="page-heading"
+            tabIndex={-1}
+            className="max-w-3xl text-4xl font-semibold leading-tight tracking-tight sm:text-5xl lg:text-6xl"
+          >
             I build responsive web applications and product interfaces with
             clear user flows and practical engineering decisions behind them.
           </h1>

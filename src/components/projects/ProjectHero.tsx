@@ -31,7 +31,11 @@ export function ProjectHero({
             Case study · {proofLabel}
           </p>
 
-          <h1 className="mt-5 max-w-4xl text-5xl font-semibold tracking-[-0.04em] text-[#F5F2FF] sm:text-6xl lg:text-7xl">
+          <h1
+            id="page-heading"
+            tabIndex={-1}
+            className="mt-5 max-w-4xl text-5xl font-semibold tracking-[-0.04em] text-[#F5F2FF] sm:text-6xl lg:text-7xl"
+          >
             {title}
           </h1>
 

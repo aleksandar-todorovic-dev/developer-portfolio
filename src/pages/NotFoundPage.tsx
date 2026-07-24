@@ -38,7 +38,11 @@ export function NotFoundPage() {
             404 / Route not found
           </p>
 
-          <h1 className="mt-5 max-w-4xl text-4xl font-semibold leading-tight tracking-[-0.03em] text-[#F5F2FF] sm:text-5xl lg:text-6xl">
+          <h1
+            id="page-heading"
+            tabIndex={-1}
+            className="mt-5 max-w-4xl text-4xl font-semibold leading-tight tracking-[-0.03em] text-[#F5F2FF] sm:text-5xl lg:text-6xl"
+          >
             This page could not be found.
           </h1>
 
