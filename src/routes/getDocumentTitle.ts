@@ -2,18 +2,27 @@ import { getProjectBySlug } from "../utils/getProjectBySlug";
 
 const SITE_NAME = "Aleksandar Todorovic";
 
-function normalizePathname(pathname: string): string {
-  if (pathname === "/") {
+function decodePathname(pathname: string): string {
+  try {
+    return pathname
+      .split("/")
+      .map((segment) =>
+        decodeURIComponent(segment).replace(/\//g, "%2F"),
+      )
+      .join("/");
+  } catch {
     return pathname;
   }
+}
 
-  return pathname.replace(/\/+$/, "");
+function normalizePathname(pathname: string): string {
+  return pathname.replace(/\/+$/, "") || "/";
 }
 
 export function getDocumentTitle(pathname: string): string {
-  const normalizedPathname = normalizePathname(pathname);
+  const normalizedPathname = normalizePathname(decodePathname(pathname));
 
-  switch (normalizedPathname) {
+  switch (normalizedPathname.toLowerCase()) {
     case "/":
       return `${SITE_NAME} — Frontend Developer`;
 
@@ -27,10 +36,13 @@ export function getDocumentTitle(pathname: string): string {
       return `Contact | ${SITE_NAME}`;
   }
 
-  const projectRouteMatch = normalizedPathname.match(/^\/projects\/([^/]+)$/);
+  const projectRouteMatch = normalizedPathname.match(
+    /^\/projects\/([^/]+)$/i,
+  );
 
   if (projectRouteMatch) {
-    const [, slug] = projectRouteMatch;
+    const [, encodedSlug] = projectRouteMatch;
+    const slug = encodedSlug.replace(/%2F/g, "/");
     const project = getProjectBySlug(slug);
 
     return project

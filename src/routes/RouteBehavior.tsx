@@ -45,29 +45,19 @@ export function RouteBehavior() {
   const location = useLocation();
   const navigationType = useNavigationType();
 
-  const initialLocationKeyRef = useRef(location.key);
-  const hasLeftInitialLocationRef = useRef(false);
-  const hasHandledInitialLocationRef = useRef(false);
-
-  const { pathname, hash, key } = location;
+  const initialLocationRef = useRef(location);
+  const { pathname } = location;
 
   useEffect(() => {
     document.title = getDocumentTitle(pathname);
   }, [pathname]);
 
   useEffect(() => {
-    if (key !== initialLocationKeyRef.current) {
-      hasLeftInitialLocationRef.current = true;
-    }
-
-    const isFirstRenderedLocation =
-      key === initialLocationKeyRef.current &&
-      !hasLeftInitialLocationRef.current &&
-      !hasHandledInitialLocationRef.current;
+    const { hash } = location;
+    const isFirstRenderedLocation = location === initialLocationRef.current;
 
     if (isFirstRenderedLocation) {
       if (!hash) {
-        hasHandledInitialLocationRef.current = true;
         return;
       }
 
@@ -76,7 +66,6 @@ export function RouteBehavior() {
       const alignInitialHashTarget = () => {
         animationFrameId = window.requestAnimationFrame(() => {
           scrollToHashTarget(hash);
-          hasHandledInitialLocationRef.current = true;
         });
       };
 
@@ -122,7 +111,7 @@ export function RouteBehavior() {
     return () => {
       window.cancelAnimationFrame(animationFrameId);
     };
-  }, [hash, key, navigationType, pathname]);
+  }, [location, navigationType]);
 
   return null;
 }
