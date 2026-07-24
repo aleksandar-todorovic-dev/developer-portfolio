@@ -119,7 +119,11 @@ export function ContactPage() {
             Contact / Opportunities
           </p>
 
-          <h1 className="mt-5 max-w-4xl text-4xl font-semibold leading-tight tracking-[-0.03em] text-[#F5F2FF] sm:text-5xl lg:text-6xl">
+          <h1
+            id="page-heading"
+            tabIndex={-1}
+            className="mt-5 max-w-4xl text-4xl font-semibold leading-tight tracking-[-0.03em] text-[#F5F2FF] sm:text-5xl lg:text-6xl"
+          >
             A useful conversation starts with a clear problem.
           </h1>
 

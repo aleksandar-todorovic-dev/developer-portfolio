@@ -8,7 +8,11 @@ export function ProjectsPage() {
         Selected project work
       </p>
 
-      <h1 className="max-w-3xl text-4xl font-semibold tracking-tight sm:text-5xl">
+      <h1
+        id="page-heading"
+        tabIndex={-1}
+        className="max-w-3xl text-4xl font-semibold tracking-tight sm:text-5xl"
+      >
         Each project exists here for a different reason.
       </h1>
 

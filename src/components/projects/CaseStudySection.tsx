@@ -32,6 +32,7 @@ export function CaseStudySection({
   return (
     <section
       id={section.id}
+      tabIndex={-1}
       aria-labelledby={headingId}
       className="scroll-mt-24 border-t border-[#2B2340] py-12 sm:py-14"
     >
