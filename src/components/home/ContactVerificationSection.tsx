@@ -5,65 +5,83 @@ import { NewTabNotice } from "../ui";
 
 export function ContactVerificationSection() {
   return (
-    <section className="mt-24 border-t border-[#2B2340] pt-12">
-      <div className="grid gap-10 lg:grid-cols-[1fr_1.4fr] lg:gap-16">
-        <div>
-          <p className="text-sm font-medium uppercase tracking-[0.16em] text-[#A78BFA]">
-            Contact and project links
-          </p>
+    <section className="full-bleed border-y border-[var(--line)] bg-[var(--ink-2)] py-20 sm:py-28">
+      <div className="content-frame">
+        <div className="grid gap-10 lg:grid-cols-[minmax(0,0.8fr)_minmax(22rem,1.2fr)] lg:gap-16">
+          <div className="lg:sticky lg:top-28 lg:self-start">
+            <p className="signal-label text-[var(--signal)]">
+              07 / Verify + connect
+            </p>
 
-          <h2 className="mt-4 max-w-xl text-3xl font-semibold tracking-tight text-[#F5F2FF] sm:text-4xl">
-            You can review the work directly.
-          </h2>
+            <h2 className="mt-5 font-display text-[clamp(3.4rem,7vw,7.5rem)] font-semibold leading-[0.84] tracking-[-0.07em]">
+              PROOF
+              <span className="block text-[var(--violet)]">IS PUBLIC.</span>
+            </h2>
 
-          <p className="mt-5 max-w-xl leading-7 text-[#A9A1BA]">
-            Review the projects, inspect the code, or contact me about frontend,
-            web, implementation or software-facing work.
-          </p>
-        </div>
+            <p className="mt-6 max-w-lg text-base leading-7 text-[var(--paper-muted)]">
+              Review the projects, inspect the code, or contact me about
+              frontend, web, implementation or software-facing work.
+            </p>
+          </div>
 
-        <ul className="border-y border-[#2B2340]">
-          {verificationLinks.map((item) => (
-            <li
-              key={item.label}
-              className="border-b border-[#2B2340] last:border-b-0"
-            >
-              {item.external ||
-              item.download ||
-              item.href.startsWith("mailto:") ? (
-                <a
-                  href={item.href}
-                  target={item.external ? "_blank" : undefined}
-                  rel={item.external ? "noreferrer" : undefined}
-                  download={item.download}
-                  className="group grid gap-2 py-6 transition sm:grid-cols-[150px_1fr] sm:gap-8"
-                >
-                  <span className="font-medium text-[#F5F2FF] transition group-hover:text-[#C4B5FD]">
-                    {item.label}
+          <ul className="border-t border-[var(--line-strong)]">
+            {verificationLinks.map((item, index) => {
+              const content = (
+                <>
+                  <span className="font-mono text-xs text-[var(--paper-muted)]">
+                    {String(index + 1).padStart(2, "0")}
                   </span>
 
-                  <span className="leading-7 text-[#A9A1BA]">
-                    {item.description}
+                  <span>
+                    <span className="block font-display text-2xl font-semibold tracking-[-0.035em] sm:text-3xl">
+                      {item.label}
+                    </span>
+                    <span className="mt-2 block max-w-2xl text-sm leading-6 text-[var(--paper-muted)]">
+                      {item.description}
+                    </span>
                   </span>
+
+                  <span
+                    aria-hidden="true"
+                    className="text-2xl text-[var(--signal)] transition-transform group-hover:translate-x-2"
+                  >
+                    {item.download ? "↓" : item.external ? "↗" : "→"}
+                  </span>
+
                   {item.external ? <NewTabNotice /> : null}
-                </a>
-              ) : (
-                <Link
-                  to={item.href}
-                  className="group grid gap-2 py-6 transition sm:grid-cols-[150px_1fr] sm:gap-8"
-                >
-                  <span className="font-medium text-[#F5F2FF] transition group-hover:text-[#C4B5FD]">
-                    {item.label}
-                  </span>
+                </>
+              );
 
-                  <span className="leading-7 text-[#A9A1BA]">
-                    {item.description}
-                  </span>
-                </Link>
-              )}
-            </li>
-          ))}
-        </ul>
+              return (
+                <li
+                  key={item.label}
+                  className="border-b border-[var(--line)]"
+                >
+                  {item.external ||
+                  item.download ||
+                  item.href.startsWith("mailto:") ? (
+                    <a
+                      href={item.href}
+                      target={item.external ? "_blank" : undefined}
+                      rel={item.external ? "noreferrer" : undefined}
+                      download={item.download}
+                      className="focus-ring group grid min-h-30 grid-cols-[2rem_minmax(0,1fr)_auto] items-center gap-4 py-6 transition-colors hover:bg-[var(--ink)] sm:px-4"
+                    >
+                      {content}
+                    </a>
+                  ) : (
+                    <Link
+                      to={item.href}
+                      className="focus-ring group grid min-h-30 grid-cols-[2rem_minmax(0,1fr)_auto] items-center gap-4 py-6 transition-colors hover:bg-[var(--ink)] sm:px-4"
+                    >
+                      {content}
+                    </Link>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+        </div>
       </div>
     </section>
   );

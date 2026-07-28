@@ -1,6 +1,8 @@
+import { motion, useReducedMotion } from "motion/react";
 import { Link } from "react-router";
 
 import { NewTabNotice, SectionHeader } from "../components/ui";
+import { cn } from "../utils/cn";
 
 type AvailabilitySignal = {
   label: string;
@@ -20,6 +22,12 @@ type ContactLink = {
   description: string;
   href: string;
   kind: ContactLinkKind;
+};
+
+type ContactDirectoryLinkProps = {
+  item: ContactLink;
+  index: number;
+  surfaceClassName: string;
 };
 
 const availabilitySignals: AvailabilitySignal[] = [
@@ -107,98 +115,252 @@ const usefulContext = [
   "Any timeline, access needs or parts of the system that should remain untouched",
 ];
 
-const contactLinkClassName =
-  "group grid gap-3 py-6 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#8B5CF6] sm:grid-cols-[160px_minmax(0,1fr)_auto] sm:items-center sm:gap-8 sm:px-4";
+const opportunityLayouts = [
+  "lg:col-span-5",
+  "lg:col-span-4 lg:mt-24",
+  "lg:col-span-3 lg:mt-48",
+] as const;
+
+const directoryPanels = [
+  {
+    layout: "lg:col-span-8 lg:row-span-2",
+    surface: "min-h-[24rem] bg-[var(--violet)] sm:min-h-[29rem]",
+    text: "text-[var(--paper)]",
+  },
+  {
+    layout: "lg:col-span-4",
+    surface: "min-h-[15rem] bg-[var(--paper)] lg:min-h-0",
+    text: "text-[var(--ink)]",
+  },
+  {
+    layout: "lg:col-span-4",
+    surface:
+      "min-h-[15rem] border border-[var(--line-strong)] bg-[var(--ink-2)] lg:min-h-0",
+    text: "text-[var(--paper)]",
+  },
+  {
+    layout: "lg:col-span-5",
+    surface:
+      "min-h-[18rem] border border-[var(--line-strong)] bg-[var(--ink)]",
+    text: "text-[var(--paper)]",
+  },
+  {
+    layout: "lg:col-span-7",
+    surface: "min-h-[18rem] bg-[var(--signal)]",
+    text: "text-[var(--ink)]",
+  },
+] as const;
+
+function ContactDirectoryLink({
+  item,
+  index,
+  surfaceClassName,
+}: ContactDirectoryLinkProps) {
+  const content = (
+    <>
+      <div className="flex items-start justify-between gap-6 font-mono text-[0.66rem] uppercase tracking-[0.16em]">
+        <span>
+          {String(index + 1).padStart(2, "0")} / {item.kind}
+        </span>
+        <span
+          aria-hidden="true"
+          className="text-2xl leading-none transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
+        >
+          {item.kind === "external"
+            ? "↗"
+            : item.kind === "download"
+              ? "↓"
+              : "→"}
+        </span>
+      </div>
+
+      <div className="mt-auto pt-12">
+        <span className="font-display block break-words text-[clamp(2.8rem,6vw,6.5rem)] font-semibold leading-[0.84] tracking-[-0.065em]">
+          {item.label}
+        </span>
+        <span className="mt-6 block max-w-xl text-sm leading-7 sm:text-base">
+          {item.description}
+        </span>
+      </div>
+
+      {item.kind === "external" ? <NewTabNotice /> : null}
+    </>
+  );
+
+  const className = cn(
+    "group focus-ring cut-corner flex h-full flex-col overflow-hidden p-6 transition-transform duration-300 hover:-translate-y-1 sm:p-8",
+    surfaceClassName,
+  );
+
+  if (item.kind === "internal") {
+    return (
+      <Link to={item.href} className={className}>
+        {content}
+      </Link>
+    );
+  }
+
+  return (
+    <a
+      href={item.href}
+      target={item.kind === "external" ? "_blank" : undefined}
+      rel={item.kind === "external" ? "noreferrer" : undefined}
+      download={item.kind === "download"}
+      className={className}
+    >
+      {content}
+    </a>
+  );
+}
 
 export function ContactPage() {
+  const prefersReducedMotion = useReducedMotion();
+
   return (
     <>
-      <section className="grid items-start gap-12 lg:grid-cols-[minmax(0,1.2fr)_minmax(300px,0.8fr)] lg:gap-16">
-        <div>
-          <p className="text-sm font-medium uppercase tracking-[0.3em] text-[#C4B5FD]">
-            Contact / Opportunities
-          </p>
+      <section className="full-bleed relative isolate overflow-hidden bg-[var(--paper)] text-[var(--ink)]">
+        <div
+          aria-hidden="true"
+          className="absolute right-0 top-0 -z-10 h-[36%] w-[18%] bg-[var(--signal)] max-sm:w-5"
+        />
+
+        <div className="content-frame py-14 sm:py-20 lg:py-28">
+          <div className="flex items-center justify-between gap-6">
+            <p className="font-mono text-[0.7rem] uppercase tracking-[0.2em] text-[var(--violet-dark)]">
+              Contact / Opportunities
+            </p>
+            <div className="flex items-center gap-3 font-mono text-[0.66rem] uppercase tracking-[0.16em] text-[var(--ink-2)]">
+              <motion.span
+                aria-hidden="true"
+                animate={
+                  prefersReducedMotion
+                    ? undefined
+                    : { scale: [1, 1.5, 1], opacity: [1, 0.55, 1] }
+                }
+                transition={{
+                  duration: 1.8,
+                  repeat: prefersReducedMotion ? 0 : Number.POSITIVE_INFINITY,
+                  ease: "easeInOut",
+                }}
+                className="h-2.5 w-2.5 bg-[var(--signal)]"
+              />
+              Open channel
+            </div>
+          </div>
+
+          <motion.div
+            aria-hidden="true"
+            initial={prefersReducedMotion ? false : { scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ duration: prefersReducedMotion ? 0 : 0.7, ease: [0.2, 0.8, 0.2, 1] }}
+            className="mt-5 h-px origin-left bg-[var(--ink)]"
+          />
 
           <h1
             id="page-heading"
             tabIndex={-1}
-            className="mt-5 max-w-4xl text-4xl font-semibold leading-tight tracking-[-0.03em] text-[#F5F2FF] sm:text-5xl lg:text-6xl"
+            className="font-display mt-9 max-w-[13ch] text-[clamp(4rem,11.5vw,11.5rem)] font-semibold leading-[0.8] tracking-[-0.08em] focus:outline-none"
           >
-            A useful conversation starts with a clear problem.
+            A useful conversation
+            <span className="block text-[var(--violet)] sm:ml-[0.55ch]">
+              starts with
+            </span>
+            <span className="block sm:ml-[1.7ch]">a clear problem.</span>
           </h1>
 
-          <div className="mt-8 max-w-3xl space-y-5 text-lg leading-8 text-[#A9A1BA]">
-            <p>
-              I am open to frontend and web development opportunities, smaller,
-              clearly defined web tasks, and software-facing roles where
-              technical troubleshooting and reliable follow-through matter.
-            </p>
+          <div className="mt-14 grid gap-10 border-t border-[var(--ink)] pt-8 lg:mt-20 lg:grid-cols-[minmax(0,1fr)_minmax(20rem,0.7fr)] lg:gap-16">
+            <div className="max-w-3xl space-y-5 text-base leading-8 text-[var(--ink-2)] sm:text-lg">
+              <p>
+                I am open to frontend and web development opportunities,
+                smaller, clearly defined web tasks, and software-facing roles
+                where technical troubleshooting and reliable follow-through
+                matter.
+              </p>
 
-            <p>
-              My strongest work so far is in React, TypeScript, JavaScript and
-              Firebase. I am also comfortable working in existing frontend
-              codebases, following documented APIs and using related web
-              technologies when the task is clear and I can test the result.
-            </p>
+              <p>
+                My strongest work so far is in React, TypeScript, JavaScript and
+                Firebase. I am also comfortable working in existing frontend
+                codebases, following documented APIs and using related web
+                technologies when the task is clear and I can test the result.
+              </p>
+            </div>
+
+            <a
+              href="mailto:aleksandar.todorovic.rs@gmail.com"
+              style={{ color: "var(--paper)" }}
+              className="focus-ring group flex min-h-32 items-end justify-between gap-8 bg-[var(--ink)] p-5 text-[var(--paper)] transition-colors hover:bg-[var(--violet-dark)] sm:p-6"
+            >
+              <span>
+                <span className="font-mono block text-[0.65rem] uppercase tracking-[0.16em] text-[var(--signal)]">
+                  Direct line
+                </span>
+                <span className="font-display mt-3 block text-3xl font-semibold tracking-[-0.045em]">
+                  Send an email
+                </span>
+              </span>
+              <span
+                aria-hidden="true"
+                className="text-3xl transition-transform group-hover:translate-x-1"
+              >
+                →
+              </span>
+            </a>
           </div>
 
-          <a
-            href="mailto:aleksandar.todorovic.rs@gmail.com"
-            className="mt-9 inline-flex min-h-12 items-center justify-center border border-[#8B5CF6] bg-[#8B5CF6] px-6 text-sm font-semibold text-white transition hover:bg-[#A855F7] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C4B5FD]"
+          <aside
+            aria-label="Availability and work preferences"
+            className="mt-12 lg:mt-16"
           >
-            Send an email
-          </a>
+            <p className="font-mono text-[0.66rem] uppercase tracking-[0.18em] text-[var(--violet-dark)]">
+              Availability context
+            </p>
+
+            <dl className="mt-4 grid border-l border-t border-[var(--ink)] sm:grid-cols-2 lg:grid-cols-4">
+              {availabilitySignals.map((signal) => (
+                <div
+                  key={signal.label}
+                  className="border-b border-r border-[var(--ink)] p-5"
+                >
+                  <dt className="font-mono text-[0.64rem] uppercase tracking-[0.15em] text-[var(--violet-dark)]">
+                    {signal.label}
+                  </dt>
+                  <dd className="mt-3 text-sm leading-6">{signal.value}</dd>
+                </div>
+              ))}
+            </dl>
+          </aside>
         </div>
-
-        <aside
-          aria-label="Availability and work preferences"
-          className="border-y border-[#2B2340] bg-[#0D0B14]"
-        >
-          <p className="border-b border-[#2B2340] px-5 py-4 text-xs font-medium uppercase tracking-[0.2em] text-[#8B849A]">
-            Availability context
-          </p>
-
-          <dl>
-            {availabilitySignals.map((signal) => (
-              <div
-                key={signal.label}
-                className="border-b border-[#2B2340] px-5 py-5 last:border-b-0"
-              >
-                <dt className="text-xs font-medium uppercase tracking-[0.16em] text-[#6F687E]">
-                  {signal.label}
-                </dt>
-
-                <dd className="mt-2 leading-6 text-[#D8D2E8]">
-                  {signal.value}
-                </dd>
-              </div>
-            ))}
-          </dl>
-        </aside>
       </section>
 
-      <section className="mt-24">
+      <section className="mt-24 sm:mt-32">
         <SectionHeader
           eyebrow="Where I can help"
-          title="I work best when the goal is clear and the result can be tested."
-          description="That can mean building a frontend feature, improving an existing codebase or tracing a software issue through to a working result."
+          title="Clear goal in. Testable result out."
+          description="I work best when the goal is clear and the result can be tested. That can mean building a frontend feature, improving an existing codebase or tracing a software issue through to a working result."
         />
 
-        <div className="mt-10 border-y border-[#2B2340]">
+        <div className="mt-14 grid gap-12 lg:grid-cols-12 lg:gap-6">
           {opportunityAreas.map((area, index) => (
             <article
               key={area.label}
-              className="grid gap-5 border-b border-[#2B2340] py-8 last:border-b-0 lg:grid-cols-[150px_minmax(220px,0.8fr)_minmax(0,1.4fr)] lg:gap-10"
+              className={cn(
+                "relative border-t border-[var(--line-strong)] pt-5",
+                opportunityLayouts[index],
+              )}
             >
-              <p className="text-xs font-medium uppercase tracking-[0.16em] text-[#8B849A]">
-                {String(index + 1).padStart(2, "0")} / {area.label}
+              <span
+                aria-hidden="true"
+                className="font-display block text-[clamp(5rem,10vw,9rem)] font-semibold leading-[0.75] tracking-[-0.08em] text-[var(--violet)]"
+              >
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <p className="font-mono mt-8 text-[0.66rem] uppercase tracking-[0.17em] text-[var(--signal)]">
+                {area.label}
               </p>
-
-              <h2 className="text-xl font-semibold leading-7 text-[#F5F2FF]">
+              <h2 className="font-display mt-4 text-[clamp(2rem,3.5vw,3.4rem)] font-semibold leading-[0.96] tracking-[-0.05em] text-[var(--paper)]">
                 {area.title}
               </h2>
-
-              <p className="max-w-3xl leading-7 text-[#A9A1BA]">
+              <p className="mt-5 leading-7 text-[var(--paper-muted)]">
                 {area.description}
               </p>
             </article>
@@ -206,100 +368,66 @@ export function ContactPage() {
         </div>
       </section>
 
-      <section className="mt-24 grid gap-10 border-y border-[#2B2340] py-10 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-16">
-        <div>
-          <p className="text-xs font-medium uppercase tracking-[0.2em] text-[#8B849A]">
-            Useful first message
-          </p>
+      <section className="full-bleed mt-24 bg-[var(--violet-dark)] text-[var(--paper)] sm:mt-32">
+        <div className="content-frame grid gap-12 py-14 sm:py-20 lg:grid-cols-[minmax(16rem,0.65fr)_minmax(0,1.35fr)] lg:gap-16">
+          <div>
+            <p className="font-mono text-[0.68rem] uppercase tracking-[0.2em] text-[var(--signal)]">
+              Useful first message
+            </p>
 
-          <h2 className="mt-3 max-w-xl text-3xl font-semibold tracking-[-0.02em] text-[#F5F2FF] sm:text-4xl">
-            A little context makes the first conversation much more useful.
-          </h2>
+            <h2 className="font-display mt-5 max-w-xl text-[clamp(2.8rem,5vw,5.2rem)] font-semibold leading-[0.92] tracking-[-0.06em]">
+              A little context makes the first conversation much more useful.
+            </h2>
 
-          <p className="mt-5 max-w-xl leading-7 text-[#A9A1BA]">
-            A complete specification is not necessary. A short description of
-            the real outcome and current situation is usually enough to begin.
-          </p>
+            <p className="mt-6 max-w-xl leading-8 text-[var(--paper)]">
+              A complete specification is not necessary. A short description of
+              the real outcome and current situation is usually enough to
+              begin.
+            </p>
+          </div>
+
+          <ol className="grid self-start border-l border-t border-[var(--paper)]/25 sm:grid-cols-2">
+            {usefulContext.map((item, index) => (
+              <li
+                key={item}
+                className="min-h-40 border-b border-r border-[var(--paper)]/25 p-5 sm:p-6"
+              >
+                <span className="font-mono text-[0.68rem] text-[var(--signal)]">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <span className="mt-8 block leading-7 text-[var(--paper)]">
+                  {item}
+                </span>
+              </li>
+            ))}
+          </ol>
         </div>
-
-        <ol className="border-t border-[#2B2340]">
-          {usefulContext.map((item, index) => (
-            <li
-              key={item}
-              className="grid grid-cols-[48px_minmax(0,1fr)] gap-4 border-b border-[#2B2340] py-5"
-            >
-              <span className="font-mono text-sm text-[#5F5870]">
-                {String(index + 1).padStart(2, "0")}
-              </span>
-
-              <span className="leading-7 text-[#D8D2E8]">{item}</span>
-            </li>
-          ))}
-        </ol>
       </section>
 
-      <section className="mt-24">
+      <section className="mt-24 sm:mt-32">
         <SectionHeader
           eyebrow="Contact and project links"
-          title="Choose the easiest way to reach me or review my work."
+          title="Choose your entry point."
           description="Contact me directly, review the work, inspect the code or download the current CV."
         />
 
-        <ul className="mt-10 border-y border-[#2B2340]">
-          {contactLinks.map((item) => (
-            <li
-              key={item.label}
-              className="border-b border-[#2B2340] last:border-b-0"
-            >
-              {item.kind === "internal" ? (
-                <Link to={item.href} className={contactLinkClassName}>
-                  <span className="font-semibold text-[#F5F2FF] transition group-hover:text-[#C4B5FD]">
-                    {item.label}
-                  </span>
+        <ul className="mt-12 grid gap-3 lg:grid-cols-12">
+          {contactLinks.map((item, index) => {
+            const panel = directoryPanels[index];
 
-                  <span className="max-w-3xl leading-7 text-[#A9A1BA]">
-                    {item.description}
-                  </span>
-
-                  <span
-                    aria-hidden="true"
-                    className="text-[#8B849A] transition group-hover:translate-x-1 group-hover:text-[#C4B5FD]"
-                  >
-                    →
-                  </span>
-                </Link>
-              ) : (
-                <a
-                  href={item.href}
-                  target={item.kind === "external" ? "_blank" : undefined}
-                  rel={item.kind === "external" ? "noreferrer" : undefined}
-                  download={item.kind === "download"}
-                  className={contactLinkClassName}
-                >
-                  <span className="font-semibold text-[#F5F2FF] transition group-hover:text-[#C4B5FD]">
-                    {item.label}
-                  </span>
-
-                  <span className="max-w-3xl leading-7 text-[#A9A1BA]">
-                    {item.description}
-                  </span>
-
-                  <span
-                    aria-hidden="true"
-                    className="text-[#8B849A] transition group-hover:translate-x-1 group-hover:text-[#C4B5FD]"
-                  >
-                    {item.kind === "external"
-                      ? "↗"
-                      : item.kind === "download"
-                        ? "↓"
-                        : "→"}
-                  </span>
-
-                  {item.kind === "external" ? <NewTabNotice /> : null}
-                </a>
-              )}
-            </li>
-          ))}
+            return (
+              <li
+                key={item.label}
+                className={cn(panel.layout, panel.text)}
+              >
+                <ContactDirectoryLink
+                  item={item}
+                  index={index}
+                  surfaceClassName={panel.surface}
+                />
+              </li>
+            );
+          })}
         </ul>
       </section>
     </>

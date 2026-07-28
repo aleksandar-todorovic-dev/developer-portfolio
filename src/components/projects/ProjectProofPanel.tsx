@@ -8,41 +8,52 @@ type ProjectProofPanelProps = {
 
 export function ProjectProofPanel({ projects }: ProjectProofPanelProps) {
   return (
-    <aside className="rounded-2xl border border-[#2B2340] bg-[#11101A] p-5">
-      <div className="flex items-center justify-between gap-4">
-        <p className="text-xs font-medium uppercase tracking-[0.2em] text-[#A9A1BA]">
-          Selected projects
+    <aside className="relative overflow-hidden border border-[var(--line-strong)] bg-[var(--violet)] text-[var(--paper)]">
+      <div
+        aria-hidden="true"
+        className="absolute -right-12 -top-12 size-28 rotate-45 border border-[var(--paper)]/25"
+      />
+
+      <div className="relative flex items-center justify-between gap-4 border-b border-[var(--paper)]/30 px-5 py-4">
+        <p className="font-mono text-[0.64rem] uppercase tracking-[0.18em]">
+          Selected proof
         </p>
 
-        <span className="text-xs text-[#C4B5FD]">
-          {projects.length} projects
+        <span className="bg-[var(--signal)] px-2 py-1 font-mono text-[0.62rem] text-[var(--ink)]">
+          {String(projects.length).padStart(2, "0")} RECORDS
         </span>
       </div>
 
-      <ul className="mt-5 divide-y divide-[#2B2340]">
-        {projects.map((project) => (
-          <li key={project.slug} className="py-4 first:pt-0 last:pb-0">
-            <Link to={`/projects/${project.slug}`} className="group block">
-              <div className="flex items-start justify-between gap-4">
-                <div>
-                  <p className="font-medium text-[#F5F2FF]">{project.title}</p>
+      <ol className="relative">
+        {projects.map((project, index) => (
+          <li key={project.slug} className="border-b border-[var(--paper)]/30 last:border-b-0">
+            <Link
+              to={`/projects/${project.slug}`}
+              className="focus-ring group grid grid-cols-[3rem_minmax(0,1fr)_2rem] gap-3 px-5 py-5"
+            >
+              <span className="font-mono text-xs text-[var(--signal)]">
+                {String(index + 1).padStart(2, "0")}
+              </span>
 
-                  <p className="mt-1 text-sm text-[#A9A1BA]">
-                    {project.proofLabel}
-                  </p>
-                </div>
-
-                <span
-                  aria-hidden="true"
-                  className="text-[#C4B5FD] transition group-hover:translate-x-1"
-                >
-                  →
+              <span>
+                <span className="font-display block text-xl font-semibold tracking-[-0.035em]">
+                  {project.title}
                 </span>
-              </div>
+                <span className="font-mono mt-2 block text-[0.61rem] uppercase tracking-[0.15em] text-[var(--paper)]">
+                  {project.proofLabel}
+                </span>
+              </span>
+
+              <span
+                aria-hidden="true"
+                className="text-xl transition-transform duration-200 group-hover:translate-x-2"
+              >
+                →
+              </span>
             </Link>
           </li>
         ))}
-      </ul>
+      </ol>
     </aside>
   );
 }

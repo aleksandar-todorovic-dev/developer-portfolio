@@ -26,9 +26,7 @@ export function ProjectScreenshotSelector({
   onSelect,
 }: ProjectScreenshotSelectorProps) {
   const [focusedIndex, setFocusedIndex] = useState(activeIndex);
-
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
-
   const isRail = variant === "rail";
 
   function focusTab(index: number) {
@@ -47,7 +45,6 @@ export function ProjectScreenshotSelector({
         if (isRail) {
           return;
         }
-
         nextIndex = (index + 1) % screenshots.length;
         break;
 
@@ -55,7 +52,6 @@ export function ProjectScreenshotSelector({
         if (isRail) {
           return;
         }
-
         nextIndex = (index - 1 + screenshots.length) % screenshots.length;
         break;
 
@@ -63,7 +59,6 @@ export function ProjectScreenshotSelector({
         if (!isRail) {
           return;
         }
-
         nextIndex = (index + 1) % screenshots.length;
         break;
 
@@ -71,7 +66,6 @@ export function ProjectScreenshotSelector({
         if (!isRail) {
           return;
         }
-
         nextIndex = (index - 1 + screenshots.length) % screenshots.length;
         break;
 
@@ -98,8 +92,8 @@ export function ProjectScreenshotSelector({
       aria-orientation={isRail ? "vertical" : "horizontal"}
       className={cn(
         isRail
-          ? "border-y border-[#2B2340]"
-          : "grid border-y border-[#2B2340] sm:grid-cols-2 xl:grid-cols-3",
+          ? "border-y border-[var(--line-strong)]"
+          : "grid gap-px border border-[var(--line)] bg-[var(--line)] sm:grid-cols-2 xl:grid-cols-3",
         className,
       )}
     >
@@ -125,31 +119,51 @@ export function ProjectScreenshotSelector({
               setFocusedIndex(index);
               onSelect(index);
             }}
-            className={`${
-              isRail
-                ? "grid w-full grid-cols-[40px_minmax(0,1fr)] gap-3 border-b border-[#2B2340] px-4 py-4 text-left last:border-b-0"
-                : "grid grid-cols-[40px_minmax(0,1fr)] gap-3 border-b border-[#2B2340] px-4 py-4 text-left sm:border-r sm:even:border-r-0 xl:even:border-r xl:nth-[3n]:border-r-0"
-            } transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#8B5CF6] ${
+            className={cn(
+              "focus-ring group relative grid min-h-24 grid-cols-[3rem_minmax(0,1fr)] gap-3 px-4 py-5 text-left transition-colors duration-200",
+              isRail && "w-full border-b border-[var(--line)] last:border-b-0",
               isActive
-                ? "bg-[#181423] text-[#F5F2FF]"
-                : "text-[#A9A1BA] hover:bg-[#11101A] hover:text-[#D8D2E8]"
-            }`}
+                ? "bg-[var(--violet)] text-[var(--paper)]"
+                : "bg-[var(--ink)] text-[var(--paper-muted)] hover:bg-[var(--ink-2)] hover:text-[var(--paper)]",
+            )}
           >
             <span
-              className={`font-mono text-sm ${
-                isActive ? "text-[#C4B5FD]" : "text-[#5F5870]"
-              }`}
+              className={cn(
+                "font-mono text-xs",
+                isActive
+                  ? "text-[var(--signal)]"
+                  : "text-[var(--violet-text)]",
+              )}
             >
-              {number}
+              IMG—{number}
             </span>
 
             <span>
-              <span className="block font-medium">{screenshot.label}</span>
+              <span className="font-body block font-semibold">
+                {screenshot.label}
+              </span>
 
-              <span className="mt-1 block text-xs uppercase tracking-[0.14em] text-[#6F687E]">
-                {screenshot.format}
+              <span
+                className={cn(
+                  "mt-2 block font-mono text-[0.61rem] uppercase tracking-[0.17em]",
+                  isActive
+                    ? "text-[var(--paper)]"
+                    : "text-[var(--paper-muted)]",
+                )}
+              >
+                {screenshot.format} / select
               </span>
             </span>
+
+            <span
+              aria-hidden="true"
+              className={cn(
+                "absolute bottom-0 left-0 h-1 transition-[width] duration-300",
+                isActive
+                  ? "w-full bg-[var(--signal)]"
+                  : "w-0 bg-[var(--violet)] group-hover:w-1/3",
+              )}
+            />
           </button>
         );
       })}

@@ -62,10 +62,40 @@ export function RouteBehavior() {
       }
 
       let animationFrameId: number | undefined;
+      let observer: MutationObserver | undefined;
+      let observerTimeoutId: number | undefined;
+
+      const stopWatchingForTarget = () => {
+        observer?.disconnect();
+
+        if (observerTimeoutId !== undefined) {
+          window.clearTimeout(observerTimeoutId);
+        }
+      };
 
       const alignInitialHashTarget = () => {
         animationFrameId = window.requestAnimationFrame(() => {
-          scrollToHashTarget(hash);
+          if (scrollToHashTarget(hash)) {
+            return;
+          }
+
+          const routeContent =
+            document.getElementById("main-content") ?? document.body;
+
+          observer = new MutationObserver(() => {
+            if (scrollToHashTarget(hash)) {
+              stopWatchingForTarget();
+            }
+          });
+          observer.observe(routeContent, {
+            childList: true,
+            subtree: true,
+          });
+
+          observerTimeoutId = window.setTimeout(
+            stopWatchingForTarget,
+            15_000,
+          );
         });
       };
 
@@ -79,6 +109,7 @@ export function RouteBehavior() {
 
       return () => {
         window.removeEventListener("load", alignInitialHashTarget);
+        stopWatchingForTarget();
 
         if (animationFrameId !== undefined) {
           window.cancelAnimationFrame(animationFrameId);

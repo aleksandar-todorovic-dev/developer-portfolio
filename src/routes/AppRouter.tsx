@@ -1,27 +1,55 @@
+import { lazy, Suspense } from "react";
 import { BrowserRouter, Route, Routes } from "react-router";
 import { RouteBehavior } from "./RouteBehavior";
 
 import { PageShell } from "../components/layout/PageShell";
-import { AboutPage } from "../pages/AboutPage";
-import { ContactPage } from "../pages/ContactPage";
-import { HomePage } from "../pages/HomePage";
-import { NotFoundPage } from "../pages/NotFoundPage";
-import { ProjectDetailPage } from "../pages/ProjectDetailPage";
-import { ProjectsPage } from "../pages/ProjectsPage";
+
+const AboutPage = lazy(() =>
+  import("../pages/AboutPage").then(({ AboutPage }) => ({
+    default: AboutPage,
+  })),
+);
+const ContactPage = lazy(() =>
+  import("../pages/ContactPage").then(({ ContactPage }) => ({
+    default: ContactPage,
+  })),
+);
+const HomePage = lazy(() =>
+  import("../pages/HomePage").then(({ HomePage }) => ({
+    default: HomePage,
+  })),
+);
+const NotFoundPage = lazy(() =>
+  import("../pages/NotFoundPage").then(({ NotFoundPage }) => ({
+    default: NotFoundPage,
+  })),
+);
+const ProjectDetailPage = lazy(() =>
+  import("../pages/ProjectDetailPage").then(({ ProjectDetailPage }) => ({
+    default: ProjectDetailPage,
+  })),
+);
+const ProjectsPage = lazy(() =>
+  import("../pages/ProjectsPage").then(({ ProjectsPage }) => ({
+    default: ProjectsPage,
+  })),
+);
 
 export function AppRouter() {
   return (
     <BrowserRouter>
       <RouteBehavior />
       <PageShell>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/projects" element={<ProjectsPage />} />
-          <Route path="/projects/:slug" element={<ProjectDetailPage />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/contact" element={<ContactPage />} />
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
+        <Suspense fallback={null}>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/projects" element={<ProjectsPage />} />
+            <Route path="/projects/:slug" element={<ProjectDetailPage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/contact" element={<ContactPage />} />
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+        </Suspense>
       </PageShell>
     </BrowserRouter>
   );

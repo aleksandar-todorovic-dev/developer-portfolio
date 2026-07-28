@@ -1,6 +1,8 @@
+import { motion, useReducedMotion } from "motion/react";
 import { Link } from "react-router";
 
 import { SectionHeader } from "../components/ui";
+import { cn } from "../utils/cn";
 import type { ProjectSlug } from "../types/project";
 
 type ProfileSignal = {
@@ -81,173 +83,291 @@ const projectProofLinks: ProjectProofLink[] = [
   },
 ];
 
+const principlePanels = [
+  {
+    panel:
+      "bg-[var(--paper)] text-[var(--ink)] lg:mr-[18%] lg:grid-cols-[minmax(0,0.85fr)_minmax(20rem,1.15fr)]",
+    metadata: "text-[var(--violet-dark)]",
+    title: "text-[var(--ink)]",
+    body: "text-[var(--ink-2)]",
+    number: "text-[var(--violet)]/12",
+  },
+  {
+    panel:
+      "bg-[var(--violet-dark)] text-[var(--paper)] lg:ml-[18%] lg:grid-cols-[minmax(20rem,1.15fr)_minmax(0,0.85fr)]",
+    metadata: "text-[var(--signal)]",
+    title: "text-[var(--paper)] lg:order-2",
+    body: "text-[var(--paper)] lg:order-1",
+    number: "text-[var(--paper)]/8",
+  },
+  {
+    panel:
+      "border border-[var(--line-strong)] bg-[var(--ink)] text-[var(--paper)] lg:mx-[8%] lg:grid-cols-[minmax(0,0.9fr)_minmax(20rem,1.1fr)]",
+    metadata: "text-[var(--signal)]",
+    title: "text-[var(--paper)]",
+    body: "text-[var(--paper-muted)]",
+    number: "text-[var(--violet)]/20",
+  },
+] as const;
+
+const projectPanels = [
+  {
+    layout: "lg:col-span-7",
+    surface: "bg-[var(--violet)]",
+    text: "text-[var(--paper)]",
+  },
+  {
+    layout: "lg:col-span-5",
+    surface: "bg-[var(--paper)]",
+    text: "text-[var(--ink)]",
+  },
+  {
+    layout: "lg:col-span-8 lg:col-start-5",
+    surface:
+      "border border-[var(--line-strong)] bg-[var(--ink-2)]",
+    text: "text-[var(--paper)]",
+  },
+] as const;
+
 export function AboutPage() {
+  const prefersReducedMotion = useReducedMotion();
+
   return (
     <>
-      <section className="grid items-start gap-12 lg:grid-cols-[minmax(0,1.25fr)_minmax(300px,0.75fr)] lg:gap-16">
-        <div>
-          <p className="text-sm font-medium uppercase tracking-[0.3em] text-[#C4B5FD]">
-            About / Current direction
-          </p>
+      <section className="full-bleed relative isolate overflow-hidden bg-[var(--violet)] text-[var(--paper)]">
+        <div
+          aria-hidden="true"
+          className="absolute inset-y-0 left-[72%] hidden w-px bg-[var(--paper)]/20 lg:block"
+        />
+        <div
+          aria-hidden="true"
+          className="font-display absolute -bottom-[0.22em] -right-[0.03em] -z-10 select-none text-[clamp(10rem,30vw,30rem)] font-semibold leading-none tracking-[-0.12em] text-[var(--violet-dark)]/25"
+        >
+          A
+        </div>
+
+        <div className="content-frame relative py-14 sm:py-20 lg:py-28">
+          <div className="flex items-center justify-between gap-6">
+            <p className="signal-label font-mono text-[0.7rem] uppercase tracking-[0.2em] text-[var(--paper)]">
+              About / Current direction
+            </p>
+            <p className="font-mono hidden text-[0.68rem] uppercase tracking-[0.16em] text-[var(--paper)] sm:block">
+              Profile trace · 01
+            </p>
+          </div>
+
+          <motion.div
+            aria-hidden="true"
+            initial={prefersReducedMotion ? false : { scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ duration: prefersReducedMotion ? 0 : 0.75, ease: [0.2, 0.8, 0.2, 1] }}
+            className="mt-5 h-px origin-left bg-[var(--signal)]"
+          />
 
           <h1
             id="page-heading"
             tabIndex={-1}
-            className="mt-5 max-w-4xl text-4xl font-semibold leading-tight tracking-[-0.03em] text-[#F5F2FF] sm:text-5xl lg:text-6xl"
+            className="font-display mt-9 max-w-[13ch] text-balance text-[clamp(3.6rem,9.5vw,9.6rem)] font-semibold leading-[0.82] tracking-[-0.075em] text-[var(--paper)] focus:outline-none"
           >
-            Frontend is where I work best, but I do not limit every project to
-            one exact stack.
+            Frontend is where
+            <span className="block sm:ml-[0.75ch]">I work best,</span>
+            <span className="mt-3 block max-w-[16ch] text-[0.5em] leading-[0.95] tracking-[-0.055em] sm:ml-[2.7ch]">
+              but I do not limit every project to one exact stack.
+            </span>
           </h1>
 
-          <div className="mt-8 max-w-3xl space-y-5 text-lg leading-8 text-[#A9A1BA]">
-            <p>
-              I am Aleksandar, a frontend-first web developer focused on
-              responsive applications, product interfaces and practical web
-              features.
-            </p>
+          <div className="mt-14 grid gap-10 border-t border-[var(--paper)]/30 pt-8 lg:mt-20 lg:grid-cols-[minmax(0,0.72fr)_minmax(0,1.28fr)] lg:gap-16">
+            <div className="max-w-xl space-y-5 text-base leading-8 text-[var(--paper)] sm:text-lg">
+              <p>
+                I am Aleksandar, a frontend-first web developer focused on
+                responsive applications, product interfaces and practical web
+                features.
+              </p>
 
-            <p>
-              Most of my work so far has been in React, TypeScript, JavaScript
-              and Firebase. Those are the tools behind my strongest current
-              projects, but I am also comfortable working with existing
-              codebases, documented APIs and related web technologies.
-            </p>
+              <p>
+                Most of my work so far has been in React, TypeScript, JavaScript
+                and Firebase. Those are the tools behind my strongest current
+                projects, but I am also comfortable working with existing
+                codebases, documented APIs and related web technologies.
+              </p>
+            </div>
+
+            <aside aria-label="Current professional profile">
+              <p className="font-mono text-[0.68rem] uppercase tracking-[0.18em] text-[var(--paper)]">
+                Current working profile
+              </p>
+
+              <dl className="mt-5 grid border-l border-t border-[var(--paper)]/30 sm:grid-cols-2">
+                {profileSignals.map((signal) => (
+                  <div
+                    key={signal.label}
+                    className="border-b border-r border-[var(--paper)]/30 p-5"
+                  >
+                    <dt className="font-mono text-[0.65rem] uppercase tracking-[0.16em] text-[var(--signal)]">
+                      {signal.label}
+                    </dt>
+                    <dd className="mt-3 text-sm leading-6 text-[var(--paper)] sm:text-base">
+                      {signal.value}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            </aside>
           </div>
         </div>
-
-        <aside
-          aria-label="Current professional profile"
-          className="border-y border-[#2B2340] bg-[#0D0B14]"
-        >
-          <p className="border-b border-[#2B2340] px-5 py-4 text-xs font-medium uppercase tracking-[0.2em] text-[#8B849A]">
-            Current working profile
-          </p>
-
-          <dl>
-            {profileSignals.map((signal) => (
-              <div
-                key={signal.label}
-                className="border-b border-[#2B2340] px-5 py-5 last:border-b-0"
-              >
-                <dt className="text-xs font-medium uppercase tracking-[0.16em] text-[#6F687E]">
-                  {signal.label}
-                </dt>
-
-                <dd className="mt-2 leading-6 text-[#D8D2E8]">
-                  {signal.value}
-                </dd>
-              </div>
-            ))}
-          </dl>
-        </aside>
       </section>
 
-      <section className="mt-24">
+      <section className="mt-24 sm:mt-32">
         <SectionHeader
           eyebrow="How I work"
           title="I keep the work focused, understandable and testable."
           description="I start by understanding the real problem, make a focused change, test it carefully and explain the result clearly."
         />
 
-        <div className="mt-10 border-y border-[#2B2340]">
-          {workingPrinciples.map((principle, index) => (
-            <article
-              key={principle.label}
-              className="grid gap-5 border-b border-[#2B2340] py-8 last:border-b-0 lg:grid-cols-[150px_minmax(220px,0.8fr)_minmax(0,1.4fr)] lg:gap-10"
-            >
-              <p className="text-xs font-medium uppercase tracking-[0.16em] text-[#8B849A]">
-                {String(index + 1).padStart(2, "0")} / {principle.label}
-              </p>
+        <div className="mt-12 space-y-5 sm:mt-16">
+          {workingPrinciples.map((principle, index) => {
+            const panel = principlePanels[index];
 
-              <h2 className="text-xl font-semibold leading-7 text-[#F5F2FF]">
-                {principle.title}
-              </h2>
+            return (
+              <article
+                key={principle.label}
+                className={cn(
+                  "cut-corner relative grid min-h-[22rem] content-between gap-10 overflow-hidden p-6 sm:p-10 lg:gap-16 lg:p-14",
+                  panel.panel,
+                )}
+              >
+                <span
+                  aria-hidden="true"
+                  className={cn(
+                    "font-display pointer-events-none absolute -bottom-[0.28em] right-3 text-[clamp(9rem,21vw,18rem)] font-semibold leading-none tracking-[-0.1em]",
+                    panel.number,
+                  )}
+                >
+                  {index + 1}
+                </span>
 
-              <p className="max-w-3xl leading-7 text-[#A9A1BA]">
-                {principle.description}
-              </p>
-            </article>
-          ))}
+                <div className={cn("relative z-10", panel.title)}>
+                  <p
+                    className={cn(
+                      "font-mono text-[0.68rem] uppercase tracking-[0.18em]",
+                      panel.metadata,
+                    )}
+                  >
+                    {String(index + 1).padStart(2, "0")} / {principle.label}
+                  </p>
+                  <h2 className="font-display mt-6 max-w-xl text-[clamp(2.15rem,4.5vw,4.5rem)] font-semibold leading-[0.94] tracking-[-0.055em]">
+                    {principle.title}
+                  </h2>
+                </div>
+
+                <p
+                  className={cn(
+                    "relative z-10 max-w-2xl self-end text-base leading-8",
+                    panel.body,
+                  )}
+                >
+                  {principle.description}
+                </p>
+              </article>
+            );
+          })}
         </div>
       </section>
 
-      <section className="mt-24">
+      <section className="mt-24 sm:mt-32">
         <SectionHeader
           eyebrow="Selected projects"
-          title="The projects show different parts of the same working direction."
-          description="Each one highlights a different kind of technical or product work."
+          title="Three projects. Three different forms of proof."
+          description="The projects show different parts of the same working direction. Each one highlights a different kind of technical or product work."
         />
 
-        <div className="mt-10 border-y border-[#2B2340]">
-          {projectProofLinks.map((project, index) => (
-            <Link
-              key={project.slug}
-              to={`/projects/${project.slug}`}
-              className="group grid gap-4 border-b border-[#2B2340] py-7 transition last:border-b-0 hover:bg-[#11101A] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#8B5CF6] md:grid-cols-[70px_220px_minmax(0,1fr)_auto] md:items-center md:px-4"
-            >
-              <span className="font-mono text-sm text-[#5F5870]">
-                {String(index + 1).padStart(2, "0")}
-              </span>
+        <div className="mt-12 grid gap-4 lg:grid-cols-12">
+          {projectProofLinks.map((project, index) => {
+            const panel = projectPanels[index];
 
-              <span className="font-semibold text-[#F5F2FF]">
-                {project.title}
-              </span>
-
-              <span className="max-w-2xl leading-7 text-[#A9A1BA]">
-                {project.proof}
-              </span>
-
-              <span
-                aria-hidden="true"
-                className="text-[#8B849A] transition group-hover:translate-x-1 group-hover:text-[#C4B5FD]"
+            return (
+              <div
+                key={project.slug}
+                className={cn(
+                  panel.layout,
+                  panel.text,
+                )}
               >
-                →
-              </span>
-            </Link>
-          ))}
+                <Link
+                  to={`/projects/${project.slug}`}
+                  className={cn(
+                    "group focus-ring cut-corner flex min-h-[20rem] h-full flex-col justify-between overflow-hidden p-6 transition-transform duration-300 hover:-translate-y-1 sm:min-h-[24rem] sm:p-9",
+                    panel.surface,
+                  )}
+                >
+                  <div className="flex items-start justify-between gap-6 font-mono text-[0.68rem] uppercase tracking-[0.17em]">
+                    <span>
+                      {String(index + 1).padStart(2, "0")} / Evidence
+                    </span>
+                    <span
+                      aria-hidden="true"
+                      className="text-2xl leading-none transition-transform duration-300 group-hover:translate-x-1"
+                    >
+                      ↗
+                    </span>
+                  </div>
+
+                  <div>
+                    <h3 className="font-display break-words text-[clamp(2.7rem,6vw,6.5rem)] font-semibold leading-[0.84] tracking-[-0.065em]">
+                      {project.title}
+                    </h3>
+                    <p className="mt-6 max-w-xl text-sm leading-7 sm:text-base">
+                      {project.proof}
+                    </p>
+                  </div>
+                </Link>
+              </div>
+            );
+          })}
         </div>
       </section>
 
-      <section className="mt-24 border-y border-[#2B2340] py-10">
-        <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
+      <section className="full-bleed mt-24 bg-[var(--paper)] text-[var(--ink)] sm:mt-32">
+        <div className="content-frame grid gap-10 py-14 sm:py-20 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
           <div>
-            <p className="text-xs font-medium uppercase tracking-[0.2em] text-[#8B849A]">
-              Next step
+            <p className="font-mono text-[0.68rem] uppercase tracking-[0.2em] text-[var(--violet-dark)]">
+              Next step / 04
             </p>
 
-            <h2 className="mt-3 max-w-2xl text-3xl font-semibold tracking-[-0.02em] text-[#F5F2FF] sm:text-4xl">
+            <h2 className="font-display mt-5 max-w-4xl text-balance text-[clamp(2.8rem,6vw,6rem)] font-semibold leading-[0.9] tracking-[-0.06em]">
               The work is easier to judge through the projects than through a
               long biography.
             </h2>
 
-            <p className="mt-5 max-w-2xl leading-7 text-[#A9A1BA]">
+            <p className="mt-6 max-w-2xl leading-8 text-[var(--ink-2)]">
               Review the case studies, download the current CV, or contact me
               about a frontend, web, product-facing, implementation or
               software-facing opportunity.
             </p>
           </div>
 
-          <div className="flex flex-col gap-3 sm:flex-row lg:justify-end">
+          <div className="flex flex-col gap-2 sm:flex-row lg:max-w-[17rem] lg:flex-col">
             <Link
               to="/projects"
-              className="inline-flex min-h-12 items-center justify-center border border-[#8B5CF6] bg-[#8B5CF6] px-5 text-sm font-semibold text-white transition hover:bg-[#A855F7] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C4B5FD]"
+              style={{ color: "var(--paper)" }}
+              className="focus-ring inline-flex min-h-12 items-center justify-between gap-8 bg-[var(--violet)] px-5 py-3 font-mono text-xs font-semibold uppercase tracking-[0.12em] text-[var(--paper)] transition-colors hover:bg-[var(--violet-dark)]"
             >
-              View case studies
+              View case studies <span aria-hidden="true">→</span>
             </Link>
 
             <a
               href="/Aleksandar_Todorovic_CV.pdf"
               download
-              className="inline-flex min-h-12 items-center justify-center border border-[#3A3150] px-5 text-sm font-semibold text-[#D8D2E8] transition hover:border-[#8B5CF6] hover:text-[#F5F2FF] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8B5CF6]"
+              className="focus-ring inline-flex min-h-12 items-center justify-between gap-8 border border-[var(--ink)] px-5 py-3 font-mono text-xs font-semibold uppercase tracking-[0.12em] transition-colors hover:bg-[var(--ink)] hover:text-[var(--paper)]"
             >
-              Download CV
+              Download CV <span aria-hidden="true">↓</span>
             </a>
 
             <Link
               to="/contact"
-              className="inline-flex min-h-12 items-center justify-center border border-[#3A3150] px-5 text-sm font-semibold text-[#D8D2E8] transition hover:border-[#8B5CF6] hover:text-[#F5F2FF] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8B5CF6]"
+              className="focus-ring inline-flex min-h-12 items-center justify-between gap-8 border border-[var(--ink)] px-5 py-3 font-mono text-xs font-semibold uppercase tracking-[0.12em] transition-colors hover:bg-[var(--ink)] hover:text-[var(--paper)]"
             >
-              Contact
+              Contact <span aria-hidden="true">→</span>
             </Link>
           </div>
         </div>

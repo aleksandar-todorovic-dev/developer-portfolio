@@ -14,10 +14,11 @@ type ButtonProps = PropsWithChildren<
 
 const variantClasses: Record<ButtonVariant, string> = {
   primary:
-    "bg-[#8B5CF6] text-white shadow-[0_0_24px_rgba(139,92,246,0.22)] hover:bg-[#A855F7]",
+    "border border-[var(--violet)] bg-[var(--violet)] text-white hover:border-[var(--signal)] hover:bg-[var(--signal)] hover:text-[var(--ink)]",
   secondary:
-    "border border-[#2B2340] bg-[#11101A] text-[#F5F2FF] hover:border-[#8B5CF6]/70 hover:bg-[#181423]",
-  ghost: "text-[#A9A1BA] hover:bg-[#11101A] hover:text-[#F5F2FF]",
+    "border border-[var(--line-strong)] bg-transparent text-[var(--paper)] hover:border-[var(--paper)] hover:bg-[var(--paper)] hover:text-[var(--ink)]",
+  ghost:
+    "border-b border-[var(--line-strong)] text-[var(--paper-muted)] hover:border-[var(--signal)] hover:text-[var(--paper)]",
 };
 
 const sizeClasses: Record<ButtonSize, string> = {
@@ -37,8 +38,8 @@ export function Button({
     <button
       type={type}
       className={cn(
-        "inline-flex items-center justify-center rounded-full font-semibold transition",
-        "focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8B5CF6] focus-visible:ring-offset-2 focus-visible:ring-offset-[#07060B]",
+        "inline-flex items-center justify-center font-mono font-semibold uppercase tracking-[0.08em] transition-colors",
+        "focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--signal)]",
         "disabled:cursor-not-allowed disabled:opacity-60",
         variantClasses[variant],
         sizeClasses[size],

@@ -1,28 +1,70 @@
-import { SectionHeader } from "../ui";
 import { buildSteps } from "../../data/buildSteps";
+import { SignalLine } from "../motion/SignalLine";
 
 export function BuildProcessSection() {
   return (
-    <section className="mt-24">
-      <SectionHeader
-        eyebrow="How I build"
-        title="A practical path from project idea to a tested result."
-        description="The projects are different, but the decision process behind them follows the same core pattern."
-      />
+    <section className="full-bleed bg-[var(--violet)] py-20 text-white sm:py-28">
+      <div className="content-frame">
+        <div className="grid gap-9 lg:grid-cols-[11rem_minmax(0,1fr)]">
+          <div>
+            <p className="signal-label text-[var(--signal)]">
+              05 / Execution path
+            </p>
+            <p className="mt-3 font-mono text-[0.62rem] uppercase tracking-[0.11em] text-white">
+              Input → state → tradeoff → result
+            </p>
+          </div>
 
-      <ol className="mt-10 grid gap-px overflow-hidden rounded-2xl border border-[#2B2340] bg-[#2B2340] md:grid-cols-2">
-        {buildSteps.map((step) => (
-          <li key={step.number} className="bg-[#11101A] p-6 sm:p-8">
-            <p className="text-sm font-medium text-[#C4B5FD]">{step.number}</p>
+          <div>
+            <h2 className="display-balance max-w-5xl font-display text-[clamp(3.2rem,7vw,7.2rem)] font-semibold leading-[0.86] tracking-[-0.065em]">
+              THE WORK MOVES
+              <span className="block text-[var(--signal)]">
+                THROUGH DECISIONS.
+              </span>
+            </h2>
 
-            <h3 className="mt-5 text-xl font-semibold text-[#F5F2FF]">
-              {step.title}
-            </h3>
+            <p className="mt-6 max-w-2xl text-lg leading-8 text-white">
+              The projects are different, but the decision process behind them
+              follows the same controlled sequence.
+            </p>
+          </div>
+        </div>
 
-            <p className="mt-3 leading-7 text-[#A9A1BA]">{step.description}</p>
-          </li>
-        ))}
-      </ol>
+        <SignalLine className="mt-12 bg-white" />
+
+        <ol className="grid border-l border-white/35 md:grid-cols-2 xl:grid-cols-4">
+          {buildSteps.map((step, index) => (
+            <li
+              key={step.number}
+              className="group relative min-h-80 border-b border-r border-white/35 p-6 sm:p-8 xl:border-b-0"
+            >
+              <span
+                aria-hidden="true"
+                className="absolute right-0 top-0 size-4 translate-x-1/2 -translate-y-1/2 bg-[var(--signal)]"
+              />
+
+              <p
+                aria-hidden="true"
+                className="font-display text-7xl font-extrabold leading-none text-white/20 transition-colors group-hover:text-[var(--signal)] sm:text-8xl"
+              >
+                {step.number}
+              </p>
+
+              <p className="signal-label mt-8 text-white">
+                State {String(index + 1).padStart(2, "0")} / 04
+              </p>
+
+              <h3 className="mt-4 font-display text-2xl font-semibold leading-tight tracking-[-0.035em]">
+                {step.title}
+              </h3>
+
+              <p className="mt-4 text-sm leading-7 text-white">
+                {step.description}
+              </p>
+            </li>
+          ))}
+        </ol>
+      </div>
     </section>
   );
 }

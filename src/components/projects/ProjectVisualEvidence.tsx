@@ -1,3 +1,4 @@
+import { motion, useReducedMotion } from "motion/react";
 import { useCallback, useId, useState } from "react";
 
 import type { ProjectScreenshot } from "../../types/project";
@@ -5,6 +6,7 @@ import { cn } from "../../utils/cn";
 import { NewTabNotice } from "../ui";
 import { ProjectImageLightbox } from "./ProjectImageLightbox";
 import { ProjectScreenshotSelector } from "./ProjectScreenshotSelector";
+import { getProjectScreenshotDimensions } from "./projectScreenshotDimensions";
 
 type ProjectVisualEvidenceProps = {
   screenshots: ProjectScreenshot[];
@@ -14,10 +16,9 @@ export function ProjectVisualEvidence({
   screenshots,
 }: ProjectVisualEvidenceProps) {
   const [activeIndex, setActiveIndex] = useState(0);
-
   const [lightboxScreenshot, setLightboxScreenshot] =
     useState<ProjectScreenshot | null>(null);
-
+  const shouldReduceMotion = useReducedMotion();
   const viewerId = useId();
   const tabIdPrefix = useId();
 
@@ -50,177 +51,225 @@ export function ProjectVisualEvidence({
   }
 
   const activeScreenshot = screenshots[activeIndex] ?? initialScreenshot;
+  const activeDimensions = getProjectScreenshotDimensions(
+    activeScreenshot.src,
+  );
   const isMobileScreenshot = activeScreenshot.format === "mobile";
-
   const currentNumber = String(activeIndex + 1).padStart(2, "0");
   const totalNumber = String(screenshots.length).padStart(2, "0");
-
   const activeTabId = `${tabIdPrefix}-${activeIndex}`;
 
   return (
     <section
       aria-labelledby="visual-evidence-heading"
-      className="mt-16 border-t border-[#2B2340] pt-10"
+      className="full-bleed overflow-hidden bg-[var(--ink)] py-20 text-[var(--paper)] sm:py-28"
     >
-      <div className="border-b border-[#2B2340] pb-8">
-        <p className="text-xs font-medium uppercase tracking-[0.22em] text-[#8B849A]">
-          Interface screenshots
-        </p>
-
-        <h2
-          id="visual-evidence-heading"
-          className="mt-3 text-3xl font-semibold tracking-[-0.02em] text-[#F5F2FF]"
-        >
-          Real project screens
-        </h2>
-
-        <p className="mt-4 max-w-xl leading-7 text-[#A9A1BA]">
-          Explore the main interfaces and product states.
-        </p>
-      </div>
-
-      <div
-        className={cn(
-          "mt-8",
-          isMobileScreenshot &&
-            "overflow-hidden border border-[#2B2340] bg-[#11101A] lg:grid lg:grid-cols-[minmax(340px,420px)_minmax(0,1fr)] lg:grid-rows-[auto_auto_1fr_auto]",
-        )}
-      >
-        {isMobileScreenshot ? (
-          <>
-            <div
-              id={viewerId}
-              role="tabpanel"
-              aria-labelledby={activeTabId}
-              className="lg:col-start-1 lg:row-start-1 lg:row-span-4 lg:h-full lg:border-r lg:border-[#2B2340]"
-            >
-              <button
-                type="button"
-                onClick={() => openScreenshot(activeScreenshot)}
-                className="flex min-h-150 w-full items-center justify-center bg-[#0D0B14] p-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#8B5CF6] lg:h-full lg:p-8"
-              >
-                <span className="sr-only">
-                  Open full image: {activeScreenshot.label}.{" "}
-                  {activeScreenshot.alt}
-                </span>
-
-                <img
-                  src={activeScreenshot.src}
-                  alt=""
-                  className="max-h-170 w-auto max-w-full object-contain"
-                />
-              </button>
-            </div>
-
-            <div className="border-t border-[#2B2340] p-7 lg:col-start-2 lg:row-start-1 lg:border-t-0 lg:p-9 lg:pb-7">
-              <p className="font-mono text-sm text-[#5F5870]">
-                {currentNumber} / {totalNumber}
-              </p>
-
-              <p className="mt-5 text-xs font-medium uppercase tracking-[0.2em] text-[#C4B5FD]">
-                Mobile interface
-              </p>
-
-              <h3 className="mt-3 text-2xl font-semibold text-[#F5F2FF]">
-                {activeScreenshot.label}
-              </h3>
-
-              <p className="mt-6 max-w-xl leading-7 text-[#A9A1BA]">
-                {activeScreenshot.caption}
-              </p>
-            </div>
-
-            <p className="border-t border-[#2B2340] px-7 pb-4 pt-6 text-xs font-medium uppercase tracking-[0.2em] text-[#8B849A] lg:col-start-2 lg:row-start-2 lg:px-9">
-              Screenshot list
+      <div className="content-frame">
+        <header className="grid gap-7 border-b border-[var(--line-strong)] pb-9 lg:grid-cols-[minmax(0,1fr)_19rem] lg:items-end">
+          <div>
+            <p className="signal-label w-fit bg-[var(--violet)] text-[var(--paper)]">
+              Visual evidence
             </p>
-          </>
-        ) : (
-          <div className="overflow-hidden border border-[#2B2340] bg-[#11101A]">
-            <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[#2B2340] px-5 py-4 sm:px-6">
-              <div>
-                <p className="text-xs font-medium uppercase tracking-[0.18em] text-[#8B849A]">
-                  Desktop interface
-                </p>
 
-                <h3 className="mt-1 font-medium text-[#F5F2FF]">
-                  {activeScreenshot.label}
-                </h3>
+            <h2
+              id="visual-evidence-heading"
+              className="font-display mt-6 text-[clamp(3.4rem,8vw,8rem)] leading-[0.8] font-semibold tracking-[-0.07em]"
+            >
+              Screen
+              <span className="block text-[var(--violet)]">proof.</span>
+            </h2>
+          </div>
+
+          <div className="border-l border-[var(--line-strong)] pl-6">
+            <p className="font-body text-lg leading-8">
+              Real project screens, not decorative mockups.
+            </p>
+            <p className="font-body mt-4 text-sm leading-6 text-[var(--paper-muted)]">
+              Select a record, inspect the full interface and follow the
+              product state through the image sequence.
+            </p>
+          </div>
+        </header>
+
+        <div
+          className={cn(
+            "mt-10",
+            isMobileScreenshot &&
+              "border border-[var(--line-strong)] lg:grid lg:grid-cols-[minmax(23rem,0.95fr)_minmax(0,1.05fr)] lg:grid-rows-[auto_auto_1fr_auto]",
+          )}
+        >
+          {isMobileScreenshot ? (
+            <>
+              <div
+                id={viewerId}
+                role="tabpanel"
+                aria-labelledby={activeTabId}
+                className="relative overflow-hidden bg-[var(--violet-dark)] lg:col-start-1 lg:row-span-4 lg:row-start-1 lg:border-r lg:border-[var(--line-strong)]"
+              >
+                <div
+                  aria-hidden="true"
+                  className="absolute -left-20 top-1/3 h-px w-72 rotate-45 bg-[var(--signal)]/70"
+                />
+                <button
+                  type="button"
+                  onClick={() => openScreenshot(activeScreenshot)}
+                  className="focus-ring relative flex min-h-155 w-full items-end justify-center overflow-hidden px-9 pt-14 lg:h-full lg:min-h-190 lg:px-16"
+                >
+                  <span className="sr-only">
+                    Open full image: {activeScreenshot.label}.{" "}
+                    {activeScreenshot.alt}
+                  </span>
+
+                  <motion.img
+                    src={activeScreenshot.src}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                    width={activeDimensions?.width}
+                    height={activeDimensions?.height}
+                    className="relative max-h-165 w-auto max-w-full object-contain object-bottom shadow-[-22px_22px_0_var(--signal)] lg:max-h-190"
+                    initial={shouldReduceMotion ? false : { y: 48, rotate: 1.5 }}
+                    whileInView={{ y: 0, rotate: 0 }}
+                    viewport={{ once: true, amount: 0.25 }}
+                    transition={{
+                      duration: 0.7,
+                      ease: [0.76, 0, 0.24, 1],
+                    }}
+                  />
+                </button>
               </div>
 
-              <button
-                type="button"
-                onClick={() => openScreenshot(activeScreenshot)}
-                className="inline-flex items-center gap-2 text-sm font-medium text-[#C4B5FD] transition hover:text-[#F5F2FF] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8B5CF6]"
-              >
-                Open full image
-                <NewTabNotice className="lg:hidden" />
-              </button>
-            </div>
+              <div className="border-t border-[var(--line-strong)] p-7 lg:col-start-2 lg:row-start-1 lg:border-t-0 lg:p-9">
+                <div className="flex items-center justify-between gap-5 font-mono text-[0.67rem] uppercase tracking-[0.18em]">
+                  <span className="text-[var(--signal)]">
+                    IMG—{currentNumber} / {totalNumber}
+                  </span>
+                  <span>Mobile interface</span>
+                </div>
 
-            <div id={viewerId} role="tabpanel" aria-labelledby={activeTabId}>
-              <button
-                type="button"
-                onClick={() => openScreenshot(activeScreenshot)}
-                className="block w-full bg-[#0D0B14] p-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#8B5CF6] sm:p-4"
+                <h3 className="font-display mt-7 text-4xl leading-[0.92] font-semibold tracking-[-0.05em] sm:text-5xl">
+                  {activeScreenshot.label}
+                </h3>
+
+                <p className="font-body mt-6 max-w-xl leading-7 text-[var(--paper-muted)]">
+                  {activeScreenshot.caption}
+                </p>
+              </div>
+
+              <p className="border-t border-[var(--line)] px-7 py-5 font-mono text-[0.63rem] uppercase tracking-[0.2em] text-[var(--paper-muted)] lg:col-start-2 lg:row-start-2 lg:px-9">
+                Screenshot execution path
+              </p>
+            </>
+          ) : (
+            <div className="border border-[var(--line-strong)]">
+              <div className="flex flex-wrap items-center justify-between gap-5 border-b border-[var(--line-strong)] bg-[var(--violet)] px-5 py-4 sm:px-7">
+                <div className="flex items-center gap-5">
+                  <span className="font-mono text-xs text-[var(--signal)]">
+                    IMG—{currentNumber}
+                  </span>
+                  <div>
+                    <p className="font-mono text-[0.61rem] uppercase tracking-[0.18em] text-[var(--paper)]">
+                      Desktop interface
+                    </p>
+                    <h3 className="font-body mt-1 font-semibold">
+                      {activeScreenshot.label}
+                    </h3>
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => openScreenshot(activeScreenshot)}
+                  className="focus-ring inline-flex items-center gap-3 border-b border-[var(--paper)]/60 pb-2 font-mono text-[0.67rem] uppercase tracking-[0.16em] transition-colors hover:border-[var(--signal)] hover:text-[var(--signal)]"
+                >
+                  Open full image
+                  <span aria-hidden="true">↗</span>
+                  <NewTabNotice className="lg:hidden" />
+                </button>
+              </div>
+
+              <div
+                id={viewerId}
+                role="tabpanel"
+                aria-labelledby={activeTabId}
+                className="bg-[var(--paper)] p-2 sm:p-4"
               >
-                <span className="sr-only">
-                  Open full image: {activeScreenshot.label}.{" "}
-                  {activeScreenshot.alt}
+                <button
+                  type="button"
+                  onClick={() => openScreenshot(activeScreenshot)}
+                  className="focus-ring block w-full overflow-hidden bg-[var(--ink-2)]"
+                >
+                  <span className="sr-only">
+                    Open full image: {activeScreenshot.label}.{" "}
+                    {activeScreenshot.alt}
+                  </span>
+
+                  <NewTabNotice className="lg:hidden" />
+
+                  <motion.img
+                    src={activeScreenshot.src}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                    width={activeDimensions?.width}
+                    height={activeDimensions?.height}
+                    className="block h-auto w-full object-contain"
+                    initial={shouldReduceMotion ? false : { scale: 1.035 }}
+                    whileInView={{ scale: 1 }}
+                    viewport={{ once: true, amount: 0.2 }}
+                    transition={{
+                      duration: 0.65,
+                      ease: [0.76, 0, 0.24, 1],
+                    }}
+                  />
+                </button>
+              </div>
+
+              <div className="grid gap-4 border-t border-[var(--line-strong)] px-5 py-6 sm:grid-cols-[5rem_minmax(0,1fr)] sm:px-7">
+                <span className="font-mono text-xs text-[var(--violet-text)]">
+                  CAP—{currentNumber}
                 </span>
 
-                <NewTabNotice className="lg:hidden" />
+                <p className="font-body max-w-4xl leading-7 text-[var(--paper-muted)]">
+                  {activeScreenshot.caption}
+                </p>
+              </div>
+            </div>
+          )}
 
-                <img
-                  src={activeScreenshot.src}
-                  alt=""
-                  className="block h-auto w-full object-contain"
-                />
+          <ProjectScreenshotSelector
+            screenshots={screenshots}
+            activeIndex={activeIndex}
+            panelId={viewerId}
+            tabIdPrefix={tabIdPrefix}
+            variant={isMobileScreenshot ? "rail" : "grid"}
+            className={
+              isMobileScreenshot
+                ? "lg:col-start-2 lg:row-start-3 lg:self-start"
+                : "mt-6"
+            }
+            onSelect={setActiveIndex}
+          />
+
+          {isMobileScreenshot ? (
+            <div className="border-t border-[var(--line-strong)] px-7 py-6 lg:col-start-2 lg:row-start-4 lg:px-9">
+              <button
+                type="button"
+                onClick={() => openScreenshot(activeScreenshot)}
+                className="focus-ring inline-flex items-center gap-3 border-b border-[var(--paper-muted)] pb-2 font-mono text-[0.67rem] uppercase tracking-[0.16em] transition-colors hover:border-[var(--signal)] hover:text-[var(--signal)]"
+              >
+                Open full image
+                <span aria-hidden="true">↗</span>
               </button>
             </div>
+          ) : null}
+        </div>
 
-            <div className="grid gap-3 border-t border-[#2B2340] px-5 py-5 sm:grid-cols-[48px_minmax(0,1fr)] sm:px-6">
-              <span className="font-mono text-sm text-[#5F5870]">
-                {currentNumber}
-              </span>
-
-              <p className="max-w-4xl leading-7 text-[#A9A1BA]">
-                {activeScreenshot.caption}
-              </p>
-            </div>
-          </div>
-        )}
-
-        <ProjectScreenshotSelector
-          screenshots={screenshots}
-          activeIndex={activeIndex}
-          panelId={viewerId}
-          tabIdPrefix={tabIdPrefix}
-          variant={isMobileScreenshot ? "rail" : "grid"}
-          className={
-            isMobileScreenshot
-              ? "lg:col-start-2 lg:row-start-3 lg:self-start"
-              : "mt-6"
-          }
-          onSelect={setActiveIndex}
-        />
-
-        {isMobileScreenshot ? (
-          <div className="border-t border-[#2B2340] px-7 py-6 lg:col-start-2 lg:row-start-4 lg:px-9">
-            <button
-              type="button"
-              onClick={() => openScreenshot(activeScreenshot)}
-              className="inline-flex w-fit items-center border-b border-[#4C4161] pb-2 text-sm font-medium text-[#D8D2E8] transition hover:border-[#8B5CF6] hover:text-[#C4B5FD] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8B5CF6]"
-            >
-              Open full image
-            </button>
-          </div>
-        ) : null}
+        <p className="sr-only" aria-live="polite" aria-atomic="true">
+          Showing {activeScreenshot.label}, screenshot {activeIndex + 1} of{" "}
+          {screenshots.length}.
+        </p>
       </div>
-
-      <p className="sr-only" aria-live="polite" aria-atomic="true">
-        Showing {activeScreenshot.label}, screenshot {activeIndex + 1} of{" "}
-        {screenshots.length}.
-      </p>
 
       <ProjectImageLightbox
         screenshot={lightboxScreenshot}

@@ -1,3 +1,5 @@
+import { motion, useReducedMotion } from "motion/react";
+
 import type { ProjectCategory, ProjectSlug } from "../../types/project";
 
 type ProjectHeroProps = {
@@ -23,61 +25,95 @@ export function ProjectHero({
   category,
   sectionCount,
 }: ProjectHeroProps) {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
-    <header className="mt-8 border-y border-[#2B2340] py-10 sm:py-14">
-      <div className="grid gap-10 lg:grid-cols-[minmax(0,1.4fr)_minmax(280px,0.6fr)] lg:items-end">
-        <div>
-          <p className="text-sm font-medium uppercase tracking-[0.3em] text-[#C4B5FD]">
-            Case study · {proofLabel}
-          </p>
+    <header className="full-bleed relative overflow-hidden border-y border-[var(--paper)]/25 bg-[var(--violet)] text-[var(--paper)]">
+      <motion.div
+        aria-hidden="true"
+        className="absolute inset-y-0 left-[17%] w-px bg-[var(--paper)]/20"
+        initial={shouldReduceMotion ? false : { scaleY: 0 }}
+        animate={{ scaleY: 1 }}
+        transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
+        style={{ transformOrigin: "top" }}
+      />
+      <div
+        aria-hidden="true"
+        className="absolute -right-28 -top-28 size-72 rotate-45 border border-[var(--paper)]/20 sm:size-96"
+      />
 
-          <h1
-            id="page-heading"
-            tabIndex={-1}
-            className="mt-5 max-w-4xl text-5xl font-semibold tracking-[-0.04em] text-[#F5F2FF] sm:text-6xl lg:text-7xl"
-          >
-            {title}
-          </h1>
-
-          <p className="mt-7 max-w-3xl text-lg leading-8 text-[#A9A1BA] sm:text-xl">
-            {shortDescription}
-          </p>
+      <div className="content-frame relative py-12 sm:py-18 lg:py-24">
+        <div className="flex flex-wrap items-center justify-between gap-5 border-b border-[var(--paper)]/30 pb-5 font-mono text-[0.66rem] uppercase tracking-[0.2em]">
+          <span>Case study / {proofLabel}</span>
+          <span>Record—{slug}</span>
         </div>
 
-        <aside className="border-t border-[#2B2340] pt-6 lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0">
-          <p className="text-xs font-medium uppercase tracking-[0.22em] text-[#8B849A]">
-            Project overview
-          </p>
+        <div className="grid gap-12 pt-10 lg:grid-cols-[minmax(0,1fr)_17rem] lg:items-end">
+          <div className="min-w-0">
+            <p className="signal-label mb-7 w-fit bg-[var(--signal)] text-[var(--ink)]">
+              Resolved project
+            </p>
 
-          <dl className="mt-6 divide-y divide-[#2B2340] border-y border-[#2B2340]">
-            <div className="flex items-start justify-between gap-6 py-4">
-              <dt className="text-sm text-[#8B849A]">Project</dt>
+            <h1
+              id="page-heading"
+              tabIndex={-1}
+              className="font-display max-w-6xl text-[clamp(2.25rem,11vw,9rem)] leading-[0.8] font-semibold tracking-[-0.07em] [overflow-wrap:anywhere]"
+            >
+              {title}
+            </h1>
 
-              <dd className="text-right font-medium text-[#D8D2E8]">{slug}</dd>
-            </div>
+            <motion.div
+              aria-hidden="true"
+              className="mt-7 h-2 w-full max-w-3xl bg-[var(--signal)]"
+              initial={shouldReduceMotion ? false : { scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              transition={{ duration: 0.75, delay: 0.15, ease: [0.76, 0, 0.24, 1] }}
+              style={{ transformOrigin: "left" }}
+            />
 
-            <div className="flex items-start justify-between gap-6 py-4">
-              <dt className="text-sm text-[#8B849A]">Category</dt>
+            <p className="font-body mt-8 max-w-3xl text-lg leading-8 text-[var(--paper)] sm:text-xl">
+              {shortDescription}
+            </p>
+          </div>
 
-              <dd className="text-right font-medium text-[#D8D2E8]">
-                {categoryLabels[category]}
-              </dd>
-            </div>
+          <aside aria-label="Project overview" className="border-l border-[var(--paper)]/35 pl-6">
+            <p className="font-mono text-[0.65rem] uppercase tracking-[0.2em] text-[var(--paper)]">
+              Execution map
+            </p>
 
-            <div className="flex items-start justify-between gap-6 py-4">
-              <dt className="text-sm text-[#8B849A]">Sections</dt>
+            <dl className="mt-5 border-y border-[var(--paper)]/35">
+              <div className="grid grid-cols-[5.4rem_1fr] gap-4 border-b border-[var(--paper)]/25 py-4">
+                <dt className="font-mono text-[0.64rem] uppercase tracking-[0.16em] text-[var(--paper)]">
+                  Project
+                </dt>
+                <dd className="font-body text-sm font-semibold">{slug}</dd>
+              </div>
 
-              <dd className="font-medium text-[#C4B5FD]">
-                {String(sectionCount).padStart(2, "0")}
-              </dd>
-            </div>
-          </dl>
+              <div className="grid grid-cols-[5.4rem_1fr] gap-4 border-b border-[var(--paper)]/25 py-4">
+                <dt className="font-mono text-[0.64rem] uppercase tracking-[0.16em] text-[var(--paper)]">
+                  Mode
+                </dt>
+                <dd className="font-body text-sm font-semibold">
+                  {categoryLabels[category]}
+                </dd>
+              </div>
 
-          <p className="mt-5 text-sm leading-6 text-[#8B849A]">
-            Structured around real decisions, implementation details, tradeoffs,
-            validation, and lessons.
-          </p>
-        </aside>
+              <div className="grid grid-cols-[5.4rem_1fr] gap-4 py-4">
+                <dt className="font-mono text-[0.64rem] uppercase tracking-[0.16em] text-[var(--paper)]">
+                  Records
+                </dt>
+                <dd className="font-mono text-sm text-[var(--signal)]">
+                  {String(sectionCount).padStart(2, "0")}
+                </dd>
+              </div>
+            </dl>
+
+            <p className="font-body mt-5 text-sm leading-6 text-[var(--paper)]">
+              Decisions, implementation, tradeoffs, validation and lessons
+              traced end to end.
+            </p>
+          </aside>
+        </div>
       </div>
     </header>
   );

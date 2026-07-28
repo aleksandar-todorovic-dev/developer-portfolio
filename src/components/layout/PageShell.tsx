@@ -1,4 +1,6 @@
 import type { PropsWithChildren } from "react";
+import { motion, useReducedMotion } from "motion/react";
+import { useLocation } from "react-router";
 
 import { cn } from "../../utils/cn";
 import { Footer } from "./Footer";
@@ -8,27 +10,44 @@ type PageShellProps = PropsWithChildren<{
   className?: string;
 }>;
 
+function RouteTrace() {
+  const location = useLocation();
+  const shouldReduceMotion = useReducedMotion();
+
+  return (
+    <motion.div
+      key={`${location.pathname}${location.hash}`}
+      aria-hidden="true"
+      className="fixed inset-x-0 top-[var(--header-height)] z-40 h-0.5 origin-left bg-[var(--signal)]"
+      initial={shouldReduceMotion ? false : { scaleX: 0 }}
+      animate={{ scaleX: 1 }}
+      transition={{
+        duration: shouldReduceMotion ? 0 : 0.46,
+        ease: [0.22, 1, 0.36, 1],
+      }}
+    />
+  );
+}
+
 export function PageShell({ children, className = "" }: PageShellProps) {
   return (
-    <div className="flex min-h-screen flex-col bg-[#07060B] text-[#F5F2FF]">
+    <div className="route-stage flex min-h-screen flex-col bg-[var(--ink)] text-[var(--paper)]">
       <a
         href="#main-content"
-        className="fixed left-4 top-4 z-100 -translate-y-24 border border-[#8B5CF6] bg-[#181423] px-4 py-3 text-sm font-semibold text-[#F5F2FF] transition focus:translate-y-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#C4B5FD]"
+        className="fixed left-4 top-4 z-100 -translate-y-24 border-2 border-[var(--ink)] bg-[var(--signal)] px-4 py-3 font-mono text-xs font-semibold uppercase tracking-[0.1em] text-[var(--ink)] transition-transform focus:translate-y-0 focus:outline-none"
       >
         Skip to main content
       </a>
 
       <Header />
+      <RouteTrace />
 
       <main
         id="main-content"
         tabIndex={-1}
-        className={cn(
-          "mx-auto w-full max-w-6xl flex-1 px-5 py-12 sm:px-6 sm:py-14 lg:py-16",
-          className,
-        )}
+        className={cn("w-full flex-1", className)}
       >
-        {children}
+        <div className="content-frame">{children}</div>
       </main>
 
       <Footer />
