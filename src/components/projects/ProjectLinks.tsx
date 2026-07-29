@@ -12,52 +12,32 @@ const linkTypeLabels: Record<ProjectLink["type"], string> = {
 
 export function ProjectLinks({ links }: ProjectLinksProps) {
   return (
-    <section
+    <nav
       aria-label="Project links"
-      className="full-bleed mt-24 border-y border-[var(--ink)]/25 bg-[var(--paper)] text-[var(--ink)] sm:mt-32"
+      className="grid gap-3 pt-5 sm:grid-cols-[10rem_minmax(0,1fr)] sm:items-start"
     >
-      <div className="content-frame grid lg:grid-cols-[16rem_minmax(0,1fr)]">
-        <div className="py-10 lg:border-r lg:border-[var(--ink)]/25 lg:pr-10">
-          <p className="font-mono text-[0.66rem] uppercase tracking-[0.16em] text-[var(--violet-dark)]">
-            Project destinations
-          </p>
+      <p className="font-mono text-[0.62rem] uppercase tracking-[0.11em] text-[var(--ink)]/65">
+        Live and source
+      </p>
 
-          <h2 className="font-display mt-5 text-4xl leading-[0.92] font-semibold tracking-[-0.05em]">
-            View the project
-          </h2>
-        </div>
-
-        <div className="border-t border-[var(--ink)]/25 lg:border-t-0 lg:pl-10">
-          {links.map((link) => (
-            <a
-              key={link.type}
-              href={link.href}
-              target="_blank"
-              rel="noreferrer"
-              className="focus-ring group grid gap-5 border-b border-[var(--ink)]/25 py-8 last:border-b-0 sm:grid-cols-[minmax(0,1fr)_4rem] sm:items-center"
-            >
-              <span>
-                <span className="block font-mono text-[0.65rem] uppercase tracking-[0.16em] text-[var(--ink)]/65">
-                  {linkTypeLabels[link.type]}
-                </span>
-
-                <span className="font-display mt-2 block text-2xl font-semibold tracking-[-0.035em] sm:text-3xl">
-                  {link.label}
-                </span>
-              </span>
-
-              <span
-                aria-hidden="true"
-                className="flex size-12 items-center justify-center bg-[var(--violet-dark)] text-2xl text-[var(--paper)] transition-transform duration-200 group-hover:-translate-y-1 group-hover:translate-x-1"
-              >
-                ↗
-              </span>
-
-              <NewTabNotice />
-            </a>
-          ))}
-        </div>
+      <div className="grid grid-cols-2 gap-2">
+        {links.map((link) => (
+          <a
+            key={link.type}
+            href={link.href}
+            target="_blank"
+            rel="noreferrer"
+            className="focus-ring inline-flex min-h-12 items-center justify-between gap-2 border border-[var(--ink)]/35 px-3 py-2 text-sm font-semibold transition-colors duration-200 hover:border-[var(--violet-dark)] hover:text-[var(--violet-dark)]"
+          >
+            <span>
+              <span className="sr-only">{linkTypeLabels[link.type]}: </span>
+              {link.label}
+            </span>
+            <span aria-hidden="true">↗</span>
+            <NewTabNotice />
+          </a>
+        ))}
       </div>
-    </section>
+    </nav>
   );
 }

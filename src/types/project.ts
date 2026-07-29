@@ -16,6 +16,7 @@ export type ProjectLink = {
 export type ProjectEvidence = {
   label: string;
   detail: string;
+  sectionId: string;
 };
 
 export type CaseStudySectionType =

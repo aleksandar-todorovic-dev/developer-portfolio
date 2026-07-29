@@ -13,7 +13,7 @@ export function ProjectStackSection() {
           </p>
 
           <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(16rem,0.45fr)] lg:items-end">
-            <h2 className="display-balance font-display text-[clamp(2.8rem,6vw,6rem)] font-semibold leading-[0.9] tracking-[-0.055em]">
+            <h2 className="display-balance font-display text-[clamp(2.8rem,6vw,6rem)] font-semibold leading-[1.04] tracking-[-0.025em] md:leading-none md:tracking-[-0.035em]">
               The stack only
               <span className="block text-[var(--violet-text)]">
                 matters in use.

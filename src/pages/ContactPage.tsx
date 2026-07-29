@@ -109,26 +109,33 @@ const usefulContext = [
 ];
 
 function ContactLinkRow({ item }: { item: ContactLink }) {
+  const indicator =
+    item.kind === "external"
+      ? "↗"
+      : item.kind === "download"
+        ? "↓"
+        : item.kind === "internal"
+          ? "→"
+          : null;
+
   const content = (
     <>
       <span>
-        <span className="font-display block text-[clamp(2rem,4vw,3.5rem)] font-semibold leading-none tracking-[-0.05em]">
+        <span className="block font-display text-[clamp(2rem,4vw,3.5rem)] font-semibold leading-[1.02] tracking-[-0.03em]">
           {item.label}
         </span>
         <span className="mt-3 block max-w-2xl leading-7 text-[var(--paper-muted)]">
           {item.description}
         </span>
       </span>
-      <span
-        aria-hidden="true"
-        className="text-2xl text-[var(--violet-text)] transition-transform group-hover:translate-x-1 group-hover:-translate-y-1"
-      >
-        {item.kind === "external"
-          ? "↗"
-          : item.kind === "download"
-            ? "↓"
-            : "→"}
-      </span>
+      {indicator ? (
+        <span
+          aria-hidden="true"
+          className="text-2xl text-[var(--violet-text)] transition-transform group-hover:translate-x-1 group-hover:-translate-y-1 motion-reduce:group-hover:translate-x-0 motion-reduce:group-hover:translate-y-0"
+        >
+          {indicator}
+        </span>
+      ) : null}
       {item.kind === "external" ? <NewTabNotice /> : null}
     </>
   );
@@ -174,10 +181,10 @@ export function ContactPage() {
           <h1
             id="page-heading"
             tabIndex={-1}
-            className="font-display mt-10 max-w-[12ch] text-balance text-[clamp(3.5rem,8.7vw,8.8rem)] font-semibold leading-[0.84] tracking-[-0.072em] focus:outline-none"
+            className="mt-10 max-w-[14ch] text-balance font-display text-[clamp(3rem,7.8vw,7.2rem)] font-semibold leading-[0.96] tracking-[-0.032em] focus:outline-none md:leading-[0.93] md:tracking-[-0.042em]"
           >
             A useful conversation
-            <span className="block text-[var(--violet)]">
+            <span className="block text-[var(--violet-dark)]">
               starts with a clear problem.
             </span>
           </h1>
@@ -200,24 +207,18 @@ export function ContactPage() {
 
             <a
               href={primaryEmail.href}
-              className="focus-ring group border-l-4 border-[var(--violet)] bg-[var(--ink)] p-6 text-[var(--paper)] transition-colors hover:bg-[var(--ink-2)] sm:p-8"
+              className="focus-ring border-l-4 border-[var(--violet)] bg-[var(--ink)] p-6 text-[var(--paper)] transition-colors hover:bg-[var(--ink-2)] sm:p-8"
             >
               <span className="block text-sm font-semibold">Email me</span>
-              <span className="font-display mt-5 block text-[clamp(1.55rem,4.5vw,3.25rem)] font-semibold leading-[0.98] tracking-[-0.045em]">
+              <span className="mt-5 block font-display text-[clamp(1.55rem,4.5vw,3.25rem)] font-semibold leading-[1.02] tracking-[-0.03em]">
                 <span className="block">aleksandar.</span>
                 <span className="block">todorovic.rs</span>
                 <span className="block text-[var(--violet-text)]">
                   @gmail.com
                 </span>
               </span>
-              <span className="mt-6 grid grid-cols-[minmax(0,1fr)_auto] items-end gap-5 text-sm leading-6 text-[var(--paper-muted)]">
-                <span>{primaryEmail.description}</span>
-                <span
-                  aria-hidden="true"
-                  className="text-2xl text-[var(--signal)] transition-transform group-hover:translate-x-1"
-                >
-                  →
-                </span>
+              <span className="mt-6 block max-w-2xl text-sm leading-6 text-[var(--paper-muted)]">
+                {primaryEmail.description}
               </span>
             </a>
           </div>
@@ -252,7 +253,7 @@ export function ContactPage() {
             Where I can help
           </p>
           <div>
-            <h2 className="font-display max-w-4xl text-balance text-[clamp(2.8rem,5.8vw,5.8rem)] font-semibold leading-[0.91] tracking-[-0.058em]">
+            <h2 className="max-w-4xl text-balance font-display text-[clamp(2.5rem,5vw,4.9rem)] font-semibold leading-[1.02] tracking-[-0.025em] md:tracking-[-0.028em]">
               I work best when the goal is clear and the result can be tested.
             </h2>
             <p className="mt-6 max-w-3xl text-base leading-8 text-[var(--paper-muted)] sm:text-lg">
@@ -271,7 +272,7 @@ export function ContactPage() {
               <p className="text-sm font-semibold text-[var(--violet-text)] lg:pt-2">
                 {area.label}
               </p>
-              <h3 className="font-display max-w-xl text-[clamp(2rem,3.8vw,3.6rem)] font-semibold leading-[0.96] tracking-[-0.048em]">
+              <h3 className="max-w-xl font-display text-[clamp(1.9rem,3.5vw,3.25rem)] font-semibold leading-[1.04] tracking-[-0.025em]">
                 {area.title}
               </h3>
               <p className="max-w-3xl self-center leading-8 text-[var(--paper-muted)]">
@@ -288,7 +289,7 @@ export function ContactPage() {
             <p className="text-sm font-semibold text-[var(--violet-dark)]">
               Your first message
             </p>
-            <h2 className="font-display mt-5 max-w-xl text-[clamp(2.8rem,5.3vw,5.3rem)] font-semibold leading-[0.92] tracking-[-0.055em]">
+            <h2 className="mt-5 max-w-xl font-display text-[clamp(2.5rem,4.8vw,4.7rem)] font-semibold leading-[1.02] tracking-[-0.025em] md:tracking-[-0.028em]">
               A short first message is enough.
             </h2>
             <p className="mt-6 max-w-xl leading-8 text-[var(--ink-2)]">
@@ -321,7 +322,7 @@ export function ContactPage() {
             Other useful links
           </p>
           <div>
-            <h2 className="font-display max-w-4xl text-balance text-[clamp(2.8rem,5.8vw,5.8rem)] font-semibold leading-[0.91] tracking-[-0.058em]">
+            <h2 className="max-w-4xl text-balance font-display text-[clamp(2.5rem,5vw,4.9rem)] font-semibold leading-[1.02] tracking-[-0.025em] md:tracking-[-0.028em]">
               Review the work or continue the conversation elsewhere.
             </h2>
             <p className="mt-6 max-w-3xl text-base leading-8 text-[var(--paper-muted)] sm:text-lg">

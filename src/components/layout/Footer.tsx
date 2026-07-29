@@ -1,6 +1,5 @@
 import { Link } from "react-router";
 
-import { TracePath } from "../motion/TracePath";
 import { NewTabNotice } from "../ui";
 
 const footerLinks = [
@@ -25,30 +24,17 @@ export function Footer() {
   return (
     <footer className="mt-24 border-t border-[var(--line-strong)] bg-[var(--ink)] text-[var(--paper)] sm:mt-32">
       <div className="content-frame py-10 sm:py-14">
-        <div className="grid gap-12 border-b border-[var(--line-strong)] pb-12 lg:grid-cols-[minmax(0,1.2fr)_minmax(20rem,0.8fr)] lg:items-end">
-          <div>
-            <p className="text-sm text-[var(--paper-muted)]">
-              Aleksandar Todorovic · Frontend developer
-            </p>
+        <div className="border-b border-[var(--line-strong)] pb-12">
+          <p className="text-sm text-[var(--paper-muted)]">
+            Aleksandar Todorovic · Frontend developer
+          </p>
 
-            <h2 className="mt-5 max-w-5xl font-display text-[clamp(3rem,7vw,7rem)] font-semibold leading-[0.88] tracking-[-0.065em]">
-              From an unclear problem
-              <span className="block text-[var(--violet-text)]">
-                to something you can inspect.
-              </span>
-            </h2>
-          </div>
-
-          <div>
-            <TracePath
-              variant="complete"
-              className="h-24 text-[var(--violet-text)]"
-            />
-            <p className="mt-4 max-w-md text-sm leading-6 text-[var(--paper-muted)]">
-              The case studies show the decisions, tradeoffs and tested results
-              in between.
-            </p>
-          </div>
+          <h2 className="mt-5 max-w-5xl font-display text-[clamp(2.75rem,5.8vw,5.4rem)] font-semibold leading-[1.02] tracking-[-0.025em] md:leading-none md:tracking-[-0.035em]">
+            From an unclear problem
+            <span className="block text-[var(--violet-text)]">
+              to a result you can inspect.
+            </span>
+          </h2>
         </div>
 
         <div className="grid border-l border-t border-[var(--line-strong)] sm:grid-cols-2">
@@ -60,12 +46,12 @@ export function Footer() {
               See the decisions and the finished work
             </span>
             <span className="flex items-end justify-between gap-6">
-              <span className="font-display text-[clamp(2.2rem,4vw,4rem)] font-semibold leading-none tracking-[-0.05em]">
+              <span className="font-display text-[clamp(2.2rem,4vw,4rem)] font-semibold leading-[1.02] tracking-[-0.03em]">
                 Projects
               </span>
               <span
                 aria-hidden="true"
-                className="text-2xl text-[var(--violet-text)] transition-transform group-hover:translate-x-1"
+                className="text-2xl text-[var(--violet-text)] transition-transform group-hover:translate-x-1 motion-reduce:group-hover:translate-x-0"
               >
                 →
               </span>
@@ -80,12 +66,12 @@ export function Footer() {
               Share a role, project or clearly defined task
             </span>
             <span className="flex items-end justify-between gap-6">
-              <span className="font-display text-[clamp(2.2rem,4vw,4rem)] font-semibold leading-none tracking-[-0.05em]">
+              <span className="font-display text-[clamp(2.2rem,4vw,4rem)] font-semibold leading-[1.02] tracking-[-0.03em]">
                 Contact
               </span>
               <span
                 aria-hidden="true"
-                className="text-2xl text-[var(--signal)] transition-transform group-hover:translate-x-1"
+                className="text-2xl text-[var(--violet-text)] transition-transform group-hover:translate-x-1 motion-reduce:group-hover:translate-x-0"
               >
                 →
               </span>
@@ -105,7 +91,12 @@ export function Footer() {
                     download={item.download}
                     className="focus-ring border-b border-transparent py-2 text-sm font-semibold hover:border-[var(--paper)]"
                   >
-                    {item.label}
+                    <span className="inline-flex items-center gap-2">
+                      {item.label}
+                      <span aria-hidden="true">
+                        {item.download ? "↓" : "↗"}
+                      </span>
+                    </span>
                     {item.external ? <NewTabNotice /> : null}
                   </a>
                 </li>

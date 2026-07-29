@@ -1,7 +1,7 @@
 import { Link } from "react-router";
 
-import { TracePath } from "../components/motion/TracePath";
-import type { ProjectSlug } from "../types/project";
+import { ProjectTitleText } from "../components/projects/ProjectTitleText";
+import { projects } from "../data/projects";
 
 type ProfileDetail = {
   label: string;
@@ -10,12 +10,6 @@ type ProfileDetail = {
 
 type WorkingPrinciple = {
   label: string;
-  title: string;
-  description: string;
-};
-
-type ProjectLink = {
-  slug: ProjectSlug;
   title: string;
   description: string;
 };
@@ -60,27 +54,6 @@ const workingPrinciples: WorkingPrinciple[] = [
   },
 ];
 
-const projectLinks: ProjectLink[] = [
-  {
-    slug: "liferecompiled",
-    title: "LifeRecompiled",
-    description:
-      "React and Firebase engineering, backend-connected flows and resilient product behavior.",
-  },
-  {
-    slug: "training-app",
-    title: "Training App",
-    description:
-      "Product thinking, mobile-first execution and a focused local-first MVP.",
-  },
-  {
-    slug: "taskflow",
-    title: "TaskFlow",
-    description:
-      "Practical React and TypeScript UI architecture, typed state and drag-and-drop behavior.",
-  },
-];
-
 export function AboutPage() {
   return (
     <>
@@ -100,10 +73,10 @@ export function AboutPage() {
               <h1
                 id="page-heading"
                 tabIndex={-1}
-                className="font-display max-w-[12ch] text-balance text-[clamp(3.5rem,8.7vw,8.8rem)] font-semibold leading-[0.84] tracking-[-0.072em] focus:outline-none"
+                className="max-w-[13ch] text-balance font-display text-[clamp(3rem,7.8vw,7.2rem)] font-semibold leading-[0.96] tracking-[-0.032em] focus:outline-none md:leading-[0.93] md:tracking-[-0.042em]"
               >
                 Frontend is a change of direction,
-                <span className="block text-[var(--violet)]">
+                <span className="block text-[var(--violet-dark)]">
                   not a clean restart.
                 </span>
               </h1>
@@ -152,11 +125,6 @@ export function AboutPage() {
               </dl>
             </aside>
           </div>
-
-          <TracePath
-            variant="clarity"
-            className="mt-10 h-28 text-[var(--violet)] sm:mt-14 sm:h-36"
-          />
         </div>
       </section>
 
@@ -166,7 +134,7 @@ export function AboutPage() {
             The route here
           </p>
           <div>
-            <h2 className="font-display max-w-4xl text-balance text-[clamp(2.8rem,5.8vw,5.8rem)] font-semibold leading-[0.91] tracking-[-0.058em]">
+            <h2 className="max-w-4xl text-balance font-display text-[clamp(2.5rem,5vw,4.9rem)] font-semibold leading-[1.02] tracking-[-0.025em] md:tracking-[-0.028em]">
               Earlier work still shapes how I build software now.
             </h2>
             <p className="mt-6 max-w-3xl text-base leading-8 text-[var(--paper-muted)] sm:text-lg">
@@ -186,7 +154,7 @@ export function AboutPage() {
               <p className="text-sm font-semibold text-[var(--violet-text)] lg:pt-2">
                 {principle.label}
               </p>
-              <h3 className="font-display max-w-xl text-[clamp(2rem,3.8vw,3.6rem)] font-semibold leading-[0.96] tracking-[-0.048em]">
+              <h3 className="max-w-xl font-display text-[clamp(1.9rem,3.5vw,3.25rem)] font-semibold leading-[1.04] tracking-[-0.025em]">
                 {principle.title}
               </h3>
               <p className="max-w-3xl self-center leading-8 text-[var(--paper-muted)]">
@@ -203,7 +171,7 @@ export function AboutPage() {
             Selected projects
           </p>
           <div>
-            <h2 className="font-display max-w-4xl text-balance text-[clamp(2.8rem,5.8vw,5.8rem)] font-semibold leading-[0.91] tracking-[-0.058em]">
+            <h2 className="max-w-4xl text-balance font-display text-[clamp(2.5rem,5vw,4.9rem)] font-semibold leading-[1.02] tracking-[-0.025em] md:tracking-[-0.028em]">
               Three projects show three different kinds of work.
             </h2>
             <p className="mt-6 max-w-3xl text-base leading-8 text-[var(--paper-muted)] sm:text-lg">
@@ -214,7 +182,7 @@ export function AboutPage() {
         </header>
 
         <ul className="mt-12 border-y border-[var(--line-strong)] sm:mt-16">
-          {projectLinks.map((project) => (
+          {projects.map((project) => (
             <li
               key={project.slug}
               className="border-b border-[var(--line)] last:border-b-0"
@@ -223,21 +191,15 @@ export function AboutPage() {
                 to={`/projects/${project.slug}`}
                 className="focus-ring group grid gap-5 py-8 sm:grid-cols-[minmax(0,0.7fr)_minmax(18rem,1fr)_auto] sm:items-center sm:gap-10"
               >
-                <h3
-                  className={
-                    project.slug === "liferecompiled"
-                      ? "font-display whitespace-nowrap text-[clamp(1.8rem,6.4vw,3.8rem)] font-semibold leading-none tracking-[-0.055em]"
-                      : "font-display text-[clamp(2.2rem,6.4vw,3.8rem)] font-semibold leading-none tracking-[-0.055em]"
-                  }
-                >
-                  {project.title}
+                <h3 className="project-word font-display text-[clamp(2rem,5.8vw,3.5rem)] font-semibold leading-[1.02] tracking-[-0.03em]">
+                  <ProjectTitleText title={project.title} />
                 </h3>
                 <p className="max-w-2xl leading-7 text-[var(--paper-muted)]">
-                  {project.description}
+                  {project.proofSummary}
                 </p>
                 <span
                   aria-hidden="true"
-                  className="text-2xl text-[var(--violet-text)] transition-transform group-hover:translate-x-1"
+                  className="text-2xl text-[var(--violet-text)] transition-transform group-hover:translate-x-1 motion-reduce:group-hover:translate-x-0"
                 >
                   →
                 </span>
@@ -253,7 +215,7 @@ export function AboutPage() {
             <p className="text-sm font-semibold text-[var(--violet-dark)]">
               Where to go next
             </p>
-            <h2 className="font-display mt-5 max-w-4xl text-balance text-[clamp(2.8rem,5.8vw,5.8rem)] font-semibold leading-[0.91] tracking-[-0.058em]">
+            <h2 className="mt-5 max-w-4xl text-balance font-display text-[clamp(2.5rem,5vw,4.9rem)] font-semibold leading-[1.02] tracking-[-0.025em] md:tracking-[-0.028em]">
               The work is easier to judge through the projects than through a
               long biography.
             </h2>

@@ -13,10 +13,10 @@ export function ContactVerificationSection() {
               Work and contact
             </p>
 
-            <h2 className="mt-5 font-display text-[clamp(3rem,6.2vw,6.4rem)] font-semibold leading-[0.88] tracking-[-0.06em]">
-              THE WORK
+            <h2 className="mt-5 font-display text-[clamp(2.8rem,5.6vw,5.6rem)] font-semibold leading-[1.04] tracking-[-0.025em] md:leading-none md:tracking-[-0.035em]">
+              The work
               <span className="block text-[var(--violet-text)]">
-                IS OPEN TO INSPECT.
+                is open to inspect.
               </span>
             </h2>
 
@@ -28,10 +28,18 @@ export function ContactVerificationSection() {
 
           <ul className="border-t border-[var(--line-strong)]">
             {verificationLinks.map((item) => {
+              const isEmail = item.href.startsWith("mailto:");
+              const indicator = item.download
+                ? "↓"
+                : item.external
+                  ? "↗"
+                  : isEmail
+                    ? null
+                    : "→";
               const content = (
                 <>
                   <span>
-                    <span className="block font-display text-2xl font-semibold tracking-[-0.035em] sm:text-3xl">
+                    <span className="block font-display text-2xl font-semibold tracking-[-0.025em] sm:text-3xl">
                       {item.label}
                     </span>
                     <span className="mt-2 block max-w-2xl text-sm leading-6 text-[var(--paper-muted)]">
@@ -39,16 +47,14 @@ export function ContactVerificationSection() {
                     </span>
                   </span>
 
-                  <span
-                    aria-hidden="true"
-                    className={`text-2xl transition-transform group-hover:translate-x-2 ${
-                      item.href.startsWith("mailto:")
-                        ? "text-[var(--signal)]"
-                        : "text-[var(--violet-text)]"
-                    }`}
-                  >
-                    {item.download ? "↓" : item.external ? "↗" : "→"}
-                  </span>
+                  {indicator ? (
+                    <span
+                      aria-hidden="true"
+                      className="text-2xl text-[var(--violet-text)] transition-transform group-hover:translate-x-2 motion-reduce:group-hover:translate-x-0"
+                    >
+                      {indicator}
+                    </span>
+                  ) : null}
 
                   {item.external ? <NewTabNotice /> : null}
                 </>
@@ -61,7 +67,7 @@ export function ContactVerificationSection() {
                 >
                   {item.external ||
                   item.download ||
-                  item.href.startsWith("mailto:") ? (
+                  isEmail ? (
                     <a
                       href={item.href}
                       target={item.external ? "_blank" : undefined}

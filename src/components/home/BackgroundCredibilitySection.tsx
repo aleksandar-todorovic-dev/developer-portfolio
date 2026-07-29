@@ -10,7 +10,7 @@ export function BackgroundCredibilitySection() {
           </p>
 
           <div>
-            <h2 className="display-balance max-w-5xl font-display text-[clamp(2.8rem,6vw,6rem)] font-semibold leading-[0.9] tracking-[-0.055em]">
+            <h2 className="display-balance max-w-5xl font-display text-[clamp(2.8rem,6vw,6rem)] font-semibold leading-[1.04] tracking-[-0.025em] md:leading-[1] md:tracking-[-0.035em]">
               The way I work
               <span className="block text-[var(--violet-dark)]">
                 started before code.

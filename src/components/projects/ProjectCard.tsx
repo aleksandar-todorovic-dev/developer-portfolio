@@ -1,23 +1,12 @@
-import { motion, useReducedMotion } from "motion/react";
 import { Link } from "react-router";
 
 import type { Project, ProjectSlug } from "../../types/project";
-import { TracePath } from "../motion/TracePath";
-import { projectTraceVariants } from "../motion/projectTraceVariants";
 import { getProjectScreenshotDimensions } from "./projectScreenshotDimensions";
-
-type ProjectCardVariant = "compact" | "detailed";
+import { ProjectTitleText } from "./ProjectTitleText";
 
 type ProjectCardProps = {
   project: Project;
-  variant?: ProjectCardVariant;
-  index?: number;
-};
-
-const projectOrder: Record<ProjectSlug, number> = {
-  liferecompiled: 0,
-  "training-app": 1,
-  taskflow: 2,
+  index: number;
 };
 
 const chapterStyles: Record<
@@ -26,198 +15,111 @@ const chapterStyles: Record<
     scene: string;
     muted: string;
     line: string;
+    accent: string;
     action: string;
+    grid: string;
+    contentOrder: string;
+    mediaOrder: string;
     imageStage: string;
-    trace: string;
   }
 > = {
   liferecompiled: {
     scene: "bg-[var(--paper)] text-[var(--ink)]",
-    muted: "text-[var(--ink)]/65",
+    muted: "text-[var(--ink)]/68",
     line: "border-[var(--ink)]/25",
+    accent: "text-[var(--violet-dark)]",
     action: "bg-[var(--violet-dark)] text-[var(--paper)]",
-    imageStage: "bg-[var(--ink)]",
-    trace: "text-[var(--violet-dark)]",
+    grid: "xl:grid-cols-[minmax(26rem,1.12fr)_minmax(0,0.88fr)]",
+    contentOrder: "",
+    mediaOrder: "",
+    imageStage: "bg-[var(--ink)] p-2 sm:p-3",
   },
   "training-app": {
     scene: "bg-[var(--ink-2)] text-[var(--paper)]",
     muted: "text-[var(--paper-muted)]",
     line: "border-[var(--line-strong)]",
+    accent: "text-[var(--violet-text)]",
     action: "bg-[var(--paper)] text-[var(--ink)]",
-    imageStage: "bg-[var(--ink)]",
-    trace: "text-[var(--violet-text)]",
+    grid: "xl:grid-cols-[minmax(0,1.06fr)_minmax(22rem,0.94fr)]",
+    contentOrder: "xl:order-2",
+    mediaOrder: "xl:order-1",
+    imageStage:
+      "flex min-h-132 items-end justify-center bg-[var(--ink)] px-8 pt-12 sm:min-h-160",
   },
   taskflow: {
     scene: "bg-[var(--paper)] text-[var(--ink)]",
-    muted: "text-[var(--ink)]/65",
+    muted: "text-[var(--ink)]/68",
     line: "border-[var(--ink)]/25",
+    accent: "text-[var(--violet-dark)]",
     action: "bg-[var(--ink)] text-[var(--paper)]",
-    imageStage: "bg-[var(--ink-2)]",
-    trace: "text-[var(--violet-dark)]",
+    grid: "xl:grid-cols-[minmax(21rem,0.8fr)_minmax(0,1.2fr)]",
+    contentOrder: "",
+    mediaOrder: "",
+    imageStage: "bg-[var(--ink-2)] p-2 sm:p-3",
   },
 };
 
-export function ProjectCard({
-  project,
-  variant = "detailed",
-  index = projectOrder[project.slug],
-}: ProjectCardProps) {
-  const shouldReduceMotion = useReducedMotion();
-  const isDetailed = variant === "detailed";
+export function ProjectCard({ project, index }: ProjectCardProps) {
   const number = String(index + 1).padStart(2, "0");
   const styles = chapterStyles[project.slug];
   const [coverScreenshot] = project.screenshots;
   const dimensions = coverScreenshot
     ? getProjectScreenshotDimensions(coverScreenshot.src)
     : undefined;
-
-  if (!isDetailed) {
-    return (
-      <article
-        className={`group relative flex h-full flex-col overflow-hidden border-t ${styles.line} ${styles.scene} p-6 sm:p-7`}
-      >
-        <div className="flex items-center justify-between gap-5 font-mono text-[0.68rem] uppercase tracking-[0.18em]">
-          <span>{project.proofLabel}</span>
-          <span>{number} / 03</span>
-        </div>
-
-        <h3 className="project-word mt-8 font-display text-[clamp(2.3rem,4vw,4.4rem)] font-semibold leading-[0.9] tracking-[-0.055em]">
-          {project.title}
-        </h3>
-
-        <p className={`font-body mt-6 leading-7 ${styles.muted}`}>
-          {project.shortDescription}
-        </p>
-
-        <div className={`mt-7 border-l-2 pl-4 ${styles.line}`}>
-          <p className="font-mono text-[0.66rem] uppercase tracking-[0.2em]">
-            Key decision
-          </p>
-          <p className={`font-body mt-3 text-sm leading-6 ${styles.muted}`}>
-            {project.keyDecision}
-          </p>
-        </div>
-
-        <Link
-          to={`/projects/${project.slug}`}
-          className="focus-ring mt-auto flex items-center justify-between gap-4 border-t border-current/25 pt-6 font-mono text-xs uppercase tracking-[0.16em]"
-        >
-          Read case study
-          <span
-            aria-hidden="true"
-            className="text-xl transition-transform duration-200 group-hover:translate-x-2"
-          >
-            →
-          </span>
-        </Link>
-      </article>
-    );
-  }
-
-  const isReversed = index % 2 === 1;
   const isMobileCover = coverScreenshot?.format === "mobile";
 
   return (
     <article
-      className={`relative border-b ${styles.line} ${styles.scene} px-5 py-16 sm:px-8 sm:py-24 lg:px-12 lg:py-28`}
+      className={`border-b px-5 py-14 sm:px-8 sm:py-20 lg:px-12 lg:py-24 ${styles.line} ${styles.scene}`}
     >
-      <div className={`mb-10 grid gap-5 border-b pb-6 ${styles.line} sm:grid-cols-[minmax(0,1fr)_minmax(14rem,0.65fr)] sm:items-center`}>
-        <div className="flex items-center justify-between gap-5 font-mono text-[0.68rem] uppercase tracking-[0.16em] sm:block">
-          <span>Project {number} of 03</span>
-          <span className={`sm:mt-2 sm:block ${styles.muted}`}>
-            {project.proofLabel}
-          </span>
-        </div>
+      <header
+        className={`flex flex-wrap items-center justify-between gap-4 border-b pb-5 font-mono text-[0.63rem] uppercase tracking-[0.11em] ${styles.line}`}
+      >
+        <span>Project {number} of 03</span>
+        <span className={styles.muted}>{project.proofLabel}</span>
+      </header>
 
-        <TracePath
-          variant={projectTraceVariants[project.slug]}
-          className={`h-16 ${styles.trace}`}
-        />
-      </div>
-
-      <div className="grid gap-10 lg:grid-cols-12 lg:items-start lg:gap-8">
-        <div
-          className={`min-w-0 lg:col-span-5 ${
-            isReversed ? "lg:col-start-8 lg:row-start-1" : ""
-          }`}
-        >
-          <h2 className="project-word font-display text-[clamp(2.55rem,12vw,7.5rem)] font-semibold leading-[0.82] tracking-[-0.07em]">
-            {project.title}
+      <div
+        className={`grid gap-10 pt-10 xl:items-center xl:gap-14 ${styles.grid}`}
+      >
+        <div className={styles.contentOrder}>
+          <h2 className="project-word font-display text-[clamp(3rem,7.3vw,6.6rem)] font-semibold leading-[0.94] tracking-[-0.035em] [font-stretch:100%]">
+            <ProjectTitleText title={project.title} />
           </h2>
 
-          <p className={`font-body mt-7 max-w-xl text-lg leading-8 ${styles.muted}`}>
+          <p
+            className={`mt-6 max-w-2xl text-base leading-7 sm:text-lg sm:leading-8 ${styles.muted}`}
+          >
             {project.shortDescription}
           </p>
 
-          <div className={`mt-9 border-t pt-6 ${styles.line}`}>
-            <p className="font-mono text-[0.66rem] uppercase tracking-[0.2em]">
+          <div className={`mt-8 border-t pt-6 ${styles.line}`}>
+            <p
+              className={`font-mono text-[0.61rem] uppercase tracking-[0.1em] ${styles.accent}`}
+            >
               What it demonstrates
             </p>
-            <p className="font-body mt-4 max-w-xl leading-7">
+            <p className="mt-4 max-w-2xl leading-7">
               {project.proofSummary}
             </p>
           </div>
-        </div>
 
-        {coverScreenshot ? (
-          <Link
-            to={`/projects/${project.slug}`}
-            aria-label={`View ${project.title} case study`}
-            className={`focus-ring group relative overflow-hidden lg:col-span-7 lg:row-span-2 ${
-              isReversed ? "lg:col-start-1 lg:row-start-1" : ""
-            } ${styles.imageStage} ${
-              isMobileCover
-                ? "flex min-h-125 items-end justify-center px-10 pt-12 sm:min-h-150"
-                : "p-2 sm:p-3"
-            }`}
-          >
+          <dl className={`mt-8 border-y ${styles.line}`}>
             <div
-              aria-hidden="true"
-              className="absolute left-0 top-0 z-10 border-b border-r border-[var(--paper)]/30 px-3 py-2 font-mono text-[0.6rem] uppercase tracking-[0.18em] text-[var(--paper)]"
+              className={`grid gap-3 border-b py-5 sm:grid-cols-[7rem_1fr] ${styles.line}`}
             >
-              {coverScreenshot.label}
-            </div>
-
-            <motion.img
-              src={coverScreenshot.src}
-              alt={coverScreenshot.alt}
-              loading="lazy"
-              decoding="async"
-              width={dimensions?.width}
-              height={dimensions?.height}
-              className={
-                isMobileCover
-                  ? "relative w-full max-w-67 object-contain object-bottom shadow-[-16px_16px_0_var(--violet)]"
-                  : "relative h-full w-full object-cover transition-[filter] duration-300 group-hover:contrast-110"
-              }
-              initial={shouldReduceMotion ? false : { scale: 1.06 }}
-              whileInView={{ scale: 1 }}
-              whileHover={shouldReduceMotion ? undefined : { scale: 1.018 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1] }}
-            />
-          </Link>
-        ) : null}
-
-        <div
-          className={`lg:col-span-5 ${
-            isReversed ? "lg:col-start-8" : ""
-          }`}
-        >
-          <dl className={`border-y ${styles.line}`}>
-            <div className={`grid gap-3 border-b py-5 sm:grid-cols-[8rem_1fr] ${styles.line}`}>
-              <dt className="font-mono text-[0.66rem] uppercase tracking-[0.18em]">
+              <dt className="font-mono text-[0.61rem] uppercase tracking-[0.1em]">
                 Decision
               </dt>
-              <dd className={`font-body text-sm leading-6 ${styles.muted}`}>
+              <dd className={`text-sm leading-6 ${styles.muted}`}>
                 {project.keyDecision}
               </dd>
             </div>
-            <div className="grid gap-3 py-5 sm:grid-cols-[8rem_1fr]">
-              <dt className="font-mono text-[0.66rem] uppercase tracking-[0.18em]">
+            <div className="grid gap-3 py-5 sm:grid-cols-[7rem_1fr]">
+              <dt className="font-mono text-[0.61rem] uppercase tracking-[0.1em]">
                 Tradeoff
               </dt>
-              <dd className={`font-body text-sm leading-6 ${styles.muted}`}>
+              <dd className={`text-sm leading-6 ${styles.muted}`}>
                 {project.tradeoff}
               </dd>
             </div>
@@ -230,7 +132,7 @@ export function ProjectCard({
             {project.techStack.map((technology) => (
               <li
                 key={technology}
-                className="font-mono text-[0.65rem] uppercase tracking-[0.16em]"
+                className="font-mono text-[0.61rem] uppercase tracking-[0.08em]"
               >
                 {technology}
               </li>
@@ -239,14 +141,52 @@ export function ProjectCard({
 
           <Link
             to={`/projects/${project.slug}`}
-            className={`focus-ring mt-10 flex w-full items-center justify-between gap-5 px-5 py-4 font-mono text-xs uppercase tracking-[0.18em] transition-colors duration-200 ${styles.action}`}
+            className={`focus-ring mt-9 flex min-h-12 w-full items-center justify-between gap-5 px-5 py-3 text-sm font-semibold transition-colors ${styles.action}`}
           >
             Read full case study
             <span aria-hidden="true" className="text-xl">
-              ↗
+              →
             </span>
           </Link>
         </div>
+
+        {coverScreenshot ? (
+          <figure className={styles.mediaOrder}>
+            <Link
+              to={`/projects/${project.slug}`}
+              aria-label={`View ${project.title} case study`}
+              className={`focus-ring group relative block overflow-hidden border ${styles.line} ${styles.imageStage}`}
+            >
+              <span
+                aria-hidden="true"
+                className="absolute left-0 top-0 z-10 border-b border-r border-[var(--paper)]/30 bg-[var(--ink)] px-3 py-2 font-mono text-[0.56rem] uppercase tracking-[0.1em] text-[var(--paper)]"
+              >
+                {coverScreenshot.label}
+              </span>
+
+              <img
+                src={coverScreenshot.src}
+                alt={coverScreenshot.alt}
+                loading="lazy"
+                decoding="async"
+                width={dimensions?.width}
+                height={dimensions?.height}
+                style={isMobileCover ? { maxWidth: "22rem" } : undefined}
+                className={
+                  isMobileCover
+                    ? "block h-auto w-full object-contain"
+                    : "block h-auto w-full"
+                }
+              />
+            </Link>
+
+            <figcaption
+              className={`mt-4 max-w-3xl text-sm leading-6 ${styles.muted}`}
+            >
+              {coverScreenshot.caption}
+            </figcaption>
+          </figure>
+        ) : null}
       </div>
     </article>
   );

@@ -90,7 +90,7 @@ export function ProjectImageLightbox({
           onClose();
         }
       }}
-      initial={shouldReduceMotion ? false : { opacity: 0 }}
+      initial={false}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.18 }}
     >

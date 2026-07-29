@@ -1,9 +1,8 @@
 import { Link } from "react-router";
 
 import type { Project, ProjectSlug } from "../../types/project";
-import { MediaReveal } from "../motion/MediaReveal";
-import { TracePath } from "../motion/TracePath";
-import { projectTraceVariants } from "../motion/projectTraceVariants";
+import { getProjectScreenshotDimensions } from "../projects/projectScreenshotDimensions";
+import { ProjectTitleText } from "../projects/ProjectTitleText";
 
 type FeaturedProjectChapterProps = {
   project: Project;
@@ -15,22 +14,11 @@ type ChapterStyle = {
   line: string;
   muted: string;
   accent: string;
-  trace: string;
   grid: string;
-  content: string;
-  media: string;
+  contentOrder: string;
+  mediaOrder: string;
+  stage: string;
 };
-
-const screenshotDimensions = {
-  desktop: {
-    width: 1907,
-    height: 940,
-  },
-  mobile: {
-    width: 1170,
-    height: 2532,
-  },
-} as const;
 
 const chapterStyles: Record<ProjectSlug, ChapterStyle> = {
   liferecompiled: {
@@ -38,31 +26,33 @@ const chapterStyles: Record<ProjectSlug, ChapterStyle> = {
     line: "border-[var(--ink)]/25",
     muted: "text-[var(--ink)]/70",
     accent: "text-[var(--violet-dark)]",
-    trace: "text-[var(--violet-dark)]",
-    grid: "lg:grid-cols-[minmax(18rem,0.72fr)_minmax(0,1.28fr)]",
-    content: "",
-    media: "screen-stage",
+    grid: "xl:grid-cols-[minmax(20rem,0.74fr)_minmax(0,1.26fr)]",
+    contentOrder: "",
+    mediaOrder: "",
+    stage:
+      "overflow-hidden border border-[var(--ink)]/25 bg-[var(--ink)] p-2 sm:p-3",
   },
   "training-app": {
     scene: "bg-[var(--ink-2)] text-[var(--paper)]",
     line: "border-[var(--line-strong)]",
     muted: "text-[var(--paper-muted)]",
     accent: "text-[var(--violet-text)]",
-    trace: "text-[var(--violet-text)]",
-    grid: "lg:grid-cols-[minmax(0,1.15fr)_minmax(18rem,0.85fr)]",
-    content: "lg:order-2",
-    media:
-      "relative flex min-h-[34rem] items-end justify-center overflow-hidden border border-[var(--line-strong)] bg-[var(--ink)] px-8 pt-12 lg:order-1",
+    grid: "xl:grid-cols-[minmax(0,1.12fr)_minmax(20rem,0.88fr)]",
+    contentOrder: "xl:order-2",
+    mediaOrder: "xl:order-1",
+    stage:
+      "flex min-h-128 items-end justify-center overflow-hidden border border-[var(--line-strong)] bg-[var(--ink)] px-6 pt-10 sm:min-h-152 sm:px-10",
   },
   taskflow: {
     scene: "bg-[var(--paper)] text-[var(--ink)]",
     line: "border-[var(--ink)]/25",
     muted: "text-[var(--ink)]/70",
     accent: "text-[var(--violet-dark)]",
-    trace: "text-[var(--violet-dark)]",
-    grid: "lg:grid-cols-[minmax(0,0.74fr)_minmax(20rem,1.26fr)]",
-    content: "lg:order-2",
-    media: "screen-stage lg:order-1",
+    grid: "xl:grid-cols-[minmax(0,1.16fr)_minmax(20rem,0.84fr)]",
+    contentOrder: "xl:order-2",
+    mediaOrder: "xl:order-1",
+    stage:
+      "overflow-hidden border border-[var(--ink)]/25 bg-[var(--ink-2)] p-2 sm:p-3",
   },
 };
 
@@ -84,7 +74,7 @@ export function FeaturedProjectChapter({
     return null;
   }
 
-  const dimensions = screenshotDimensions[screenshot.format];
+  const dimensions = getProjectScreenshotDimensions(screenshot.src);
   const isMobileScreenshot = screenshot.format === "mobile";
 
   return (
@@ -92,43 +82,31 @@ export function FeaturedProjectChapter({
       className={`full-bleed overflow-hidden border-t ${styles.line} ${styles.scene}`}
     >
       <div className="content-frame py-12 sm:py-16 lg:py-22">
-        <div
-          className={`flex flex-wrap items-center justify-between gap-4 border-b pb-4 ${styles.line}`}
+        <header
+          className={`grid gap-5 border-b pb-8 ${styles.line} lg:grid-cols-[12rem_minmax(0,1fr)] lg:items-start`}
         >
-          <p className="font-mono text-[0.66rem] uppercase tracking-[0.14em]">
-            {project.proofLabel}
-          </p>
-          <p className={`font-mono text-[0.64rem] ${styles.muted}`}>
-            Project {number} of 03
-          </p>
-        </div>
+          <div className="flex items-center justify-between gap-5 font-mono text-[0.63rem] uppercase tracking-[0.11em] lg:block">
+            <p>{project.proofLabel}</p>
+            <p className={`lg:mt-2 ${styles.muted}`}>
+              Project {number} of 03
+            </p>
+          </div>
 
-        <div className="grid gap-5 py-5 sm:grid-cols-[minmax(0,1fr)_minmax(16rem,0.7fr)] sm:items-center">
-          <p className="max-w-2xl font-display text-xl font-semibold leading-tight tracking-[-0.03em] sm:text-2xl">
+          <p className="max-w-4xl font-display text-[clamp(1.8rem,4vw,3.6rem)] font-semibold leading-[1.05] tracking-[-0.02em] [font-stretch:100%]">
             {projectQuestions[project.slug]}
           </p>
-          <TracePath
-            variant={projectTraceVariants[project.slug]}
-            className={`h-20 ${styles.trace}`}
-          />
-        </div>
+        </header>
 
         <div
-          className={`grid min-h-[40rem] gap-10 border-t pt-10 lg:items-center ${styles.line} ${styles.grid}`}
+          className={`grid gap-10 pt-10 xl:items-center xl:gap-14 ${styles.grid}`}
         >
-          <div className={styles.content}>
-            <h3
-              className={`project-word font-display font-semibold leading-[0.84] tracking-[-0.075em] ${
-                project.slug === "liferecompiled"
-                  ? "text-[clamp(2.15rem,6.4vw,5.8rem)]"
-                  : "text-[clamp(2.15rem,12.7vw,7.2rem)]"
-              }`}
-            >
-              {project.title}
+          <div className={styles.contentOrder}>
+            <h3 className="project-word font-display text-[clamp(3rem,8vw,7rem)] font-semibold leading-[0.94] tracking-[-0.035em] [font-stretch:100%]">
+              <ProjectTitleText title={project.title} />
             </h3>
 
             <p
-              className={`mt-6 max-w-2xl text-base leading-7 sm:text-lg ${styles.muted}`}
+              className={`mt-6 max-w-2xl text-base leading-7 sm:text-lg sm:leading-8 ${styles.muted}`}
             >
               {project.shortDescription}
             </p>
@@ -138,7 +116,7 @@ export function FeaturedProjectChapter({
                 className={`grid gap-3 border-b py-5 sm:grid-cols-[7rem_minmax(0,1fr)] ${styles.line}`}
               >
                 <dt
-                  className={`font-mono text-[0.64rem] uppercase tracking-[0.14em] ${styles.accent}`}
+                  className={`font-mono text-[0.62rem] uppercase tracking-[0.11em] ${styles.accent}`}
                 >
                   Decision
                 </dt>
@@ -146,7 +124,7 @@ export function FeaturedProjectChapter({
               </div>
               <div className="grid gap-3 py-5 sm:grid-cols-[7rem_minmax(0,1fr)]">
                 <dt
-                  className={`font-mono text-[0.64rem] uppercase tracking-[0.14em] ${styles.accent}`}
+                  className={`font-mono text-[0.62rem] uppercase tracking-[0.11em] ${styles.accent}`}
                 >
                   Constraint
                 </dt>
@@ -156,7 +134,7 @@ export function FeaturedProjectChapter({
               </div>
             </dl>
 
-            <ul className="mt-6 flex flex-wrap gap-x-5 gap-y-2 font-mono text-[0.64rem] uppercase tracking-[0.09em]">
+            <ul className="mt-6 flex flex-wrap gap-x-5 gap-y-2 font-mono text-[0.61rem] uppercase tracking-[0.08em]">
               {project.techStack.map((technology) => (
                 <li key={technology}>{technology}</li>
               ))}
@@ -164,36 +142,46 @@ export function FeaturedProjectChapter({
 
             <Link
               to={`/projects/${project.slug}`}
-              className="editorial-link mt-8 focus-visible:outline-none"
+              className={`focus-ring mt-8 inline-flex min-h-12 items-center gap-8 border-b pb-2 text-sm font-semibold transition-colors ${styles.accent}`}
             >
               Read the case study
+              <span aria-hidden="true">→</span>
             </Link>
           </div>
 
-          <MediaReveal className={styles.media}>
-            <div
-              className={`absolute left-0 top-0 z-10 border-b border-r px-3 py-2 font-mono text-[0.58rem] uppercase tracking-[0.11em] ${
-                project.slug === "training-app"
-                  ? "border-[var(--line-strong)] bg-[var(--ink-2)] text-[var(--paper)]"
-                  : "border-[var(--line)] bg-[var(--violet)] text-white"
-              }`}
-            >
-              {screenshot.label}
+          <figure className={styles.mediaOrder}>
+            <div className={`relative ${styles.stage}`}>
+              <div
+                className={`absolute left-0 top-0 z-10 border-b border-r px-3 py-2 font-mono text-[0.56rem] uppercase tracking-[0.1em] ${
+                  project.slug === "training-app"
+                    ? "border-[var(--line-strong)] bg-[var(--ink-2)] text-[var(--paper)]"
+                    : "border-[var(--paper)]/30 bg-[var(--violet-dark)] text-[var(--paper)]"
+                }`}
+              >
+                {screenshot.label}
+              </div>
+
+              <img
+                src={screenshot.src}
+                alt={screenshot.alt}
+                width={dimensions?.width}
+                height={dimensions?.height}
+                loading="lazy"
+                decoding="async"
+                className={
+                  isMobileScreenshot
+                    ? "block max-h-168 w-auto max-w-full object-contain"
+                    : "block h-auto w-full"
+                }
+              />
             </div>
 
-            <img
-              src={screenshot.src}
-              alt={screenshot.alt}
-              width={dimensions.width}
-              height={dimensions.height}
-              loading="lazy"
-              className={
-                isMobileScreenshot
-                  ? "max-h-[38rem] w-auto translate-y-10 object-contain"
-                  : "aspect-[1.85/1] h-full w-full object-cover object-top"
-              }
-            />
-          </MediaReveal>
+            <figcaption
+              className={`mt-4 max-w-3xl text-sm leading-6 ${styles.muted}`}
+            >
+              {screenshot.caption}
+            </figcaption>
+          </figure>
         </div>
       </div>
     </article>

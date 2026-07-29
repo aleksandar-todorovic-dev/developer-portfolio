@@ -1,4 +1,3 @@
-import { motion, useReducedMotion } from "motion/react";
 import { useCallback, useId, useState } from "react";
 
 import type { ProjectScreenshot } from "../../types/project";
@@ -18,7 +17,6 @@ export function ProjectVisualEvidence({
   const [activeIndex, setActiveIndex] = useState(0);
   const [lightboxScreenshot, setLightboxScreenshot] =
     useState<ProjectScreenshot | null>(null);
-  const shouldReduceMotion = useReducedMotion();
   const viewerId = useId();
   const tabIdPrefix = useId();
 
@@ -62,40 +60,32 @@ export function ProjectVisualEvidence({
   return (
     <section
       aria-labelledby="visual-evidence-heading"
-      className="full-bleed overflow-hidden bg-[var(--ink)] py-20 text-[var(--paper)] sm:py-28"
+      className="full-bleed overflow-hidden bg-[var(--ink)] py-10 text-[var(--paper)] sm:py-14"
     >
       <div className="content-frame">
-        <header className="grid gap-7 border-b border-[var(--line-strong)] pb-9 lg:grid-cols-[minmax(0,1fr)_19rem] lg:items-end">
+        <header className="grid gap-3 border-b border-[var(--line-strong)] pb-5 sm:grid-cols-[10rem_minmax(0,1fr)] sm:items-end">
+          <p className="text-sm font-semibold text-[var(--violet-text)]">
+            Lead evidence
+          </p>
           <div>
-            <p className="font-mono text-[0.68rem] uppercase tracking-[0.16em] text-[var(--violet-text)]">
-              Project screenshots
-            </p>
-
             <h2
               id="visual-evidence-heading"
-              className="mt-6 font-display text-[clamp(3.2rem,7vw,6.5rem)] font-semibold leading-[0.84] tracking-[-0.065em]"
+              className="font-display text-3xl font-semibold leading-[1.04] tracking-[-0.025em] sm:text-4xl"
             >
-              See the
-              <span className="block text-[var(--violet-text)]">work.</span>
+              Real project screens.
             </h2>
-          </div>
-
-          <div className="border-l border-[var(--line-strong)] pl-6">
-            <p className="font-body text-lg leading-8">
-              Real project screens, not decorative mockups.
-            </p>
-            <p className="font-body mt-4 text-sm leading-6 text-[var(--paper-muted)]">
+            <p className="mt-3 max-w-2xl text-sm leading-6 text-[var(--paper-muted)]">
               Select a screenshot, inspect the full interface and follow the
-              product through the image sequence.
+              product through the verified image sequence.
             </p>
           </div>
         </header>
 
         <div
           className={cn(
-            "mt-10",
+            "mt-8",
             isMobileScreenshot &&
-              "border border-[var(--line-strong)] lg:grid lg:grid-cols-[minmax(23rem,0.95fr)_minmax(0,1.05fr)] lg:grid-rows-[auto_auto_1fr_auto]",
+              "border border-[var(--line-strong)] lg:grid lg:grid-cols-[minmax(23rem,0.95fr)_minmax(0,1.05fr)] lg:grid-rows-[auto_1fr_auto]",
           )}
         >
           {isMobileScreenshot ? (
@@ -109,52 +99,41 @@ export function ProjectVisualEvidence({
                 <button
                   type="button"
                   onClick={() => openScreenshot(activeScreenshot)}
-                  className="focus-ring relative flex min-h-155 w-full items-end justify-center overflow-hidden px-9 pt-14 lg:h-full lg:min-h-190 lg:px-16"
+                  className="focus-ring screenshot-trigger relative flex min-h-112 w-full items-end justify-center overflow-hidden px-6 pt-8 sm:min-h-130 sm:px-8 sm:pt-10 lg:h-full lg:min-h-160 lg:px-14"
                 >
                   <span className="sr-only">
                     Open full image: {activeScreenshot.label}.{" "}
                     {activeScreenshot.alt}
                   </span>
 
-                  <motion.img
+                  <img
                     src={activeScreenshot.src}
                     alt=""
-                    loading="lazy"
+                    loading="eager"
                     decoding="async"
                     width={activeDimensions?.width}
                     height={activeDimensions?.height}
-                    className="relative max-h-165 w-auto max-w-full object-contain object-bottom shadow-[-18px_18px_0_var(--violet)] lg:max-h-190"
-                    initial={shouldReduceMotion ? false : { y: 48, rotate: 1.5 }}
-                    whileInView={{ y: 0, rotate: 0 }}
-                    viewport={{ once: true, amount: 0.25 }}
-                    transition={{
-                      duration: 0.7,
-                      ease: [0.76, 0, 0.24, 1],
-                    }}
+                    className="relative max-h-104 w-auto max-w-full object-contain object-bottom shadow-[-12px_12px_0_var(--violet)] sm:max-h-118 lg:max-h-150"
                   />
                 </button>
               </div>
 
-              <div className="border-t border-[var(--line-strong)] p-7 lg:col-start-2 lg:row-start-1 lg:border-t-0 lg:p-9">
-                <div className="flex items-center justify-between gap-5 font-mono text-[0.67rem] uppercase tracking-[0.18em]">
+              <div className="border-t border-[var(--line-strong)] p-5 lg:col-start-2 lg:row-start-1 lg:border-t-0 lg:p-9">
+                <div className="flex items-center justify-between gap-5 font-mono text-[0.64rem] uppercase tracking-[0.12em]">
                   <span className="text-[var(--violet-text)]">
                     Screenshot {currentNumber} of {totalNumber}
                   </span>
                   <span>Mobile interface</span>
                 </div>
 
-                <h3 className="font-display mt-7 text-4xl leading-[0.92] font-semibold tracking-[-0.05em] sm:text-5xl">
+                <h3 className="mt-4 font-display text-3xl font-semibold leading-[1.02] tracking-[-0.025em] sm:text-4xl lg:mt-7 lg:text-5xl">
                   {activeScreenshot.label}
                 </h3>
 
-                <p className="font-body mt-6 max-w-xl leading-7 text-[var(--paper-muted)]">
+                <p className="mt-4 max-w-xl leading-7 text-[var(--paper-muted)] lg:mt-6">
                   {activeScreenshot.caption}
                 </p>
               </div>
-
-              <p className="border-t border-[var(--line)] px-7 py-5 font-mono text-[0.63rem] uppercase tracking-[0.2em] text-[var(--paper-muted)] lg:col-start-2 lg:row-start-2 lg:px-9">
-                Choose another view
-              </p>
             </>
           ) : (
             <div className="border border-[var(--line-strong)]">
@@ -179,7 +158,6 @@ export function ProjectVisualEvidence({
                   className="focus-ring inline-flex items-center gap-3 border-b border-[var(--paper)]/60 pb-2 font-mono text-[0.67rem] uppercase tracking-[0.16em] transition-colors hover:border-[var(--violet-text)] hover:text-[var(--violet-text)]"
                 >
                   Open full image
-                  <span aria-hidden="true">↗</span>
                   <NewTabNotice className="lg:hidden" />
                 </button>
               </div>
@@ -193,7 +171,7 @@ export function ProjectVisualEvidence({
                 <button
                   type="button"
                   onClick={() => openScreenshot(activeScreenshot)}
-                  className="focus-ring block w-full overflow-hidden bg-[var(--ink-2)]"
+                  className="focus-ring screenshot-trigger block w-full overflow-hidden bg-[var(--ink-2)]"
                 >
                   <span className="sr-only">
                     Open full image: {activeScreenshot.label}.{" "}
@@ -202,21 +180,14 @@ export function ProjectVisualEvidence({
 
                   <NewTabNotice className="lg:hidden" />
 
-                  <motion.img
+                  <img
                     src={activeScreenshot.src}
                     alt=""
-                    loading="lazy"
+                    loading="eager"
                     decoding="async"
                     width={activeDimensions?.width}
                     height={activeDimensions?.height}
                     className="block h-auto w-full object-contain"
-                    initial={shouldReduceMotion ? false : { scale: 1.035 }}
-                    whileInView={{ scale: 1 }}
-                    viewport={{ once: true, amount: 0.2 }}
-                    transition={{
-                      duration: 0.65,
-                      ease: [0.76, 0, 0.24, 1],
-                    }}
                   />
                 </button>
               </div>
@@ -241,21 +212,20 @@ export function ProjectVisualEvidence({
             variant={isMobileScreenshot ? "rail" : "grid"}
             className={
               isMobileScreenshot
-                ? "lg:col-start-2 lg:row-start-3 lg:self-start"
+                ? "lg:col-start-2 lg:row-start-2 lg:self-start"
                 : "mt-6"
             }
             onSelect={setActiveIndex}
           />
 
           {isMobileScreenshot ? (
-            <div className="border-t border-[var(--line-strong)] px-7 py-6 lg:col-start-2 lg:row-start-4 lg:px-9">
+            <div className="border-t border-[var(--line-strong)] px-5 py-5 lg:col-start-2 lg:row-start-3 lg:px-9">
               <button
                 type="button"
                 onClick={() => openScreenshot(activeScreenshot)}
                 className="focus-ring inline-flex items-center gap-3 border-b border-[var(--paper-muted)] pb-2 font-mono text-[0.67rem] uppercase tracking-[0.16em] transition-colors hover:border-[var(--violet-text)] hover:text-[var(--violet-text)]"
               >
                 Open full image
-                <span aria-hidden="true">↗</span>
               </button>
             </div>
           ) : null}

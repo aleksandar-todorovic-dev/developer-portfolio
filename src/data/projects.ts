@@ -19,11 +19,13 @@ export const projects: Project[] = [
         label: "Backend correctness",
         detail:
           "Cloud Functions maintain reaction aggregates, privileged deletion flows, and scheduled cleanup.",
+        sectionId: "reaction-correctness",
       },
       {
         label: "Resilient saved posts",
         detail:
           "Snapshot metadata, ghost cards, and Undo behavior keep saved content useful when source posts change.",
+        sectionId: "resilient-saved-posts",
       },
     ],
     techStack: [
@@ -302,11 +304,13 @@ export const projects: Project[] = [
         label: "Clarity during the workout",
         detail:
           "Action-first screens combine exercise order, set targets, RIR, tempo, rest, progression guidance, contextual cues, logging, previous values, and the next meaningful step.",
+        sectionId: "guided-workout-flow",
       },
       {
         label: "Continuity across the cycle",
         detail:
           "A stable D1-D6 order inside a flexible 9-day rhythm, partial-day support, and previous-value carry-over preserve progress when real-life schedules change.",
+        sectionId: "core-product-decision",
       },
     ],
     techStack: [
@@ -552,11 +556,13 @@ export const projects: Project[] = [
         label: "Typed state model",
         detail:
           "Typed props, Context values, events, refs, and board data keep component and state contracts explicit.",
+        sectionId: "typed-board-architecture",
       },
       {
         label: "Reusable state helpers",
         detail:
           "A generic reorder helper and immutable update functions handle column and card drag-and-drop behavior.",
+        sectionId: "drag-and-drop-state-updates",
       },
     ],
     techStack: [

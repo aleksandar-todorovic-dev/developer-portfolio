@@ -5,96 +5,64 @@ import { BuildProcessSection } from "../components/home/BuildProcessSection";
 import { ContactVerificationSection } from "../components/home/ContactVerificationSection";
 import { FeaturedProjectChapter } from "../components/home/FeaturedProjectChapter";
 import { ProjectStackSection } from "../components/home/ProjectStackSection";
-import { ResolveText } from "../components/motion/ResolveText";
-import { TracePath } from "../components/motion/TracePath";
 import { ProjectProofPanel } from "../components/projects/ProjectProofPanel";
 import { projects } from "../data/projects";
 
 export function HomePage() {
   return (
     <>
-      <section className="relative min-h-[calc(100svh-var(--header-height))] overflow-hidden pb-12 pt-10 sm:pb-16 sm:pt-14 lg:flex lg:flex-col lg:justify-between lg:pb-18">
-        <div className="grid gap-7 border-b border-[var(--line)] pb-4 sm:grid-cols-[1fr_auto] sm:items-center">
-          <p className="font-mono text-[0.68rem] uppercase tracking-[0.15em] text-[var(--paper-muted)]">
+      <section className="relative overflow-hidden pb-10 pt-8 sm:pb-12 sm:pt-10">
+        <div className="border-b border-[var(--line)] pb-4">
+          <p className="font-mono text-[0.68rem] uppercase tracking-[0.13em] text-[var(--paper-muted)]">
             Aleksandar Todorovic — Frontend developer
-          </p>
-
-          <p className="font-mono text-[0.64rem] uppercase tracking-[0.12em] text-[var(--paper-muted)] sm:text-right">
-            React · TypeScript · JavaScript · Firebase
           </p>
         </div>
 
-        <div className="grid gap-10 py-12 sm:py-16 lg:grid-cols-[minmax(0,1fr)_20rem] lg:items-end lg:py-18">
+        <div className="py-10 sm:py-12 lg:py-14">
           <h1
             id="page-heading"
             tabIndex={-1}
-            className="display-balance font-display text-[clamp(3.45rem,11.2vw,10.8rem)] font-semibold leading-[0.78] tracking-[-0.082em]"
+            className="font-display text-[clamp(3rem,9.4vw,9rem)] font-semibold leading-[0.92] tracking-[-0.04em] [font-stretch:100%]"
           >
-            <span className="block">I BUILD</span>
-            <span className="block text-outline">FRONTEND</span>
-            <span className="mt-[0.42em] block font-mono text-[0.16em] font-semibold uppercase leading-none tracking-[0.15em] text-[var(--paper-muted)]">
-              From uncertainty to
+            <span className="block">I BUILD FRONTEND</span>
+            <span className="block">FROM UNCERTAINTY</span>
+            <span className="block">
+              TO{" "}
+              <span className="text-[var(--violet)]">CLARITY.</span>
             </span>
-            <ResolveText
-              text="CLARITY."
-              className="text-[var(--violet)]"
-            />
           </h1>
 
-          <div className="border-t border-[var(--line-strong)] pt-5 lg:mb-2 lg:border-l lg:border-t-0 lg:pl-6 lg:pt-0">
-            <p className="text-base leading-7 text-[var(--paper)]">
-              I trace the relevant flow, understand the constraints and build
-              responsive frontend work around a practical decision.
-            </p>
-
-            <p className="mt-4 text-sm leading-6 text-[var(--paper-muted)]">
-              The result is tested, documented and shown through real project
-              evidence.
+          <div className="mt-9 grid gap-6 border-t border-[var(--line-strong)] pt-6 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end">
+            <p className="max-w-[56ch] text-base leading-7 text-[var(--paper-muted)] sm:text-lg sm:leading-8">
+              I trace the relevant flow, make a practical decision, and test
+              the result through real project evidence.
             </p>
 
             <Link
               to="/projects"
-              className="editorial-link mt-6 text-sm text-[var(--paper)] focus-visible:outline-none"
+              className="focus-ring inline-flex min-h-12 items-center justify-between gap-8 border-b border-[var(--paper)] pb-2 text-sm font-semibold text-[var(--paper)] transition-colors hover:border-[var(--violet-text)] hover:text-[var(--violet-text)]"
             >
-              Inspect the work
+              Inspect selected work
+              <span aria-hidden="true">→</span>
             </Link>
           </div>
-        </div>
-
-        <div className="border-t border-[var(--line)] pt-5">
-          <div className="flex items-center justify-between gap-6 font-mono text-[0.62rem] uppercase tracking-[0.12em] text-[var(--paper-muted)]">
-            <span>Unclear problem</span>
-            <span>Tested outcome</span>
-          </div>
-
-          <TracePath
-            variant="clarity"
-            className="mt-2 h-24 text-[var(--violet)] sm:h-28"
-          />
         </div>
       </section>
 
       <ProjectProofPanel projects={projects} />
 
-      <section className="pb-12 pt-24 sm:pb-16 sm:pt-30">
-        <div className="grid gap-8 lg:grid-cols-[13rem_minmax(0,1fr)]">
-          <p className="font-mono text-[0.68rem] uppercase tracking-[0.15em] text-[var(--paper-muted)]">
+      <section className="pb-12 pt-18 sm:pb-16 sm:pt-24">
+        <div className="grid gap-6 lg:grid-cols-[13rem_minmax(0,1fr)]">
+          <p className="font-mono text-[0.68rem] uppercase tracking-[0.13em] text-[var(--paper-muted)]">
             Selected work
           </p>
 
-          <div>
-            <h2 className="display-balance max-w-5xl font-display text-[clamp(3rem,6.8vw,7.2rem)] font-semibold leading-[0.88] tracking-[-0.06em]">
-              THREE PROJECTS.
-              <span className="block text-[var(--violet-text)]">
-                THREE DIFFERENT PROBLEMS.
-              </span>
-            </h2>
-
-            <p className="mt-7 max-w-2xl text-lg leading-8 text-[var(--paper-muted)]">
-              Connected data, product continuity and typed interaction each
-              require a different path from problem to result.
-            </p>
-          </div>
+          <h2 className="max-w-5xl font-display text-[clamp(2.8rem,6vw,6.4rem)] font-semibold leading-[1.02] tracking-[-0.025em] md:leading-[1.01] [font-stretch:100%]">
+            Three projects.
+            <span className="block text-[var(--violet-text)]">
+              Three different problems.
+            </span>
+          </h2>
         </div>
       </section>
 

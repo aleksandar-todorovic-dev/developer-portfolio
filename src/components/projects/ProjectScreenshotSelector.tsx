@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { KeyboardEvent } from "react";
 
 import type { ProjectScreenshot } from "../../types/project";
@@ -28,6 +28,23 @@ export function ProjectScreenshotSelector({
   const [focusedIndex, setFocusedIndex] = useState(activeIndex);
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const isRail = variant === "rail";
+  const [isWideViewport, setIsWideViewport] = useState(() =>
+    window.matchMedia("(min-width: 1024px)").matches,
+  );
+  const isVertical = isRail && isWideViewport;
+
+  useEffect(() => {
+    const wideViewportQuery = window.matchMedia("(min-width: 1024px)");
+    const handleViewportChange = (event: MediaQueryListEvent) => {
+      setIsWideViewport(event.matches);
+    };
+
+    wideViewportQuery.addEventListener("change", handleViewportChange);
+
+    return () => {
+      wideViewportQuery.removeEventListener("change", handleViewportChange);
+    };
+  }, []);
 
   function focusTab(index: number) {
     setFocusedIndex(index);
@@ -42,28 +59,28 @@ export function ProjectScreenshotSelector({
 
     switch (event.key) {
       case "ArrowRight":
-        if (isRail) {
+        if (isVertical) {
           return;
         }
         nextIndex = (index + 1) % screenshots.length;
         break;
 
       case "ArrowLeft":
-        if (isRail) {
+        if (isVertical) {
           return;
         }
         nextIndex = (index - 1 + screenshots.length) % screenshots.length;
         break;
 
       case "ArrowDown":
-        if (!isRail) {
+        if (!isVertical) {
           return;
         }
         nextIndex = (index + 1) % screenshots.length;
         break;
 
       case "ArrowUp":
-        if (!isRail) {
+        if (!isVertical) {
           return;
         }
         nextIndex = (index - 1 + screenshots.length) % screenshots.length;
@@ -89,11 +106,11 @@ export function ProjectScreenshotSelector({
     <div
       role="tablist"
       aria-label="Select project screenshot"
-      aria-orientation={isRail ? "vertical" : "horizontal"}
+      aria-orientation={isVertical ? "vertical" : "horizontal"}
       className={cn(
-        isRail
+        isVertical
           ? "border-y border-[var(--line-strong)]"
-          : "grid gap-px border border-[var(--line)] bg-[var(--line)] sm:grid-cols-2 xl:grid-cols-3",
+          : "grid grid-cols-2 gap-px border border-[var(--line)] bg-[var(--line)] xl:grid-cols-3",
         className,
       )}
     >
@@ -120,8 +137,9 @@ export function ProjectScreenshotSelector({
               onSelect(index);
             }}
             className={cn(
-              "focus-ring group relative grid min-h-24 grid-cols-[3rem_minmax(0,1fr)] gap-3 px-4 py-5 text-left transition-colors duration-200",
-              isRail && "w-full border-b border-[var(--line)] last:border-b-0",
+              "focus-ring group relative grid min-h-20 grid-cols-[2rem_minmax(0,1fr)] gap-2 px-3 py-4 text-left transition-colors duration-200",
+              isVertical &&
+                "w-full border-b border-[var(--line)] last:border-b-0",
               isActive
                 ? "bg-[var(--paper)] text-[var(--ink)]"
                 : "bg-[var(--ink)] text-[var(--paper-muted)] hover:bg-[var(--ink-2)] hover:text-[var(--paper)]",
@@ -145,7 +163,7 @@ export function ProjectScreenshotSelector({
 
               <span
                 className={cn(
-                  "mt-2 block font-mono text-[0.61rem] uppercase tracking-[0.17em]",
+                  "mt-2 hidden font-mono text-[0.61rem] uppercase tracking-[0.14em] sm:block",
                   isActive
                     ? "text-[var(--ink)]/65"
                     : "text-[var(--paper-muted)]",
@@ -158,10 +176,10 @@ export function ProjectScreenshotSelector({
             <span
               aria-hidden="true"
               className={cn(
-                "absolute bottom-0 left-0 h-1 transition-[width] duration-300",
+                "absolute bottom-0 left-0 h-1 transition-[width] duration-200",
                 isActive
                   ? "w-full bg-[var(--violet-dark)]"
-                  : "w-0 bg-[var(--violet)] group-hover:w-1/3",
+                  : "w-0 bg-[var(--violet)] group-hover:w-1/3 motion-reduce:group-hover:w-0",
               )}
             />
           </button>

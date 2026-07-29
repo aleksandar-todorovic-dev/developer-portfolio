@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import { NavLink } from "react-router";
 
 import { cn } from "../../utils/cn";
@@ -39,7 +39,7 @@ function desktopLinkClass(isActive: boolean) {
   return cn(
     "relative flex min-h-12 items-center border-l border-[var(--line)] px-5 text-sm font-semibold tracking-[-0.01em] transition-colors last:border-r",
     isActive
-      ? "bg-[var(--ink-2)] text-[var(--paper)] after:absolute after:inset-x-5 after:bottom-0 after:h-0.5 after:bg-[var(--signal)]"
+      ? "bg-[var(--ink-2)] text-[var(--paper)] after:absolute after:inset-x-5 after:bottom-0 after:h-0.5 after:bg-[var(--violet)]"
       : "text-[var(--paper-muted)] hover:bg-[var(--ink-2)] hover:text-[var(--paper)]",
   );
 }
@@ -118,11 +118,16 @@ export function Header() {
 
         if (focusWasInsideMenu) {
           window.requestAnimationFrame(() => {
-            document
-              .querySelector<HTMLElement>(
+            const focusTarget =
+              document.querySelector<HTMLElement>(
                 'nav[aria-label="Main navigation"] a[aria-current="page"]',
-              )
-              ?.focus();
+              ) ??
+              document.querySelector<HTMLElement>(
+                'a[aria-label="Aleksandar Todorovic, home"]',
+              ) ??
+              document.getElementById("page-heading");
+
+            focusTarget?.focus();
           });
         }
       }
@@ -141,25 +146,16 @@ export function Header() {
         <NavLink
           to="/"
           onClick={closeMenu}
-          className="focus-ring group flex min-w-0 items-center gap-3 pr-4"
+          className="focus-ring group flex min-w-0 items-center pr-3 sm:pr-4"
           aria-label="Aleksandar Todorovic, home"
         >
-          <span className="grid size-10 shrink-0 grid-cols-2 overflow-hidden border border-[var(--line-strong)] font-display text-[0.72rem] font-extrabold leading-none">
-            <span className="flex items-center justify-center bg-[var(--paper)] text-[var(--ink)]">
-              A
-            </span>
-            <span className="flex items-center justify-center bg-[var(--violet)] text-white">
-              T
-            </span>
-          </span>
-
           <span className="min-w-0">
-            <span className="block truncate font-display text-sm font-bold tracking-[-0.02em] sm:text-base">
+            <span className="block whitespace-nowrap font-display text-[clamp(0.82rem,4vw,1rem)] font-bold tracking-[-0.015em]">
               Aleksandar Todorovic
             </span>
 
             <span className="mt-0.5 hidden text-[0.68rem] text-[var(--paper-muted)] sm:block">
-              Frontend developer · Serbia
+              Frontend developer
             </span>
           </span>
         </NavLink>
@@ -186,8 +182,8 @@ export function Header() {
           className={cn(
             "focus-ring relative -mr-[var(--frame-gutter)] flex min-w-24 items-center justify-between gap-4 border-l border-[var(--line)] px-4 font-mono text-[0.68rem] font-semibold uppercase tracking-[0.12em] transition-colors md:hidden",
             isMenuOpen
-              ? "bg-[var(--signal)] text-[var(--ink)]"
-              : "bg-[var(--violet)] text-white hover:bg-[var(--violet-dark)]",
+              ? "bg-[var(--violet-dark)] text-[var(--paper)]"
+              : "bg-transparent text-[var(--paper)] hover:bg-[var(--ink-2)]",
           )}
           aria-label={
             isMenuOpen ? "Close navigation menu" : "Open navigation menu"
@@ -203,29 +199,23 @@ export function Header() {
         </button>
       </div>
 
-      <AnimatePresence initial={false}>
-        {isMenuOpen ? (
-          <motion.nav
-            id="mobile-navigation"
-            className="fixed inset-x-0 top-[var(--header-height)] z-40 h-[calc(100dvh-var(--header-height))] overflow-y-auto bg-[var(--paper)] text-[var(--ink)] md:hidden"
-            aria-label="Mobile navigation"
-            initial={
-              shouldReduceMotion
-                ? false
-                : { clipPath: "inset(0 0 100% 0)" }
-            }
-            animate={{ clipPath: "inset(0 0 0% 0)" }}
-            exit={
-              shouldReduceMotion
-                ? { opacity: 0 }
-                : { clipPath: "inset(0 0 100% 0)" }
-            }
-            transition={{
-              duration: shouldReduceMotion ? 0.01 : 0.42,
-              ease: [0.22, 1, 0.36, 1],
-            }}
-          >
-            <div className="content-frame flex min-h-full flex-col py-7">
+      {isMenuOpen ? (
+        <motion.nav
+          id="mobile-navigation"
+          className="fixed inset-x-0 top-[var(--header-height)] z-40 h-[calc(100dvh-var(--header-height))] overflow-y-auto bg-[var(--paper)] text-[var(--ink)] md:hidden"
+          aria-label="Mobile navigation"
+          initial={
+            shouldReduceMotion
+              ? false
+              : { clipPath: "inset(0 0 100% 0)" }
+          }
+          animate={{ clipPath: "inset(0 0 0% 0)" }}
+          transition={{
+            duration: shouldReduceMotion ? 0 : 0.22,
+            ease: [0.22, 1, 0.36, 1],
+          }}
+        >
+          <div className="content-frame flex min-h-full flex-col py-7">
               <div className="flex items-center justify-between gap-6 border-b border-[var(--ink)]/25 pb-4">
                 <p className="text-sm font-semibold">Navigation</p>
                 <p className="text-sm text-[var(--ink-2)]">
@@ -253,7 +243,7 @@ export function Header() {
                       }
                     >
                       <span>
-                        <span className="block font-display text-[clamp(2rem,10vw,4rem)] font-semibold leading-none tracking-[-0.055em]">
+                        <span className="block font-display text-[clamp(2rem,9vw,3.5rem)] font-semibold leading-[0.96] tracking-[-0.035em]">
                           {link.label}
                         </span>
                         <span className="mt-1.5 block text-sm text-current">
@@ -263,7 +253,7 @@ export function Header() {
 
                       <span
                         aria-hidden="true"
-                        className="text-2xl transition-transform group-hover:translate-x-1"
+                        className="text-2xl transition-transform group-hover:translate-x-1 motion-reduce:group-hover:translate-x-0"
                       >
                         →
                       </span>
@@ -278,15 +268,15 @@ export function Header() {
                 </p>
                 <a
                   href="mailto:aleksandar.todorovic.rs@gmail.com"
+                  onClick={closeMenu}
                   className="focus-ring justify-self-start font-semibold text-[var(--violet-dark)] underline decoration-[var(--violet)] underline-offset-4 sm:justify-self-end"
                 >
                   Send an email
                 </a>
               </div>
-            </div>
-          </motion.nav>
-        ) : null}
-      </AnimatePresence>
+          </div>
+        </motion.nav>
+      ) : null}
     </header>
   );
 }

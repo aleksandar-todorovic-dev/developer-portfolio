@@ -96,20 +96,11 @@ export function RouteBehavior() {
             return;
           }
 
-          if (focusPageStart()) {
-            return;
-          }
-
           const routeContent =
             document.getElementById("main-content") ?? document.body;
 
           observer = new MutationObserver(() => {
             if (scrollToHashTarget(hash)) {
-              stopWatchingForTarget();
-              return;
-            }
-
-            if (focusPageStart()) {
               stopWatchingForTarget();
             }
           });
@@ -144,21 +135,7 @@ export function RouteBehavior() {
     }
 
     if (navigationType === "POP") {
-      if (!hash) {
-        return;
-      }
-
-      const animationFrameId = window.requestAnimationFrame(() => {
-        if (scrollToHashTarget(hash)) {
-          return;
-        }
-
-        focusPageStart();
-      });
-
-      return () => {
-        window.cancelAnimationFrame(animationFrameId);
-      };
+      return;
     }
 
     const animationFrameId = window.requestAnimationFrame(() => {
