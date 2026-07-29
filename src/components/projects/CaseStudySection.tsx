@@ -1,13 +1,19 @@
 import type {
   CaseStudySection as CaseStudySectionData,
   CaseStudySectionType,
+  ProjectSlug,
 } from "../../types/project";
+import { TracePath } from "../motion/TracePath";
+import { projectTraceVariants } from "../motion/projectTraceVariants";
 
 type CaseStudySectionProps = {
   section: CaseStudySectionData;
   index: number;
   total: number;
+  projectSlug: ProjectSlug;
 };
+
+type SectionIntensity = "strong" | "structured" | "quiet";
 
 type SectionMetaProps = {
   index: number;
@@ -29,17 +35,49 @@ const sectionTypeLabels: Record<CaseStudySectionType, string> = {
   future: "Future direction",
 };
 
+const sectionIntensities = {
+  overview: "strong",
+  "role-scope": "structured",
+  decision: "strong",
+  implementation: "structured",
+  architecture: "strong",
+  "product-flow": "strong",
+  tradeoff: "structured",
+  validation: "structured",
+  learning: "quiet",
+  future: "strong",
+} satisfies Record<CaseStudySectionType, SectionIntensity>;
+
 const sectionSurfaces: Record<CaseStudySectionType, string> = {
-  overview: "bg-[var(--violet)] text-[var(--paper)]",
+  overview: "bg-[var(--ink-2)] text-[var(--paper)]",
   "role-scope": "bg-[var(--paper)] text-[var(--ink)]",
   decision: "bg-[var(--ink)] text-[var(--paper)]",
-  implementation: "bg-[var(--ink-2)] text-[var(--paper)]",
-  architecture: "bg-[var(--ink)] text-[var(--paper)]",
-  "product-flow": "bg-[var(--violet-dark)] text-[var(--paper)]",
+  implementation: "bg-[var(--paper)] text-[var(--ink)]",
+  architecture: "bg-[var(--ink-2)] text-[var(--paper)]",
+  "product-flow": "bg-[var(--paper)] text-[var(--ink)]",
   tradeoff: "bg-[var(--paper)] text-[var(--ink)]",
   validation: "bg-[var(--ink-2)] text-[var(--paper)]",
   learning: "bg-[var(--paper)] text-[var(--ink)]",
-  future: "bg-[var(--violet)] text-[var(--paper)]",
+  future: "bg-[var(--ink)] text-[var(--paper)]",
+};
+
+const sectionBorders: Record<CaseStudySectionType, string> = {
+  overview: "border-[var(--line-strong)]",
+  "role-scope": "border-[var(--ink)]/25",
+  decision: "border-[var(--line-strong)]",
+  implementation: "border-[var(--ink)]/25",
+  architecture: "border-[var(--line-strong)]",
+  "product-flow": "border-[var(--ink)]/25",
+  tradeoff: "border-[var(--ink)]/25",
+  validation: "border-[var(--line-strong)]",
+  learning: "border-[var(--ink)]/25",
+  future: "border-[var(--line-strong)]",
+};
+
+const intensitySpacing: Record<SectionIntensity, string> = {
+  strong: "py-16 sm:py-24 lg:py-28",
+  structured: "py-14 sm:py-20 lg:py-22",
+  quiet: "py-20 sm:py-28 lg:py-32",
 };
 
 function SectionMeta({
@@ -49,9 +87,12 @@ function SectionMeta({
   mutedClassName,
 }: SectionMetaProps) {
   return (
-    <div className="flex items-center gap-4 font-mono text-[0.66rem] uppercase tracking-[0.19em]">
+    <div className="flex items-center gap-4 font-mono text-[0.66rem] uppercase tracking-[0.16em]">
       <span>{String(index + 1).padStart(2, "0")}</span>
-      <span aria-hidden="true" className={`h-px flex-1 bg-current ${mutedClassName}`} />
+      <span
+        aria-hidden="true"
+        className={`h-px flex-1 bg-current ${mutedClassName}`}
+      />
       <span>
         {label} / {String(total).padStart(2, "0")}
       </span>
@@ -67,7 +108,7 @@ function Paragraphs({
   className: string;
 }) {
   return (
-    <div className={`font-body space-y-5 ${className}`}>
+    <div className={`space-y-5 font-body ${className}`}>
       {paragraphs.map((paragraph, paragraphIndex) => (
         <p key={`${paragraphIndex}-${paragraph}`}>{paragraph}</p>
       ))}
@@ -79,10 +120,12 @@ export function CaseStudySection({
   section,
   index,
   total,
+  projectSlug,
 }: CaseStudySectionProps) {
   const headingId = `${section.id}-heading`;
   const typeLabel = sectionTypeLabels[section.type];
-  const number = String(index + 1).padStart(2, "0");
+  const intensity = sectionIntensities[section.type];
+  const bullets = section.bullets ?? [];
 
   function renderSectionContent() {
     switch (section.type) {
@@ -93,31 +136,27 @@ export function CaseStudySection({
               index={index}
               total={total}
               label={typeLabel}
-              mutedClassName="opacity-65"
+              mutedClassName="opacity-45"
             />
 
-            <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,1.25fr)_minmax(17rem,0.75fr)] lg:items-end">
+            <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,1.2fr)_minmax(17rem,0.8fr)] lg:items-end">
               <h2
                 id={headingId}
-                className="font-display max-w-4xl text-[clamp(3.8rem,9vw,8.5rem)] leading-[0.79] font-semibold tracking-[-0.07em]"
+                className="max-w-4xl font-display text-[clamp(3rem,7vw,6.5rem)] font-semibold leading-[0.84] tracking-[-0.065em]"
               >
                 {section.title}
               </h2>
 
               <Paragraphs
                 paragraphs={section.paragraphs}
-                className="border-l border-[var(--paper)]/40 pl-6 text-lg leading-8 text-[var(--paper)]"
+                className="border-l border-[var(--line-strong)] pl-6 text-lg leading-8 text-[var(--paper-muted)]"
               />
             </div>
 
-            <div
+            <span
               aria-hidden="true"
-              className="mt-12 grid grid-cols-[1fr_3fr_1fr] gap-2"
-            >
-              <span className="h-2 bg-[var(--signal)]" />
-              <span className="h-2 bg-[var(--paper)]" />
-              <span className="h-2 border border-[var(--paper)]/45" />
-            </div>
+              className="mt-12 block h-px w-full bg-[var(--violet-text)]"
+            />
           </div>
         );
 
@@ -128,17 +167,14 @@ export function CaseStudySection({
               index={index}
               total={total}
               label={typeLabel}
-              mutedClassName="opacity-55"
+              mutedClassName="opacity-35"
             />
 
-            <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
+            <div className="mt-10 grid gap-12 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
               <div>
-                <p className="signal-label w-fit bg-[var(--violet)] text-[var(--paper)]">
-                  Ownership map
-                </p>
                 <h2
                   id={headingId}
-                  className="font-display mt-6 text-[clamp(3rem,6.5vw,6.6rem)] leading-[0.84] font-semibold tracking-[-0.06em]"
+                  className="font-display text-[clamp(2.6rem,5vw,4.8rem)] font-semibold leading-[0.9] tracking-[-0.055em]"
                 >
                   {section.title}
                 </h2>
@@ -149,22 +185,19 @@ export function CaseStudySection({
                 />
               </div>
 
-              {section.bullets?.length ? (
-                <ol className="grid border-l border-t border-[var(--ink)]/25 sm:grid-cols-2">
-                  {section.bullets.map((bullet, bulletIndex) => (
+              {bullets.length ? (
+                <ul className="border-y border-[var(--ink)]/25">
+                  {bullets.map((bullet) => (
                     <li
-                      key={`${bulletIndex}-${bullet}`}
-                      className="min-h-30 border-b border-r border-[var(--ink)]/25 p-5"
+                      key={bullet}
+                      className="border-b border-[var(--ink)]/20 py-5 last:border-b-0"
                     >
-                      <span className="font-mono text-[0.63rem] text-[var(--violet)]">
-                        SCOPE—{String(bulletIndex + 1).padStart(2, "0")}
-                      </span>
-                      <span className="font-body mt-5 block font-semibold leading-6">
+                      <span className="font-body font-semibold leading-6">
                         {bullet}
                       </span>
                     </li>
                   ))}
-                </ol>
+                </ul>
               ) : null}
             </div>
           </div>
@@ -172,25 +205,18 @@ export function CaseStudySection({
 
       case "decision":
         return (
-          <div className="grid gap-10 lg:grid-cols-[12rem_minmax(0,1fr)] lg:gap-14">
-            <div className="lg:sticky lg:top-28 lg:self-start">
-              <p className="font-mono text-5xl text-[var(--signal)]">{number}</p>
-              <p className="font-mono mt-4 text-[0.66rem] uppercase tracking-[0.19em] text-[var(--paper-muted)]">
-                {typeLabel}
-                <span className="mt-2 block">
-                  of {String(total).padStart(2, "0")}
-                </span>
-              </p>
-            </div>
+          <div>
+            <SectionMeta
+              index={index}
+              total={total}
+              label={typeLabel}
+              mutedClassName="opacity-45"
+            />
 
-            <div className="border-l-8 border-[var(--violet)] pl-6 sm:pl-10">
-              <p className="signal-label w-fit bg-[var(--signal)] text-[var(--ink)]">
-                Decision point
-              </p>
-
+            <div className="mt-10 border-l-4 border-[var(--violet)] pl-6 sm:pl-10">
               <h2
                 id={headingId}
-                className="font-display mt-7 max-w-5xl text-[clamp(3.2rem,7.5vw,7.5rem)] leading-[0.82] font-semibold tracking-[-0.065em]"
+                className="max-w-5xl font-display text-[clamp(3rem,6.3vw,6rem)] font-semibold leading-[0.86] tracking-[-0.06em]"
               >
                 {section.title}
               </h2>
@@ -200,17 +226,16 @@ export function CaseStudySection({
                 className="mt-9 max-w-3xl text-lg leading-8 text-[var(--paper-muted)]"
               />
 
-              {section.bullets?.length ? (
+              {bullets.length ? (
                 <ul className="mt-10 grid border-l border-t border-[var(--line)] md:grid-cols-2">
-                  {section.bullets.map((bullet, bulletIndex) => (
+                  {bullets.map((bullet) => (
                     <li
-                      key={`${bulletIndex}-${bullet}`}
-                      className="grid grid-cols-[2.5rem_1fr] gap-3 border-b border-r border-[var(--line)] p-5"
+                      key={bullet}
+                      className="border-b border-r border-[var(--line)] p-5"
                     >
-                      <span className="font-mono text-xs text-[var(--violet-text)]">
-                        {String.fromCharCode(65 + bulletIndex)}
+                      <span className="font-body text-sm leading-6">
+                        {bullet}
                       </span>
-                      <span className="font-body text-sm leading-6">{bullet}</span>
                     </li>
                   ))}
                 </ul>
@@ -221,110 +246,87 @@ export function CaseStudySection({
 
       case "implementation":
         return (
-          <div className="grid gap-10 lg:grid-cols-[12rem_minmax(0,1fr)] lg:gap-14">
-            <div className="lg:sticky lg:top-28 lg:self-start">
-              <SectionMeta
-                index={index}
-                total={total}
-                label="Build"
-                mutedClassName="opacity-55"
-              />
-              <p className="font-mono mt-6 text-[0.64rem] uppercase tracking-[0.18em] text-[var(--violet-text)]">
-                Execute top → bottom
+          <div>
+            <SectionMeta
+              index={index}
+              total={total}
+              label={typeLabel}
+              mutedClassName="opacity-35"
+            />
+
+            <div className="mt-10 grid gap-10 lg:grid-cols-[12rem_minmax(0,1fr)] lg:gap-14">
+              <p className="font-mono text-[0.64rem] uppercase tracking-[0.15em] text-[var(--violet-dark)]">
+                How it was built
               </p>
-            </div>
 
-            <div>
-              <h2
-                id={headingId}
-                className="font-display max-w-4xl text-[clamp(3rem,6.5vw,6.3rem)] leading-[0.85] font-semibold tracking-[-0.06em]"
-              >
-                {section.title}
-              </h2>
+              <div>
+                <h2
+                  id={headingId}
+                  className="max-w-4xl font-display text-[clamp(2.6rem,5vw,4.8rem)] font-semibold leading-[0.9] tracking-[-0.055em]"
+                >
+                  {section.title}
+                </h2>
 
-              <Paragraphs
-                paragraphs={section.paragraphs}
-                className="mt-8 max-w-3xl text-lg leading-8 text-[var(--paper-muted)]"
-              />
+                <Paragraphs
+                  paragraphs={section.paragraphs}
+                  className="mt-8 max-w-3xl text-lg leading-8 text-[var(--ink)]/70"
+                />
 
-              {section.bullets?.length ? (
-                <ol className="relative mt-10 border-y border-[var(--line-strong)]">
-                  {section.bullets.map((bullet, bulletIndex) => (
-                    <li
-                      key={`${bulletIndex}-${bullet}`}
-                      className="group grid grid-cols-[3.5rem_minmax(0,1fr)] border-b border-[var(--line)] py-5 last:border-b-0"
-                    >
-                      <span className="font-mono text-xs text-[var(--violet-text)]">
-                        EX—{String(bulletIndex + 1).padStart(2, "0")}
-                      </span>
-                      <span className="font-body leading-7 transition-transform duration-200 group-hover:translate-x-2">
-                        {bullet}
-                      </span>
-                    </li>
-                  ))}
-                </ol>
-              ) : null}
+                {bullets.length ? (
+                  <ul className="mt-10 border-y border-[var(--ink)]/25">
+                    {bullets.map((bullet) => (
+                      <li
+                        key={bullet}
+                        className="border-b border-[var(--ink)]/20 py-5 last:border-b-0"
+                      >
+                        <span className="font-body leading-7">{bullet}</span>
+                      </li>
+                    ))}
+                  </ul>
+                ) : null}
+              </div>
             </div>
           </div>
         );
 
       case "architecture":
         return (
-          <div className="relative">
-            <div
-              aria-hidden="true"
-              className="absolute inset-0 bg-[linear-gradient(var(--line)_1px,transparent_1px),linear-gradient(90deg,var(--line)_1px,transparent_1px)] bg-size-[4rem_4rem] opacity-25"
+          <div>
+            <SectionMeta
+              index={index}
+              total={total}
+              label={typeLabel}
+              mutedClassName="opacity-45"
             />
 
-            <div className="relative">
-              <SectionMeta
-                index={index}
-                total={total}
-                label={typeLabel}
-                mutedClassName="opacity-55"
+            <div className="mt-10 grid gap-10 lg:grid-cols-2">
+              <h2
+                id={headingId}
+                className="font-display text-[clamp(2.9rem,5.8vw,5.6rem)] font-semibold leading-[0.87] tracking-[-0.06em]"
+              >
+                {section.title}
+              </h2>
+
+              <Paragraphs
+                paragraphs={section.paragraphs}
+                className="self-end border-l border-[var(--violet)] pl-6 text-lg leading-8 text-[var(--paper-muted)]"
               />
-
-              <div className="mt-10 grid gap-10 lg:grid-cols-2">
-                <div>
-                  <p className="font-mono text-[0.64rem] uppercase tracking-[0.19em] text-[var(--signal)]">
-                    System topology / nodes
-                  </p>
-                  <h2
-                    id={headingId}
-                    className="font-display mt-6 text-[clamp(3.2rem,6vw,6.4rem)] leading-[0.83] font-semibold tracking-[-0.06em]"
-                  >
-                    {section.title}
-                  </h2>
-                </div>
-
-                <Paragraphs
-                  paragraphs={section.paragraphs}
-                  className="self-end border-l border-[var(--violet)] pl-6 text-lg leading-8 text-[var(--paper-muted)]"
-                />
-              </div>
-
-              {section.bullets?.length ? (
-                <ul className="mt-12 grid gap-px border border-[var(--line)] bg-[var(--line)] sm:grid-cols-2 lg:grid-cols-3">
-                  {section.bullets.map((bullet, bulletIndex) => (
-                    <li
-                      key={`${bulletIndex}-${bullet}`}
-                      className="relative min-h-32 bg-[var(--ink-2)] p-5"
-                    >
-                      <span className="font-mono text-[0.62rem] text-[var(--violet-text)]">
-                        NODE_{String(bulletIndex + 1).padStart(2, "0")}
-                      </span>
-                      <span className="font-body mt-6 block text-sm leading-6">
-                        {bullet}
-                      </span>
-                      <span
-                        aria-hidden="true"
-                        className="absolute bottom-0 right-0 size-2 bg-[var(--signal)]"
-                      />
-                    </li>
-                  ))}
-                </ul>
-              ) : null}
             </div>
+
+            {bullets.length ? (
+              <ul className="mt-12 grid gap-px border border-[var(--line)] bg-[var(--line)] sm:grid-cols-2 lg:grid-cols-3">
+                {bullets.map((bullet) => (
+                  <li
+                    key={bullet}
+                    className="min-h-32 bg-[var(--ink)] p-5"
+                  >
+                    <span className="block font-body text-sm leading-6">
+                      {bullet}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            ) : null}
           </div>
         );
 
@@ -335,42 +337,36 @@ export function CaseStudySection({
               index={index}
               total={total}
               label={typeLabel}
-              mutedClassName="opacity-60"
+              mutedClassName="opacity-35"
             />
 
-            <div className="mt-10 grid gap-9 lg:grid-cols-[minmax(0,1.1fr)_minmax(18rem,0.9fr)]">
+            <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(18rem,0.95fr)]">
               <h2
                 id={headingId}
-                className="font-display max-w-4xl text-[clamp(3.2rem,7vw,7rem)] leading-[0.82] font-semibold tracking-[-0.065em]"
+                className="max-w-4xl font-display text-[clamp(3rem,6vw,5.8rem)] font-semibold leading-[0.86] tracking-[-0.06em]"
               >
                 {section.title}
               </h2>
 
               <Paragraphs
                 paragraphs={section.paragraphs}
-                className="border-l border-[var(--paper)]/35 pl-6 text-lg leading-8 text-[var(--paper)]"
+                className="border-l border-[var(--violet-dark)] pl-6 text-lg leading-8 text-[var(--ink)]/70"
               />
             </div>
 
-            {section.bullets?.length ? (
-              <ol className="mt-12 grid gap-px border border-[var(--paper)]/25 bg-[var(--paper)]/25 sm:grid-cols-2 lg:grid-cols-3">
-                {section.bullets.map((bullet, bulletIndex) => (
+            {bullets.length ? (
+              <ol className="mt-12 grid border-l border-t border-[var(--ink)]/25 sm:grid-cols-2 lg:grid-cols-3">
+                {bullets.map((bullet, bulletIndex) => (
                   <li
                     key={`${bulletIndex}-${bullet}`}
-                    className="relative min-h-36 bg-[var(--violet-dark)] p-5"
+                    className="min-h-36 border-b border-r border-[var(--ink)]/25 p-5"
                   >
-                    <span className="font-mono text-xs text-[var(--signal)]">
-                      STEP—{String(bulletIndex + 1).padStart(2, "0")}
+                    <span className="font-mono text-xs text-[var(--violet-dark)]">
+                      Step {String(bulletIndex + 1).padStart(2, "0")}
                     </span>
-                    <span className="font-body mt-7 block leading-6">{bullet}</span>
-                    {bulletIndex < section.bullets!.length - 1 ? (
-                      <span
-                        aria-hidden="true"
-                        className="absolute bottom-4 right-4 text-xl text-[var(--paper)]/45"
-                      >
-                        →
-                      </span>
-                    ) : null}
+                    <span className="mt-7 block font-body leading-6">
+                      {bullet}
+                    </span>
                   </li>
                 ))}
               </ol>
@@ -385,41 +381,33 @@ export function CaseStudySection({
               index={index}
               total={total}
               label={typeLabel}
-              mutedClassName="opacity-55"
+              mutedClassName="opacity-35"
             />
 
-            <div className="mt-10 grid lg:grid-cols-12">
-              <div className="bg-[var(--violet)] p-7 text-[var(--paper)] sm:p-10 lg:col-span-8">
-                <p className="font-mono text-[0.64rem] uppercase tracking-[0.2em] text-[var(--signal)]">
-                  Constraint acknowledged
-                </p>
-                <h2
-                  id={headingId}
-                  className="font-display mt-6 text-[clamp(3.1rem,7vw,7rem)] leading-[0.82] font-semibold tracking-[-0.065em]"
-                >
-                  {section.title}
-                </h2>
-              </div>
+            <div className="mt-10 grid gap-10 border-l-4 border-[var(--violet-dark)] pl-6 lg:grid-cols-[minmax(0,1.15fr)_minmax(17rem,0.85fr)] lg:pl-10">
+              <h2
+                id={headingId}
+                className="font-display text-[clamp(2.7rem,5vw,4.8rem)] font-semibold leading-[0.9] tracking-[-0.055em]"
+              >
+                {section.title}
+              </h2>
 
-              <div className="border-x border-b border-[var(--ink)]/25 p-7 sm:p-10 lg:col-span-4 lg:border-l-0 lg:border-t">
-                <Paragraphs
-                  paragraphs={section.paragraphs}
-                  className="text-base leading-8 text-[var(--ink)]/72"
-                />
-              </div>
+              <Paragraphs
+                paragraphs={section.paragraphs}
+                className="text-base leading-8 text-[var(--ink)]/70"
+              />
             </div>
 
-            {section.bullets?.length ? (
-              <ul className="mt-8 columns-1 border-y border-[var(--ink)]/30 sm:columns-2">
-                {section.bullets.map((bullet, bulletIndex) => (
+            {bullets.length ? (
+              <ul className="mt-10 columns-1 border-y border-[var(--ink)]/25 sm:columns-2">
+                {bullets.map((bullet) => (
                   <li
-                    key={`${bulletIndex}-${bullet}`}
+                    key={bullet}
                     className="break-inside-avoid border-b border-[var(--ink)]/20 py-5 sm:mr-8"
                   >
-                    <span className="font-mono mr-3 text-[0.62rem] text-[var(--violet)]">
-                      LIMIT—{String(bulletIndex + 1).padStart(2, "0")}
+                    <span className="font-body text-sm leading-6">
+                      {bullet}
                     </span>
-                    <span className="font-body text-sm leading-6">{bullet}</span>
                   </li>
                 ))}
               </ul>
@@ -434,17 +422,25 @@ export function CaseStudySection({
               index={index}
               total={total}
               label={typeLabel}
-              mutedClassName="opacity-55"
+              mutedClassName="opacity-45"
             />
+
+            <div className="mt-9 grid gap-8 border-b border-[var(--line)] pb-9 lg:grid-cols-[minmax(0,1fr)_minmax(18rem,0.7fr)] lg:items-center">
+              <p className="max-w-2xl font-body text-lg leading-8 text-[var(--paper-muted)]">
+                The project path closes with checks against real behavior,
+                failure-sensitive states and responsive use.
+              </p>
+              <TracePath
+                variant={projectTraceVariants[projectSlug]}
+                className="h-20 text-[var(--violet-text)]"
+              />
+            </div>
 
             <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]">
               <div>
-                <p className="font-mono text-[0.64rem] uppercase tracking-[0.18em] text-[var(--signal)]">
-                  Verification log / pass
-                </p>
                 <h2
                   id={headingId}
-                  className="font-display mt-6 text-[clamp(3rem,6.5vw,6.5rem)] leading-[0.84] font-semibold tracking-[-0.06em]"
+                  className="font-display text-[clamp(2.7rem,5.2vw,5rem)] font-semibold leading-[0.9] tracking-[-0.055em]"
                 >
                   {section.title}
                 </h2>
@@ -454,20 +450,14 @@ export function CaseStudySection({
                 />
               </div>
 
-              {section.bullets?.length ? (
+              {bullets.length ? (
                 <ul className="border-y border-[var(--line-strong)]">
-                  {section.bullets.map((bullet, bulletIndex) => (
+                  {bullets.map((bullet) => (
                     <li
-                      key={`${bulletIndex}-${bullet}`}
-                      className="grid grid-cols-[4.5rem_minmax(0,1fr)] gap-4 border-b border-[var(--line)] py-4 last:border-b-0"
+                      key={bullet}
+                      className="border-b border-[var(--line)] py-4 last:border-b-0"
                     >
-                      <span className="font-mono text-[0.61rem] text-[var(--signal)]">
-                        [PASS]
-                      </span>
                       <span className="font-body text-sm leading-6">
-                        <span className="font-mono mr-3 text-[var(--violet-text)]">
-                          {String(bulletIndex + 1).padStart(2, "0")}
-                        </span>
                         {bullet}
                       </span>
                     </li>
@@ -485,36 +475,32 @@ export function CaseStudySection({
               index={index}
               total={total}
               label={typeLabel}
-              mutedClassName="opacity-55"
+              mutedClassName="opacity-35"
             />
 
             <div className="mt-14 lg:ml-[16.666%]">
-              <p className="font-mono text-[0.64rem] uppercase tracking-[0.18em] text-[var(--violet)]">
-                Reflection / retained state
-              </p>
               <h2
                 id={headingId}
-                className="font-display mt-6 max-w-5xl text-[clamp(3.4rem,7.5vw,7.4rem)] leading-[0.83] font-semibold tracking-[-0.065em]"
+                className="max-w-4xl font-display text-[clamp(2.5rem,4.5vw,4.2rem)] font-semibold leading-[0.92] tracking-[-0.05em]"
               >
                 {section.title}
               </h2>
 
               <Paragraphs
                 paragraphs={section.paragraphs}
-                className="mt-10 max-w-4xl text-xl leading-9 text-[var(--ink)]/72"
+                className="mt-10 max-w-3xl text-lg leading-8 text-[var(--ink)]/72"
               />
 
-              {section.bullets?.length ? (
-                <ul className="mt-12 grid border-t border-[var(--ink)]/25 md:grid-cols-2">
-                  {section.bullets.map((bullet, bulletIndex) => (
+              {bullets.length ? (
+                <ul className="mt-12 border-t border-[var(--ink)]/25">
+                  {bullets.map((bullet) => (
                     <li
-                      key={`${bulletIndex}-${bullet}`}
-                      className="grid grid-cols-[3rem_1fr] gap-3 border-b border-[var(--ink)]/25 py-5 md:pr-8 md:odd:border-r md:even:pl-8"
+                      key={bullet}
+                      className="border-b border-[var(--ink)]/20 py-5"
                     >
-                      <span className="font-mono text-xs text-[var(--violet)]">
-                        {String(bulletIndex + 1).padStart(2, "0")}
+                      <span className="max-w-3xl font-body text-sm leading-6">
+                        {bullet}
                       </span>
-                      <span className="font-body text-sm leading-6">{bullet}</span>
                     </li>
                   ))}
                 </ul>
@@ -530,47 +516,41 @@ export function CaseStudySection({
               index={index}
               total={total}
               label={typeLabel}
-              mutedClassName="opacity-65"
+              mutedClassName="opacity-45"
             />
 
-            <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,1fr)_9rem]">
-              <div>
-                <p className="signal-label w-fit bg-[var(--signal)] text-[var(--ink)]">
-                  Next state
-                </p>
-                <h2
-                  id={headingId}
-                  className="font-display mt-7 max-w-5xl text-[clamp(3.5rem,8vw,8rem)] leading-[0.8] font-semibold tracking-[-0.07em]"
-                >
-                  {section.title}
-                </h2>
-              </div>
+            <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,1fr)_7rem]">
+              <h2
+                id={headingId}
+                className="max-w-5xl font-display text-[clamp(3rem,6.2vw,6.2rem)] font-semibold leading-[0.85] tracking-[-0.06em]"
+              >
+                {section.title}
+              </h2>
 
               <span
                 aria-hidden="true"
-                className="hidden self-center text-right font-display text-8xl text-[var(--signal)] lg:block"
+                className="hidden self-center text-right font-display text-7xl text-[var(--violet-text)] lg:block"
               >
                 →
               </span>
             </div>
 
-            <div className="mt-10 grid gap-10 lg:grid-cols-2">
+            <div className="mt-10 grid gap-10 border-t border-[var(--line)] pt-10 lg:grid-cols-2">
               <Paragraphs
                 paragraphs={section.paragraphs}
-                className="text-lg leading-8 text-[var(--paper)]"
+                className="text-lg leading-8 text-[var(--paper-muted)]"
               />
 
-              {section.bullets?.length ? (
-                <ul className="border-y border-[var(--paper)]/35">
-                  {section.bullets.map((bullet, bulletIndex) => (
+              {bullets.length ? (
+                <ul className="border-y border-[var(--line-strong)]">
+                  {bullets.map((bullet) => (
                     <li
-                      key={`${bulletIndex}-${bullet}`}
-                      className="grid grid-cols-[3rem_1fr] gap-3 border-b border-[var(--paper)]/25 py-4 last:border-b-0"
+                      key={bullet}
+                      className="border-b border-[var(--line)] py-4 last:border-b-0"
                     >
-                      <span className="font-mono text-xs text-[var(--signal)]">
-                        ↗{String(bulletIndex + 1).padStart(2, "0")}
+                      <span className="font-body text-sm leading-6">
+                        {bullet}
                       </span>
-                      <span className="font-body text-sm leading-6">{bullet}</span>
                     </li>
                   ))}
                 </ul>
@@ -586,9 +566,10 @@ export function CaseStudySection({
       id={section.id}
       tabIndex={-1}
       aria-labelledby={headingId}
-      className={`full-bleed scroll-mt-28 border-b border-[var(--line-strong)] focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[var(--signal)] ${sectionSurfaces[section.type]}`}
+      data-intensity={intensity}
+      className={`full-bleed scroll-mt-28 border-b focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[var(--signal)] ${sectionBorders[section.type]} ${sectionSurfaces[section.type]}`}
     >
-      <div className="content-frame py-14 sm:py-20 lg:py-24">
+      <div className={`content-frame ${intensitySpacing[intensity]}`}>
         {renderSectionContent()}
       </div>
     </section>

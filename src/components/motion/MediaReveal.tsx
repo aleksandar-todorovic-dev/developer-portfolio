@@ -12,23 +12,22 @@ export function MediaReveal({
   const shouldReduceMotion = useReducedMotion();
 
   return (
-    <motion.div
-      className={className}
-      initial={
-        shouldReduceMotion
-          ? false
-          : {
-              clipPath: "inset(0 100% 0 0)",
-            }
-      }
-      whileInView={{ clipPath: "inset(0 0% 0 0)" }}
-      viewport={{ once: true, amount: 0.16 }}
-      transition={{
-        duration: shouldReduceMotion ? 0 : 0.72,
-        ease: [0.22, 1, 0.36, 1],
-      }}
-    >
+    <div className={className}>
       {children}
-    </motion.div>
+
+      {shouldReduceMotion ? null : (
+        <motion.span
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 z-20 origin-right bg-[var(--ink)]"
+          initial={{ scaleX: 1 }}
+          whileInView={{ scaleX: 0 }}
+          viewport={{ once: true, amount: 0.16 }}
+          transition={{
+            duration: 0.72,
+            ease: [0.22, 1, 0.36, 1],
+          }}
+        />
+      )}
+    </div>
   );
 }

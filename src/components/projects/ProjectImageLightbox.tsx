@@ -109,10 +109,10 @@ export function ProjectImageLightbox({
         animate={{ clipPath: "inset(0% 0% 0% 0%)" }}
         transition={{ duration: 0.28, ease: [0.76, 0, 0.24, 1] }}
       >
-        <header className="flex items-start justify-between gap-6 border-b border-[var(--line-strong)] bg-[var(--violet)] px-5 py-4 sm:px-7">
+        <header className="flex items-start justify-between gap-6 border-b border-[var(--line-strong)] border-t-2 border-t-[var(--violet)] bg-[var(--ink-2)] px-5 py-4 sm:px-7">
           <div>
             <p className="font-mono text-[0.62rem] uppercase tracking-[0.18em] text-[var(--paper)]">
-              Full-size screenshot / evidence
+              Full-size screenshot
             </p>
 
             <h2
@@ -127,7 +127,7 @@ export function ProjectImageLightbox({
             ref={closeButtonRef}
             type="button"
             onClick={onClose}
-            className="focus-ring inline-flex min-h-11 items-center gap-3 border border-[var(--paper)]/55 px-4 font-mono text-[0.67rem] uppercase tracking-[0.16em] transition-colors hover:border-[var(--signal)] hover:bg-[var(--signal)] hover:text-[var(--ink)]"
+            className="focus-ring inline-flex min-h-11 items-center gap-3 border border-[var(--paper)]/55 px-4 font-mono text-[0.67rem] uppercase tracking-[0.16em] transition-colors hover:border-[var(--paper)] hover:bg-[var(--paper)] hover:text-[var(--ink)]"
           >
             Close
             <span aria-hidden="true" className="text-lg">

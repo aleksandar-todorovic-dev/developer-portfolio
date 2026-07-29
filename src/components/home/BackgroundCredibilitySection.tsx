@@ -2,25 +2,18 @@ import { backgroundCredibilityItems } from "../../data/backgroundCredibility";
 
 export function BackgroundCredibilitySection() {
   return (
-    <section className="full-bleed relative overflow-hidden bg-[var(--paper)] py-20 text-[var(--ink)] sm:py-28">
-      <p
-        aria-hidden="true"
-        className="absolute -right-[0.06em] top-2 font-display text-[clamp(8rem,26vw,24rem)] font-extrabold leading-none tracking-[-0.09em] text-black/[0.045]"
-      >
-        BEFORE
-      </p>
-
-      <div className="content-frame relative">
-        <div className="grid gap-9 lg:grid-cols-[11rem_minmax(0,1fr)]">
-          <p className="signal-label text-[var(--violet-dark)]">
-            06 / Background
+    <section className="full-bleed bg-[var(--paper-deep)] py-20 text-[var(--ink)] sm:py-28">
+      <div className="content-frame">
+        <div className="grid gap-9 lg:grid-cols-[13rem_minmax(0,1fr)]">
+          <p className="font-mono text-[0.68rem] uppercase tracking-[0.15em] text-[var(--violet-dark)]">
+            Background
           </p>
 
           <div>
-            <h2 className="display-balance max-w-5xl font-display text-[clamp(3.2rem,7vw,7.2rem)] font-semibold leading-[0.86] tracking-[-0.065em]">
-              THE WAY I WORK
-              <span className="block text-[var(--violet)]">
-                STARTED BEFORE CODE.
+            <h2 className="display-balance max-w-5xl font-display text-[clamp(2.8rem,6vw,6rem)] font-semibold leading-[0.9] tracking-[-0.055em]">
+              The way I work
+              <span className="block text-[var(--violet-dark)]">
+                started before code.
               </span>
             </h2>
 
@@ -31,19 +24,24 @@ export function BackgroundCredibilitySection() {
           </div>
         </div>
 
-        <div className="mt-14 border-t-2 border-black">
+        <div className="mt-14 border-t border-black/40">
           {backgroundCredibilityItems.map((item, index) => (
             <article
               key={item.label}
-              className="grid gap-5 border-b border-black/30 py-7 sm:py-9 lg:grid-cols-[8rem_minmax(15rem,0.8fr)_minmax(0,1.25fr)] lg:gap-10"
+              className="grid gap-5 border-b border-black/25 py-7 sm:py-9 lg:grid-cols-[3rem_minmax(15rem,0.8fr)_minmax(0,1.25fr)] lg:gap-10"
             >
-              <p className="font-mono text-xs font-semibold">
-                {String(index + 1).padStart(2, "0")} / {item.label}
+              <p className="font-mono text-xs font-semibold text-[var(--violet-dark)]">
+                {String(index + 1).padStart(2, "0")}
               </p>
 
-              <h3 className="font-display text-2xl font-semibold leading-tight tracking-[-0.035em] sm:text-3xl">
-                {item.title}
-              </h3>
+              <div>
+                <p className="font-mono text-[0.62rem] uppercase tracking-[0.12em] text-[var(--ink)]/60">
+                  {item.label}
+                </p>
+                <h3 className="mt-3 font-display text-2xl font-semibold leading-tight tracking-[-0.035em] sm:text-3xl">
+                  {item.title}
+                </h3>
+              </div>
 
               <p className="max-w-3xl leading-7 text-black/65">
                 {item.description}

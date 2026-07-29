@@ -9,6 +9,7 @@
   --color-ink: #11100f;
   --color-ink-2: #191716;
   --color-paper: #f3efe6;
+  --color-paper-deep: #ded5c7;
   --color-paper-muted: #b7b0a5;
   --color-violet: #6d43ff;
   --color-violet-dark: #4820d1;
@@ -20,6 +21,7 @@
   --ink-2: #191716;
   --ink-3: #24211f;
   --paper: #f3efe6;
+  --paper-deep: #ded5c7;
   --paper-muted: #b7b0a5;
   --violet: #6d43ff;
   --violet-dark: #4820d1;
@@ -167,44 +169,6 @@ section[tabindex="-1"]:focus {
     0 0 0 5px var(--signal);
 }
 
-.cut-corner {
-  clip-path: polygon(
-    0 0,
-    calc(100% - 1.25rem) 0,
-    100% 1.25rem,
-    100% 100%,
-    1.25rem 100%,
-    0 calc(100% - 1.25rem)
-  );
-}
-
-.cut-corner-lg {
-  clip-path: polygon(
-    0 0,
-    calc(100% - clamp(1.5rem, 4vw, 4rem)) 0,
-    100% clamp(1.5rem, 4vw, 4rem),
-    100% 100%,
-    clamp(1.5rem, 4vw, 4rem) 100%,
-    0 calc(100% - clamp(1.5rem, 4vw, 4rem))
-  );
-}
-
-.trace-grid {
-  background-image:
-    linear-gradient(var(--line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--line) 1px, transparent 1px);
-  background-size: clamp(3rem, 7vw, 6rem) clamp(3rem, 7vw, 6rem);
-}
-
-.trace-dots {
-  background-image: radial-gradient(
-    circle,
-    rgba(243, 239, 230, 0.28) 1px,
-    transparent 1px
-  );
-  background-size: 1rem 1rem;
-}
-
 .text-outline {
   color: transparent;
   -webkit-text-stroke: 1px var(--line-strong);
@@ -212,8 +176,9 @@ section[tabindex="-1"]:focus {
 
 .project-word {
   min-width: 0;
-  overflow-wrap: anywhere;
+  overflow-wrap: normal;
   word-break: normal;
+  hyphens: manual;
 }
 
 .editorial-link {
@@ -251,34 +216,13 @@ section[tabindex="-1"]:focus {
   z-index: 1;
   inset: 0 0 auto;
   height: 0.25rem;
-  background: var(--signal);
+  background: var(--violet);
   content: "";
 }
 
 .route-stage {
   position: relative;
   isolation: isolate;
-}
-
-.route-stage::before {
-  position: fixed;
-  z-index: -1;
-  inset: var(--header-height) 0 auto;
-  height: min(42rem, 70vh);
-  pointer-events: none;
-  background:
-    linear-gradient(
-      90deg,
-      transparent 0 74%,
-      rgba(243, 239, 230, 0.055) 74% 74.1%,
-      transparent 74.1%
-    ),
-    linear-gradient(
-      transparent 0 62%,
-      rgba(243, 239, 230, 0.04) 62% 62.15%,
-      transparent 62.15%
-    );
-  content: "";
 }
 
 @media (max-width: 639px) {

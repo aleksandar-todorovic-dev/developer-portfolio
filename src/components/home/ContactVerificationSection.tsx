@@ -9,13 +9,15 @@ export function ContactVerificationSection() {
       <div className="content-frame">
         <div className="grid gap-10 lg:grid-cols-[minmax(0,0.8fr)_minmax(22rem,1.2fr)] lg:gap-16">
           <div className="lg:sticky lg:top-28 lg:self-start">
-            <p className="signal-label text-[var(--signal)]">
-              07 / Verify + connect
+            <p className="font-mono text-[0.68rem] uppercase tracking-[0.15em] text-[var(--paper-muted)]">
+              Work and contact
             </p>
 
-            <h2 className="mt-5 font-display text-[clamp(3.4rem,7vw,7.5rem)] font-semibold leading-[0.84] tracking-[-0.07em]">
-              PROOF
-              <span className="block text-[var(--violet)]">IS PUBLIC.</span>
+            <h2 className="mt-5 font-display text-[clamp(3rem,6.2vw,6.4rem)] font-semibold leading-[0.88] tracking-[-0.06em]">
+              THE WORK
+              <span className="block text-[var(--violet-text)]">
+                IS OPEN TO INSPECT.
+              </span>
             </h2>
 
             <p className="mt-6 max-w-lg text-base leading-7 text-[var(--paper-muted)]">
@@ -25,13 +27,9 @@ export function ContactVerificationSection() {
           </div>
 
           <ul className="border-t border-[var(--line-strong)]">
-            {verificationLinks.map((item, index) => {
+            {verificationLinks.map((item) => {
               const content = (
                 <>
-                  <span className="font-mono text-xs text-[var(--paper-muted)]">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-
                   <span>
                     <span className="block font-display text-2xl font-semibold tracking-[-0.035em] sm:text-3xl">
                       {item.label}
@@ -43,7 +41,11 @@ export function ContactVerificationSection() {
 
                   <span
                     aria-hidden="true"
-                    className="text-2xl text-[var(--signal)] transition-transform group-hover:translate-x-2"
+                    className={`text-2xl transition-transform group-hover:translate-x-2 ${
+                      item.href.startsWith("mailto:")
+                        ? "text-[var(--signal)]"
+                        : "text-[var(--violet-text)]"
+                    }`}
                   >
                     {item.download ? "↓" : item.external ? "↗" : "→"}
                   </span>
@@ -65,14 +67,14 @@ export function ContactVerificationSection() {
                       target={item.external ? "_blank" : undefined}
                       rel={item.external ? "noreferrer" : undefined}
                       download={item.download}
-                      className="focus-ring group grid min-h-30 grid-cols-[2rem_minmax(0,1fr)_auto] items-center gap-4 py-6 transition-colors hover:bg-[var(--ink)] sm:px-4"
+                      className="focus-ring group grid min-h-30 grid-cols-[minmax(0,1fr)_auto] items-center gap-4 py-6 transition-colors hover:bg-[var(--ink)] sm:px-4"
                     >
                       {content}
                     </a>
                   ) : (
                     <Link
                       to={item.href}
-                      className="focus-ring group grid min-h-30 grid-cols-[2rem_minmax(0,1fr)_auto] items-center gap-4 py-6 transition-colors hover:bg-[var(--ink)] sm:px-4"
+                      className="focus-ring group grid min-h-30 grid-cols-[minmax(0,1fr)_auto] items-center gap-4 py-6 transition-colors hover:bg-[var(--ink)] sm:px-4"
                     >
                       {content}
                     </Link>

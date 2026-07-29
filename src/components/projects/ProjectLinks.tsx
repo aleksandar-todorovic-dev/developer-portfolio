@@ -14,12 +14,12 @@ export function ProjectLinks({ links }: ProjectLinksProps) {
   return (
     <section
       aria-label="Project links"
-      className="full-bleed mt-24 border-y border-[var(--paper)]/25 bg-[var(--violet-dark)] text-[var(--paper)] sm:mt-32"
+      className="full-bleed mt-24 border-y border-[var(--ink)]/25 bg-[var(--paper)] text-[var(--ink)] sm:mt-32"
     >
       <div className="content-frame grid lg:grid-cols-[16rem_minmax(0,1fr)]">
-        <div className="py-10 lg:border-r lg:border-[var(--paper)]/25 lg:pr-10">
-          <p className="font-mono text-[0.66rem] uppercase tracking-[0.2em] text-[var(--paper)]">
-            External resolve
+        <div className="py-10 lg:border-r lg:border-[var(--ink)]/25 lg:pr-10">
+          <p className="font-mono text-[0.66rem] uppercase tracking-[0.16em] text-[var(--violet-dark)]">
+            Project destinations
           </p>
 
           <h2 className="font-display mt-5 text-4xl leading-[0.92] font-semibold tracking-[-0.05em]">
@@ -27,21 +27,17 @@ export function ProjectLinks({ links }: ProjectLinksProps) {
           </h2>
         </div>
 
-        <div className="border-t border-[var(--paper)]/25 lg:border-t-0 lg:pl-10">
-          {links.map((link, index) => (
+        <div className="border-t border-[var(--ink)]/25 lg:border-t-0 lg:pl-10">
+          {links.map((link) => (
             <a
               key={link.type}
               href={link.href}
               target="_blank"
               rel="noreferrer"
-              className="focus-ring group grid gap-5 border-b border-[var(--paper)]/25 py-8 last:border-b-0 sm:grid-cols-[4rem_minmax(0,1fr)_4rem] sm:items-center"
+              className="focus-ring group grid gap-5 border-b border-[var(--ink)]/25 py-8 last:border-b-0 sm:grid-cols-[minmax(0,1fr)_4rem] sm:items-center"
             >
-              <span className="font-mono text-xs text-[var(--signal)]">
-                OUT—{String(index + 1).padStart(2, "0")}
-              </span>
-
               <span>
-                <span className="block font-mono text-[0.65rem] uppercase tracking-[0.18em] text-[var(--paper)]">
+                <span className="block font-mono text-[0.65rem] uppercase tracking-[0.16em] text-[var(--ink)]/65">
                   {linkTypeLabels[link.type]}
                 </span>
 
@@ -52,7 +48,7 @@ export function ProjectLinks({ links }: ProjectLinksProps) {
 
               <span
                 aria-hidden="true"
-                className="flex size-12 items-center justify-center bg-[var(--signal)] text-2xl text-[var(--ink)] transition-transform duration-200 group-hover:-translate-y-1 group-hover:translate-x-1"
+                className="flex size-12 items-center justify-center bg-[var(--violet-dark)] text-2xl text-[var(--paper)] transition-transform duration-200 group-hover:-translate-y-1 group-hover:translate-x-1"
               >
                 ↗
               </span>

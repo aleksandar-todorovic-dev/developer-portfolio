@@ -2,6 +2,8 @@ import { motion, useReducedMotion } from "motion/react";
 import { Link } from "react-router";
 
 import type { Project, ProjectSlug } from "../../types/project";
+import { TracePath } from "../motion/TracePath";
+import { projectTraceVariants } from "../motion/projectTraceVariants";
 import { getProjectScreenshotDimensions } from "./projectScreenshotDimensions";
 
 type ProjectCardVariant = "compact" | "detailed";
@@ -24,30 +26,34 @@ const chapterStyles: Record<
     scene: string;
     muted: string;
     line: string;
-    signal: string;
+    action: string;
     imageStage: string;
+    trace: string;
   }
 > = {
   liferecompiled: {
     scene: "bg-[var(--paper)] text-[var(--ink)]",
     muted: "text-[var(--ink)]/65",
     line: "border-[var(--ink)]/25",
-    signal: "bg-[var(--violet)] text-[var(--paper)]",
+    action: "bg-[var(--violet-dark)] text-[var(--paper)]",
     imageStage: "bg-[var(--ink)]",
+    trace: "text-[var(--violet-dark)]",
   },
   "training-app": {
-    scene: "bg-[var(--violet)] text-[var(--paper)]",
-    muted: "text-[var(--paper)]",
-    line: "border-[var(--paper)]/30",
-    signal: "bg-[var(--signal)] text-[var(--ink)]",
-    imageStage: "bg-[var(--violet-dark)]",
-  },
-  taskflow: {
     scene: "bg-[var(--ink-2)] text-[var(--paper)]",
     muted: "text-[var(--paper-muted)]",
-    line: "border-[var(--line)]",
-    signal: "bg-[var(--signal)] text-[var(--ink)]",
-    imageStage: "bg-[var(--violet-dark)]",
+    line: "border-[var(--line-strong)]",
+    action: "bg-[var(--paper)] text-[var(--ink)]",
+    imageStage: "bg-[var(--ink)]",
+    trace: "text-[var(--violet-text)]",
+  },
+  taskflow: {
+    scene: "bg-[var(--paper)] text-[var(--ink)]",
+    muted: "text-[var(--ink)]/65",
+    line: "border-[var(--ink)]/25",
+    action: "bg-[var(--ink)] text-[var(--paper)]",
+    imageStage: "bg-[var(--ink-2)]",
+    trace: "text-[var(--violet-dark)]",
   },
 };
 
@@ -75,7 +81,7 @@ export function ProjectCard({
           <span>{number} / 03</span>
         </div>
 
-        <h3 className="font-display mt-8 text-[clamp(2.3rem,4vw,4.4rem)] leading-[0.9] font-semibold tracking-[-0.055em] [overflow-wrap:anywhere]">
+        <h3 className="project-word mt-8 font-display text-[clamp(2.3rem,4vw,4.4rem)] font-semibold leading-[0.9] tracking-[-0.055em]">
           {project.title}
         </h3>
 
@@ -96,7 +102,7 @@ export function ProjectCard({
           to={`/projects/${project.slug}`}
           className="focus-ring mt-auto flex items-center justify-between gap-4 border-t border-current/25 pt-6 font-mono text-xs uppercase tracking-[0.16em]"
         >
-          Trace case study
+          Read case study
           <span
             aria-hidden="true"
             className="text-xl transition-transform duration-200 group-hover:translate-x-2"
@@ -115,10 +121,18 @@ export function ProjectCard({
     <article
       className={`relative border-b ${styles.line} ${styles.scene} px-5 py-16 sm:px-8 sm:py-24 lg:px-12 lg:py-28`}
     >
-      <div className="mb-9 flex items-center gap-4 font-mono text-[0.68rem] uppercase tracking-[0.2em]">
-        <span className={`signal-label ${styles.signal}`}>Trace—{number}</span>
-        <span className={`h-px flex-1 border-t ${styles.line}`} />
-        <span>{project.proofLabel}</span>
+      <div className={`mb-10 grid gap-5 border-b pb-6 ${styles.line} sm:grid-cols-[minmax(0,1fr)_minmax(14rem,0.65fr)] sm:items-center`}>
+        <div className="flex items-center justify-between gap-5 font-mono text-[0.68rem] uppercase tracking-[0.16em] sm:block">
+          <span>Project {number} of 03</span>
+          <span className={`sm:mt-2 sm:block ${styles.muted}`}>
+            {project.proofLabel}
+          </span>
+        </div>
+
+        <TracePath
+          variant={projectTraceVariants[project.slug]}
+          className={`h-16 ${styles.trace}`}
+        />
       </div>
 
       <div className="grid gap-10 lg:grid-cols-12 lg:items-start lg:gap-8">
@@ -127,7 +141,7 @@ export function ProjectCard({
             isReversed ? "lg:col-start-8 lg:row-start-1" : ""
           }`}
         >
-          <h2 className="font-display text-[clamp(3.2rem,7.2vw,7.5rem)] leading-[0.8] font-semibold tracking-[-0.07em] [overflow-wrap:anywhere]">
+          <h2 className="project-word font-display text-[clamp(2.55rem,12vw,7.5rem)] font-semibold leading-[0.82] tracking-[-0.07em]">
             {project.title}
           </h2>
 
@@ -161,7 +175,7 @@ export function ProjectCard({
               aria-hidden="true"
               className="absolute left-0 top-0 z-10 border-b border-r border-[var(--paper)]/30 px-3 py-2 font-mono text-[0.6rem] uppercase tracking-[0.18em] text-[var(--paper)]"
             >
-              Screen / {coverScreenshot.format}
+              {coverScreenshot.label}
             </div>
 
             <motion.img
@@ -173,7 +187,7 @@ export function ProjectCard({
               height={dimensions?.height}
               className={
                 isMobileCover
-                  ? "relative w-full max-w-67 object-contain object-bottom shadow-[-18px_18px_0_var(--signal)]"
+                  ? "relative w-full max-w-67 object-contain object-bottom shadow-[-16px_16px_0_var(--violet)]"
                   : "relative h-full w-full object-cover transition-[filter] duration-300 group-hover:contrast-110"
               }
               initial={shouldReduceMotion ? false : { scale: 1.06 }}
@@ -213,14 +227,11 @@ export function ProjectCard({
             aria-label={`${project.title} technologies`}
             className="mt-6 flex flex-wrap gap-x-5 gap-y-2"
           >
-            {project.techStack.map((technology, technologyIndex) => (
+            {project.techStack.map((technology) => (
               <li
                 key={technology}
                 className="font-mono text-[0.65rem] uppercase tracking-[0.16em]"
               >
-                <span className={styles.muted}>
-                  {String(technologyIndex + 1).padStart(2, "0")} /
-                </span>{" "}
                 {technology}
               </li>
             ))}
@@ -228,9 +239,9 @@ export function ProjectCard({
 
           <Link
             to={`/projects/${project.slug}`}
-            className={`focus-ring mt-10 flex w-full items-center justify-between gap-5 px-5 py-4 font-mono text-xs uppercase tracking-[0.18em] transition-transform duration-200 hover:-translate-y-1 ${styles.signal}`}
+            className={`focus-ring mt-10 flex w-full items-center justify-between gap-5 px-5 py-4 font-mono text-xs uppercase tracking-[0.18em] transition-colors duration-200 ${styles.action}`}
           >
-            Resolve full case study
+            Read full case study
             <span aria-hidden="true" className="text-xl">
               ↗
             </span>

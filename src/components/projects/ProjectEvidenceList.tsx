@@ -13,7 +13,7 @@ export function ProjectEvidenceList({ evidence }: ProjectEvidenceListProps) {
       <div className="grid gap-8 lg:grid-cols-[12rem_minmax(0,1fr)] lg:gap-12">
         <div>
           <p className="font-mono text-[0.66rem] uppercase tracking-[0.2em] text-[var(--paper-muted)]">
-            Verified signals
+            Implementation
           </p>
 
           <h2
@@ -24,18 +24,14 @@ export function ProjectEvidenceList({ evidence }: ProjectEvidenceListProps) {
           </h2>
         </div>
 
-        <ol className="border-y border-[var(--line-strong)]">
-          {evidence.map((item, index) => (
+        <ul className="border-y border-[var(--line-strong)]">
+          {evidence.map((item) => (
             <li
               key={item.label}
-              className="group grid border-b border-[var(--line)] py-7 last:border-b-0 sm:grid-cols-[5rem_minmax(0,1fr)] sm:gap-5"
+              className="group border-b border-[var(--line)] py-7 last:border-b-0"
             >
-              <span className="font-mono text-xs text-[var(--violet-text)]">
-                EVID—{String(index + 1).padStart(2, "0")}
-              </span>
-
-              <div className="mt-4 sm:mt-0">
-                <h3 className="font-display text-2xl font-semibold tracking-[-0.035em] text-[var(--paper)] transition-colors group-hover:text-[var(--signal)]">
+              <div>
+                <h3 className="font-display text-2xl font-semibold tracking-[-0.035em] text-[var(--paper)] transition-colors group-hover:text-[var(--violet-text)]">
                   {item.label}
                 </h3>
 
@@ -45,7 +41,7 @@ export function ProjectEvidenceList({ evidence }: ProjectEvidenceListProps) {
               </div>
             </li>
           ))}
-        </ol>
+        </ul>
       </div>
     </section>
   );

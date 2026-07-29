@@ -7,7 +7,6 @@ import { cn } from "../../utils/cn";
 type NavItem = {
   to: string;
   label: string;
-  index: string;
   note: string;
   end?: boolean;
 };
@@ -16,35 +15,31 @@ const navLinks: NavItem[] = [
   {
     to: "/",
     label: "Home",
-    index: "01",
-    note: "Current signal",
+    note: "Portfolio overview",
     end: true,
   },
   {
     to: "/projects",
     label: "Projects",
-    index: "02",
-    note: "Three case studies",
+    note: "Selected case studies",
   },
   {
     to: "/about",
     label: "About",
-    index: "03",
-    note: "Direction + method",
+    note: "Background and approach",
   },
   {
     to: "/contact",
     label: "Contact",
-    index: "04",
-    note: "Start a conversation",
+    note: "Email and professional links",
   },
 ];
 
 function desktopLinkClass(isActive: boolean) {
   return cn(
-    "group relative flex min-h-12 items-center gap-2 border-l border-[var(--line)] px-4 font-mono text-[0.7rem] font-semibold uppercase tracking-[0.12em] transition-colors last:border-r",
+    "relative flex min-h-12 items-center border-l border-[var(--line)] px-5 text-sm font-semibold tracking-[-0.01em] transition-colors last:border-r",
     isActive
-      ? "bg-[var(--paper)] text-[var(--ink)]"
+      ? "bg-[var(--ink-2)] text-[var(--paper)] after:absolute after:inset-x-5 after:bottom-0 after:h-0.5 after:bg-[var(--signal)]"
       : "text-[var(--paper-muted)] hover:bg-[var(--ink-2)] hover:text-[var(--paper)]",
   );
 }
@@ -163,9 +158,8 @@ export function Header() {
               Aleksandar Todorovic
             </span>
 
-            <span className="mt-0.5 hidden items-center gap-2 font-mono text-[0.6rem] uppercase tracking-[0.12em] text-[var(--paper-muted)] sm:flex">
-              <span className="size-1.5 bg-[var(--signal)]" aria-hidden="true" />
-              Frontend / Serbia
+            <span className="mt-0.5 hidden text-[0.68rem] text-[var(--paper-muted)] sm:block">
+              Frontend developer · Serbia
             </span>
           </span>
         </NavLink>
@@ -181,8 +175,7 @@ export function Header() {
               end={link.end}
               className={({ isActive }) => desktopLinkClass(isActive)}
             >
-              <span className="text-[0.58rem]">{link.index}</span>
-              <span>{link.label}</span>
+              {link.label}
             </NavLink>
           ))}
         </nav>
@@ -214,7 +207,7 @@ export function Header() {
         {isMenuOpen ? (
           <motion.nav
             id="mobile-navigation"
-            className="fixed inset-x-0 top-[var(--header-height)] z-40 h-[calc(100dvh-var(--header-height))] overflow-y-auto bg-[var(--violet)] text-white md:hidden"
+            className="fixed inset-x-0 top-[var(--header-height)] z-40 h-[calc(100dvh-var(--header-height))] overflow-y-auto bg-[var(--paper)] text-[var(--ink)] md:hidden"
             aria-label="Mobile navigation"
             initial={
               shouldReduceMotion
@@ -233,34 +226,37 @@ export function Header() {
             }}
           >
             <div className="content-frame flex min-h-full flex-col py-7">
-              <div className="flex items-center justify-between border-b border-white/40 pb-4">
-                <p className="signal-label">Site index / 04 routes</p>
-                <p className="signal-label">Trace active</p>
+              <div className="flex items-center justify-between gap-6 border-b border-[var(--ink)]/25 pb-4">
+                <p className="text-sm font-semibold">Navigation</p>
+                <p className="text-sm text-[var(--ink-2)]">
+                  Aleksandar Todorovic
+                </p>
               </div>
 
-              <ol className="flex-1">
+              <ul className="flex-1">
                 {navLinks.map((link) => (
-                  <li key={link.to} className="border-b border-white/35">
+                  <li
+                    key={link.to}
+                    className="border-b border-[var(--ink)]/25"
+                  >
                     <NavLink
                       to={link.to}
                       end={link.end}
                       onClick={closeMenu}
                       className={({ isActive }) =>
                         cn(
-                          "focus-ring group grid min-h-25 grid-cols-[2.5rem_minmax(0,1fr)_auto] items-center gap-3 py-4",
-                          isActive ? "text-[var(--signal)]" : "text-white",
+                          "focus-ring group relative grid min-h-25 grid-cols-[minmax(0,1fr)_auto] items-center gap-5 py-5 pl-4",
+                          isActive
+                            ? "text-[var(--violet-dark)] before:absolute before:inset-y-5 before:left-0 before:w-1 before:bg-[var(--violet)]"
+                            : "text-[var(--ink)] hover:text-[var(--violet-dark)]",
                         )
                       }
                     >
-                      <span className="font-mono text-[0.7rem]">
-                        {link.index}
-                      </span>
-
                       <span>
                         <span className="block font-display text-[clamp(2rem,10vw,4rem)] font-semibold leading-none tracking-[-0.055em]">
                           {link.label}
                         </span>
-                        <span className="mt-1 block font-mono text-[0.6rem] uppercase tracking-[0.12em]">
+                        <span className="mt-1.5 block text-sm text-current">
                           {link.note}
                         </span>
                       </span>
@@ -274,11 +270,18 @@ export function Header() {
                     </NavLink>
                   </li>
                 ))}
-              </ol>
+              </ul>
 
-              <div className="grid gap-3 border-t border-white/40 pt-5 font-mono text-[0.62rem] uppercase tracking-[0.12em] sm:grid-cols-2">
-                <p>React · TypeScript · Firebase</p>
-                <p className="sm:text-right">Kragujevac, Serbia / 2026</p>
+              <div className="grid gap-4 border-t border-[var(--ink)]/25 pt-5 text-sm sm:grid-cols-2 sm:items-center">
+                <p className="text-[var(--ink-2)]">
+                  Frontend developer based in Kragujevac, Serbia.
+                </p>
+                <a
+                  href="mailto:aleksandar.todorovic.rs@gmail.com"
+                  className="focus-ring justify-self-start font-semibold text-[var(--violet-dark)] underline decoration-[var(--violet)] underline-offset-4 sm:justify-self-end"
+                >
+                  Send an email
+                </a>
               </div>
             </div>
           </motion.nav>

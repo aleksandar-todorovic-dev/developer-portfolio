@@ -1,6 +1,4 @@
 import type { PropsWithChildren } from "react";
-import { motion, useReducedMotion } from "motion/react";
-import { useLocation } from "react-router";
 
 import { cn } from "../../utils/cn";
 import { Footer } from "./Footer";
@@ -9,25 +7,6 @@ import { Header } from "./Header";
 type PageShellProps = PropsWithChildren<{
   className?: string;
 }>;
-
-function RouteTrace() {
-  const location = useLocation();
-  const shouldReduceMotion = useReducedMotion();
-
-  return (
-    <motion.div
-      key={`${location.pathname}${location.hash}`}
-      aria-hidden="true"
-      className="fixed inset-x-0 top-[var(--header-height)] z-40 h-0.5 origin-left bg-[var(--signal)]"
-      initial={shouldReduceMotion ? false : { scaleX: 0 }}
-      animate={{ scaleX: 1 }}
-      transition={{
-        duration: shouldReduceMotion ? 0 : 0.46,
-        ease: [0.22, 1, 0.36, 1],
-      }}
-    />
-  );
-}
 
 export function PageShell({ children, className = "" }: PageShellProps) {
   return (
@@ -40,7 +19,6 @@ export function PageShell({ children, className = "" }: PageShellProps) {
       </a>
 
       <Header />
-      <RouteTrace />
 
       <main
         id="main-content"

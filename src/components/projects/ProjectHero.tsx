@@ -1,12 +1,8 @@
-import { motion, useReducedMotion } from "motion/react";
-
-import type { ProjectCategory, ProjectSlug } from "../../types/project";
+import type { ProjectCategory } from "../../types/project";
 
 type ProjectHeroProps = {
-  proofLabel: string;
   title: string;
   shortDescription: string;
-  slug: ProjectSlug;
   category: ProjectCategory;
   sectionCount: number;
 };
@@ -18,80 +14,47 @@ const categoryLabels: Record<ProjectCategory, string> = {
 };
 
 export function ProjectHero({
-  proofLabel,
   title,
   shortDescription,
-  slug,
   category,
   sectionCount,
 }: ProjectHeroProps) {
-  const shouldReduceMotion = useReducedMotion();
-
   return (
-    <header className="full-bleed relative overflow-hidden border-y border-[var(--paper)]/25 bg-[var(--violet)] text-[var(--paper)]">
-      <motion.div
-        aria-hidden="true"
-        className="absolute inset-y-0 left-[17%] w-px bg-[var(--paper)]/20"
-        initial={shouldReduceMotion ? false : { scaleY: 0 }}
-        animate={{ scaleY: 1 }}
-        transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
-        style={{ transformOrigin: "top" }}
-      />
-      <div
-        aria-hidden="true"
-        className="absolute -right-28 -top-28 size-72 rotate-45 border border-[var(--paper)]/20 sm:size-96"
-      />
-
+    <header className="full-bleed border-y border-[var(--ink)]/25 bg-[var(--paper)] text-[var(--ink)]">
       <div className="content-frame relative py-12 sm:py-18 lg:py-24">
-        <div className="flex flex-wrap items-center justify-between gap-5 border-b border-[var(--paper)]/30 pb-5 font-mono text-[0.66rem] uppercase tracking-[0.2em]">
-          <span>Case study / {proofLabel}</span>
-          <span>Record—{slug}</span>
-        </div>
-
-        <div className="grid gap-12 pt-10 lg:grid-cols-[minmax(0,1fr)_17rem] lg:items-end">
+        <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_17rem] lg:items-end">
           <div className="min-w-0">
-            <p className="signal-label mb-7 w-fit bg-[var(--signal)] text-[var(--ink)]">
-              Resolved project
+            <p className="mb-7 font-mono text-[0.68rem] uppercase tracking-[0.16em] text-[var(--violet-dark)]">
+              Project case study
             </p>
 
             <h1
               id="page-heading"
               tabIndex={-1}
-              className="font-display max-w-6xl text-[clamp(2.25rem,11vw,9rem)] leading-[0.8] font-semibold tracking-[-0.07em] [overflow-wrap:anywhere]"
+              className="project-word max-w-6xl font-display text-[clamp(2.25rem,11vw,9rem)] font-semibold leading-[0.82] tracking-[-0.07em]"
             >
               {title}
             </h1>
 
-            <motion.div
+            <div
               aria-hidden="true"
-              className="mt-7 h-2 w-full max-w-3xl bg-[var(--signal)]"
-              initial={shouldReduceMotion ? false : { scaleX: 0 }}
-              animate={{ scaleX: 1 }}
-              transition={{ duration: 0.75, delay: 0.15, ease: [0.76, 0, 0.24, 1] }}
-              style={{ transformOrigin: "left" }}
+              className="mt-7 h-1 w-full max-w-3xl bg-[var(--violet-dark)]"
             />
 
-            <p className="font-body mt-8 max-w-3xl text-lg leading-8 text-[var(--paper)] sm:text-xl">
+            <p className="mt-8 max-w-3xl font-body text-lg leading-8 text-[var(--ink)]/72 sm:text-xl">
               {shortDescription}
             </p>
           </div>
 
-          <aside aria-label="Project overview" className="border-l border-[var(--paper)]/35 pl-6">
-            <p className="font-mono text-[0.65rem] uppercase tracking-[0.2em] text-[var(--paper)]">
-              Execution map
+          <aside aria-label="Project overview" className="border-l border-[var(--ink)]/30 pl-6">
+            <p className="font-mono text-[0.65rem] uppercase tracking-[0.16em] text-[var(--ink)]/70">
+              At a glance
             </p>
 
-            <dl className="mt-5 border-y border-[var(--paper)]/35">
-              <div className="grid grid-cols-[5.4rem_1fr] gap-4 border-b border-[var(--paper)]/25 py-4">
-                <dt className="font-mono text-[0.64rem] uppercase tracking-[0.16em] text-[var(--paper)]">
-                  Project
-                </dt>
-                <dd className="font-body text-sm font-semibold">{slug}</dd>
-              </div>
-
-              <div className="grid grid-cols-[5.4rem_1fr] gap-4 border-b border-[var(--paper)]/25 py-4">
-                <dt className="font-mono text-[0.64rem] uppercase tracking-[0.16em] text-[var(--paper)]">
-                  Mode
+            <dl className="mt-5 border-y border-[var(--ink)]/30">
+              <div className="grid grid-cols-[5.4rem_1fr] gap-4 border-b border-[var(--ink)]/20 py-4">
+                <dt className="font-mono text-[0.64rem] uppercase tracking-[0.14em] text-[var(--ink)]/65">
+                  Focus
                 </dt>
                 <dd className="font-body text-sm font-semibold">
                   {categoryLabels[category]}
@@ -99,18 +62,18 @@ export function ProjectHero({
               </div>
 
               <div className="grid grid-cols-[5.4rem_1fr] gap-4 py-4">
-                <dt className="font-mono text-[0.64rem] uppercase tracking-[0.16em] text-[var(--paper)]">
-                  Records
+                <dt className="font-mono text-[0.64rem] uppercase tracking-[0.14em] text-[var(--ink)]/65">
+                  Sections
                 </dt>
-                <dd className="font-mono text-sm text-[var(--signal)]">
+                <dd className="font-mono text-sm text-[var(--violet-dark)]">
                   {String(sectionCount).padStart(2, "0")}
                 </dd>
               </div>
             </dl>
 
-            <p className="font-body mt-5 text-sm leading-6 text-[var(--paper)]">
+            <p className="mt-5 font-body text-sm leading-6 text-[var(--ink)]/70">
               Decisions, implementation, tradeoffs, validation and lessons
-              traced end to end.
+              behind the finished project.
             </p>
           </aside>
         </div>

@@ -1,10 +1,8 @@
-import { motion, useReducedMotion } from "motion/react";
 import { Link } from "react-router";
 
-import { NewTabNotice, SectionHeader } from "../components/ui";
-import { cn } from "../utils/cn";
+import { NewTabNotice } from "../components/ui";
 
-type AvailabilitySignal = {
+type AvailabilityDetail = {
   label: string;
   value: string;
 };
@@ -24,13 +22,7 @@ type ContactLink = {
   kind: ContactLinkKind;
 };
 
-type ContactDirectoryLinkProps = {
-  item: ContactLink;
-  index: number;
-  surfaceClassName: string;
-};
-
-const availabilitySignals: AvailabilitySignal[] = [
+const availabilityDetails: AvailabilityDetail[] = [
   {
     label: "Based in",
     value: "Kragujevac, Serbia",
@@ -70,14 +62,15 @@ const opportunityAreas: OpportunityArea[] = [
   },
 ];
 
-const contactLinks: ContactLink[] = [
-  {
-    label: "Email",
-    description:
-      "The most direct way to contact me about a role, project, paid trial or clearly defined technical task.",
-    href: "mailto:aleksandar.todorovic.rs@gmail.com",
-    kind: "email",
-  },
+const primaryEmail: ContactLink = {
+  label: "Email",
+  description:
+    "The most direct way to contact me about a role, project, paid trial or clearly defined technical task.",
+  href: "mailto:aleksandar.todorovic.rs@gmail.com",
+  kind: "email",
+};
+
+const supportingLinks: ContactLink[] = [
   {
     label: "LinkedIn",
     description:
@@ -115,82 +108,33 @@ const usefulContext = [
   "Any timeline, access needs or parts of the system that should remain untouched",
 ];
 
-const opportunityLayouts = [
-  "lg:col-span-5",
-  "lg:col-span-4 lg:mt-24",
-  "lg:col-span-3 lg:mt-48",
-] as const;
-
-const directoryPanels = [
-  {
-    layout: "lg:col-span-8 lg:row-span-2",
-    surface: "min-h-[24rem] bg-[var(--violet)] sm:min-h-[29rem]",
-    text: "text-[var(--paper)]",
-  },
-  {
-    layout: "lg:col-span-4",
-    surface: "min-h-[15rem] bg-[var(--paper)] lg:min-h-0",
-    text: "text-[var(--ink)]",
-  },
-  {
-    layout: "lg:col-span-4",
-    surface:
-      "min-h-[15rem] border border-[var(--line-strong)] bg-[var(--ink-2)] lg:min-h-0",
-    text: "text-[var(--paper)]",
-  },
-  {
-    layout: "lg:col-span-5",
-    surface:
-      "min-h-[18rem] border border-[var(--line-strong)] bg-[var(--ink)]",
-    text: "text-[var(--paper)]",
-  },
-  {
-    layout: "lg:col-span-7",
-    surface: "min-h-[18rem] bg-[var(--signal)]",
-    text: "text-[var(--ink)]",
-  },
-] as const;
-
-function ContactDirectoryLink({
-  item,
-  index,
-  surfaceClassName,
-}: ContactDirectoryLinkProps) {
+function ContactLinkRow({ item }: { item: ContactLink }) {
   const content = (
     <>
-      <div className="flex items-start justify-between gap-6 font-mono text-[0.66rem] uppercase tracking-[0.16em]">
-        <span>
-          {String(index + 1).padStart(2, "0")} / {item.kind}
-        </span>
-        <span
-          aria-hidden="true"
-          className="text-2xl leading-none transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
-        >
-          {item.kind === "external"
-            ? "↗"
-            : item.kind === "download"
-              ? "↓"
-              : "→"}
-        </span>
-      </div>
-
-      <div className="mt-auto pt-12">
-        <span className="font-display block break-words text-[clamp(2.8rem,6vw,6.5rem)] font-semibold leading-[0.84] tracking-[-0.065em]">
+      <span>
+        <span className="font-display block text-[clamp(2rem,4vw,3.5rem)] font-semibold leading-none tracking-[-0.05em]">
           {item.label}
         </span>
-        <span className="mt-6 block max-w-xl text-sm leading-7 sm:text-base">
+        <span className="mt-3 block max-w-2xl leading-7 text-[var(--paper-muted)]">
           {item.description}
         </span>
-      </div>
-
+      </span>
+      <span
+        aria-hidden="true"
+        className="text-2xl text-[var(--violet-text)] transition-transform group-hover:translate-x-1 group-hover:-translate-y-1"
+      >
+        {item.kind === "external"
+          ? "↗"
+          : item.kind === "download"
+            ? "↓"
+            : "→"}
+      </span>
       {item.kind === "external" ? <NewTabNotice /> : null}
     </>
   );
 
-  const className = cn(
-    "group focus-ring cut-corner flex h-full flex-col overflow-hidden p-6 transition-transform duration-300 hover:-translate-y-1 sm:p-8",
-    surfaceClassName,
-  );
+  const className =
+    "focus-ring group grid min-h-32 grid-cols-[minmax(0,1fr)_auto] items-center gap-6 py-7";
 
   if (item.kind === "internal") {
     return (
@@ -214,61 +158,31 @@ function ContactDirectoryLink({
 }
 
 export function ContactPage() {
-  const prefersReducedMotion = useReducedMotion();
-
   return (
     <>
-      <section className="full-bleed relative isolate overflow-hidden bg-[var(--paper)] text-[var(--ink)]">
-        <div
-          aria-hidden="true"
-          className="absolute right-0 top-0 -z-10 h-[36%] w-[18%] bg-[var(--signal)] max-sm:w-5"
-        />
-
+      <section className="full-bleed bg-[var(--paper)] text-[var(--ink)]">
         <div className="content-frame py-14 sm:py-20 lg:py-28">
-          <div className="flex items-center justify-between gap-6">
-            <p className="font-mono text-[0.7rem] uppercase tracking-[0.2em] text-[var(--violet-dark)]">
-              Contact / Opportunities
+          <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[var(--ink)]/30 pb-4">
+            <p className="text-sm font-semibold text-[var(--violet-dark)]">
+              Contact
             </p>
-            <div className="flex items-center gap-3 font-mono text-[0.66rem] uppercase tracking-[0.16em] text-[var(--ink-2)]">
-              <motion.span
-                aria-hidden="true"
-                animate={
-                  prefersReducedMotion
-                    ? undefined
-                    : { scale: [1, 1.5, 1], opacity: [1, 0.55, 1] }
-                }
-                transition={{
-                  duration: 1.8,
-                  repeat: prefersReducedMotion ? 0 : Number.POSITIVE_INFINITY,
-                  ease: "easeInOut",
-                }}
-                className="h-2.5 w-2.5 bg-[var(--signal)]"
-              />
-              Open channel
-            </div>
+            <p className="text-sm text-[var(--ink)]/65">
+              Available for frontend, web and software-facing work
+            </p>
           </div>
-
-          <motion.div
-            aria-hidden="true"
-            initial={prefersReducedMotion ? false : { scaleX: 0 }}
-            animate={{ scaleX: 1 }}
-            transition={{ duration: prefersReducedMotion ? 0 : 0.7, ease: [0.2, 0.8, 0.2, 1] }}
-            className="mt-5 h-px origin-left bg-[var(--ink)]"
-          />
 
           <h1
             id="page-heading"
             tabIndex={-1}
-            className="font-display mt-9 max-w-[13ch] text-[clamp(4rem,11.5vw,11.5rem)] font-semibold leading-[0.8] tracking-[-0.08em] focus:outline-none"
+            className="font-display mt-10 max-w-[12ch] text-balance text-[clamp(3.5rem,8.7vw,8.8rem)] font-semibold leading-[0.84] tracking-[-0.072em] focus:outline-none"
           >
             A useful conversation
-            <span className="block text-[var(--violet)] sm:ml-[0.55ch]">
-              starts with
+            <span className="block text-[var(--violet)]">
+              starts with a clear problem.
             </span>
-            <span className="block sm:ml-[1.7ch]">a clear problem.</span>
           </h1>
 
-          <div className="mt-14 grid gap-10 border-t border-[var(--ink)] pt-8 lg:mt-20 lg:grid-cols-[minmax(0,1fr)_minmax(20rem,0.7fr)] lg:gap-16">
+          <div className="mt-12 grid gap-10 border-t border-[var(--ink)] pt-8 lg:mt-16 lg:grid-cols-[minmax(0,0.75fr)_minmax(22rem,1.25fr)] lg:items-end lg:gap-16">
             <div className="max-w-3xl space-y-5 text-base leading-8 text-[var(--ink-2)] sm:text-lg">
               <p>
                 I am open to frontend and web development opportunities,
@@ -276,7 +190,6 @@ export function ContactPage() {
                 where technical troubleshooting and reliable follow-through
                 matter.
               </p>
-
               <p>
                 My strongest work so far is in React, TypeScript, JavaScript and
                 Firebase. I am also comfortable working in existing frontend
@@ -286,45 +199,46 @@ export function ContactPage() {
             </div>
 
             <a
-              href="mailto:aleksandar.todorovic.rs@gmail.com"
-              style={{ color: "var(--paper)" }}
-              className="focus-ring group flex min-h-32 items-end justify-between gap-8 bg-[var(--ink)] p-5 text-[var(--paper)] transition-colors hover:bg-[var(--violet-dark)] sm:p-6"
+              href={primaryEmail.href}
+              className="focus-ring group border-l-4 border-[var(--violet)] bg-[var(--ink)] p-6 text-[var(--paper)] transition-colors hover:bg-[var(--ink-2)] sm:p-8"
             >
-              <span>
-                <span className="font-mono block text-[0.65rem] uppercase tracking-[0.16em] text-[var(--signal)]">
-                  Direct line
-                </span>
-                <span className="font-display mt-3 block text-3xl font-semibold tracking-[-0.045em]">
-                  Send an email
+              <span className="block text-sm font-semibold">Email me</span>
+              <span className="font-display mt-5 block text-[clamp(1.55rem,4.5vw,3.25rem)] font-semibold leading-[0.98] tracking-[-0.045em]">
+                <span className="block">aleksandar.</span>
+                <span className="block">todorovic.rs</span>
+                <span className="block text-[var(--violet-text)]">
+                  @gmail.com
                 </span>
               </span>
-              <span
-                aria-hidden="true"
-                className="text-3xl transition-transform group-hover:translate-x-1"
-              >
-                →
+              <span className="mt-6 grid grid-cols-[minmax(0,1fr)_auto] items-end gap-5 text-sm leading-6 text-[var(--paper-muted)]">
+                <span>{primaryEmail.description}</span>
+                <span
+                  aria-hidden="true"
+                  className="text-2xl text-[var(--signal)] transition-transform group-hover:translate-x-1"
+                >
+                  →
+                </span>
               </span>
             </a>
           </div>
 
           <aside
             aria-label="Availability and work preferences"
-            className="mt-12 lg:mt-16"
+            className="mt-14 border-t border-[var(--ink)]/30 pt-5 sm:mt-18"
           >
-            <p className="font-mono text-[0.66rem] uppercase tracking-[0.18em] text-[var(--violet-dark)]">
-              Availability context
-            </p>
-
-            <dl className="mt-4 grid border-l border-t border-[var(--ink)] sm:grid-cols-2 lg:grid-cols-4">
-              {availabilitySignals.map((signal) => (
+            <h2 className="font-display text-2xl font-semibold tracking-[-0.035em]">
+              Availability
+            </h2>
+            <dl className="mt-5 grid gap-x-10 border-y border-[var(--ink)]/25 md:grid-cols-2">
+              {availabilityDetails.map((detail) => (
                 <div
-                  key={signal.label}
-                  className="border-b border-r border-[var(--ink)] p-5"
+                  key={detail.label}
+                  className="grid gap-2 border-b border-[var(--ink)]/20 py-4 last:border-b-0 md:grid-cols-[9rem_minmax(0,1fr)] md:even:border-l md:even:pl-10 md:[&:nth-last-child(-n+2)]:border-b-0"
                 >
-                  <dt className="font-mono text-[0.64rem] uppercase tracking-[0.15em] text-[var(--violet-dark)]">
-                    {signal.label}
+                  <dt className="text-xs font-semibold uppercase tracking-[0.08em] text-[var(--violet-dark)]">
+                    {detail.label}
                   </dt>
-                  <dd className="mt-3 text-sm leading-6">{signal.value}</dd>
+                  <dd className="text-sm leading-6">{detail.value}</dd>
                 </div>
               ))}
             </dl>
@@ -333,34 +247,34 @@ export function ContactPage() {
       </section>
 
       <section className="mt-24 sm:mt-32">
-        <SectionHeader
-          eyebrow="Where I can help"
-          title="Clear goal in. Testable result out."
-          description="I work best when the goal is clear and the result can be tested. That can mean building a frontend feature, improving an existing codebase or tracing a software issue through to a working result."
-        />
+        <header className="grid gap-6 lg:grid-cols-[11rem_minmax(0,1fr)] lg:gap-12">
+          <p className="text-sm font-semibold text-[var(--violet-text)] lg:pt-2">
+            Where I can help
+          </p>
+          <div>
+            <h2 className="font-display max-w-4xl text-balance text-[clamp(2.8rem,5.8vw,5.8rem)] font-semibold leading-[0.91] tracking-[-0.058em]">
+              I work best when the goal is clear and the result can be tested.
+            </h2>
+            <p className="mt-6 max-w-3xl text-base leading-8 text-[var(--paper-muted)] sm:text-lg">
+              That can mean building a frontend feature, improving an existing
+              codebase or tracing a software issue through to a working result.
+            </p>
+          </div>
+        </header>
 
-        <div className="mt-14 grid gap-12 lg:grid-cols-12 lg:gap-6">
-          {opportunityAreas.map((area, index) => (
+        <div className="mt-12 border-t border-[var(--line-strong)] sm:mt-16">
+          {opportunityAreas.map((area) => (
             <article
               key={area.label}
-              className={cn(
-                "relative border-t border-[var(--line-strong)] pt-5",
-                opportunityLayouts[index],
-              )}
+              className="grid gap-5 border-b border-[var(--line)] py-9 sm:py-11 lg:grid-cols-[11rem_minmax(16rem,0.85fr)_minmax(0,1.15fr)] lg:gap-12"
             >
-              <span
-                aria-hidden="true"
-                className="font-display block text-[clamp(5rem,10vw,9rem)] font-semibold leading-[0.75] tracking-[-0.08em] text-[var(--violet)]"
-              >
-                {String(index + 1).padStart(2, "0")}
-              </span>
-              <p className="font-mono mt-8 text-[0.66rem] uppercase tracking-[0.17em] text-[var(--signal)]">
+              <p className="text-sm font-semibold text-[var(--violet-text)] lg:pt-2">
                 {area.label}
               </p>
-              <h2 className="font-display mt-4 text-[clamp(2rem,3.5vw,3.4rem)] font-semibold leading-[0.96] tracking-[-0.05em] text-[var(--paper)]">
+              <h3 className="font-display max-w-xl text-[clamp(2rem,3.8vw,3.6rem)] font-semibold leading-[0.96] tracking-[-0.048em]">
                 {area.title}
-              </h2>
-              <p className="mt-5 leading-7 text-[var(--paper-muted)]">
+              </h3>
+              <p className="max-w-3xl self-center leading-8 text-[var(--paper-muted)]">
                 {area.description}
               </p>
             </article>
@@ -368,66 +282,64 @@ export function ContactPage() {
         </div>
       </section>
 
-      <section className="full-bleed mt-24 bg-[var(--violet-dark)] text-[var(--paper)] sm:mt-32">
-        <div className="content-frame grid gap-12 py-14 sm:py-20 lg:grid-cols-[minmax(16rem,0.65fr)_minmax(0,1.35fr)] lg:gap-16">
+      <section className="full-bleed mt-24 bg-[var(--paper)] text-[var(--ink)] sm:mt-32">
+        <div className="content-frame grid gap-10 py-14 sm:py-20 lg:grid-cols-[minmax(16rem,0.72fr)_minmax(0,1.28fr)] lg:gap-16">
           <div>
-            <p className="font-mono text-[0.68rem] uppercase tracking-[0.2em] text-[var(--signal)]">
-              Useful first message
+            <p className="text-sm font-semibold text-[var(--violet-dark)]">
+              Your first message
             </p>
-
-            <h2 className="font-display mt-5 max-w-xl text-[clamp(2.8rem,5vw,5.2rem)] font-semibold leading-[0.92] tracking-[-0.06em]">
-              A little context makes the first conversation much more useful.
+            <h2 className="font-display mt-5 max-w-xl text-[clamp(2.8rem,5.3vw,5.3rem)] font-semibold leading-[0.92] tracking-[-0.055em]">
+              A short first message is enough.
             </h2>
-
-            <p className="mt-6 max-w-xl leading-8 text-[var(--paper)]">
+            <p className="mt-6 max-w-xl leading-8 text-[var(--ink-2)]">
               A complete specification is not necessary. A short description of
               the real outcome and current situation is usually enough to
               begin.
             </p>
           </div>
 
-          <ol className="grid self-start border-l border-t border-[var(--paper)]/25 sm:grid-cols-2">
-            {usefulContext.map((item, index) => (
+          <ul className="self-start border-y border-[var(--ink)]/25">
+            {usefulContext.map((item) => (
               <li
                 key={item}
-                className="min-h-40 border-b border-r border-[var(--paper)]/25 p-5 sm:p-6"
+                className="grid grid-cols-[1.25rem_minmax(0,1fr)] gap-4 border-b border-[var(--ink)]/20 py-5 last:border-b-0"
               >
-                <span className="font-mono text-[0.68rem] text-[var(--signal)]">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                <span className="mt-8 block leading-7 text-[var(--paper)]">
-                  {item}
-                </span>
+                <span
+                  aria-hidden="true"
+                  className="mt-[0.65rem] h-px bg-[var(--violet)]"
+                />
+                <span className="leading-7">{item}</span>
               </li>
             ))}
-          </ol>
+          </ul>
         </div>
       </section>
 
       <section className="mt-24 sm:mt-32">
-        <SectionHeader
-          eyebrow="Contact and project links"
-          title="Choose your entry point."
-          description="Contact me directly, review the work, inspect the code or download the current CV."
-        />
+        <header className="grid gap-6 lg:grid-cols-[11rem_minmax(0,1fr)] lg:gap-12">
+          <p className="text-sm font-semibold text-[var(--violet-text)] lg:pt-2">
+            Other useful links
+          </p>
+          <div>
+            <h2 className="font-display max-w-4xl text-balance text-[clamp(2.8rem,5.8vw,5.8rem)] font-semibold leading-[0.91] tracking-[-0.058em]">
+              Review the work or continue the conversation elsewhere.
+            </h2>
+            <p className="mt-6 max-w-3xl text-base leading-8 text-[var(--paper-muted)] sm:text-lg">
+              The case studies, source code, professional background and current
+              CV are all available directly.
+            </p>
+          </div>
+        </header>
 
-        <ul className="mt-12 grid gap-3 lg:grid-cols-12">
-          {contactLinks.map((item, index) => {
-            const panel = directoryPanels[index];
-
-            return (
-              <li
-                key={item.label}
-                className={cn(panel.layout, panel.text)}
-              >
-                <ContactDirectoryLink
-                  item={item}
-                  index={index}
-                  surfaceClassName={panel.surface}
-                />
-              </li>
-            );
-          })}
+        <ul className="mt-12 border-y border-[var(--line-strong)] sm:mt-16">
+          {supportingLinks.map((item) => (
+            <li
+              key={item.label}
+              className="border-b border-[var(--line)] last:border-b-0"
+            >
+              <ContactLinkRow item={item} />
+            </li>
+          ))}
         </ul>
       </section>
     </>

@@ -67,16 +67,16 @@ export function ProjectVisualEvidence({
       <div className="content-frame">
         <header className="grid gap-7 border-b border-[var(--line-strong)] pb-9 lg:grid-cols-[minmax(0,1fr)_19rem] lg:items-end">
           <div>
-            <p className="signal-label w-fit bg-[var(--violet)] text-[var(--paper)]">
-              Visual evidence
+            <p className="font-mono text-[0.68rem] uppercase tracking-[0.16em] text-[var(--violet-text)]">
+              Project screenshots
             </p>
 
             <h2
               id="visual-evidence-heading"
-              className="font-display mt-6 text-[clamp(3.4rem,8vw,8rem)] leading-[0.8] font-semibold tracking-[-0.07em]"
+              className="mt-6 font-display text-[clamp(3.2rem,7vw,6.5rem)] font-semibold leading-[0.84] tracking-[-0.065em]"
             >
-              Screen
-              <span className="block text-[var(--violet)]">proof.</span>
+              See the
+              <span className="block text-[var(--violet-text)]">work.</span>
             </h2>
           </div>
 
@@ -85,8 +85,8 @@ export function ProjectVisualEvidence({
               Real project screens, not decorative mockups.
             </p>
             <p className="font-body mt-4 text-sm leading-6 text-[var(--paper-muted)]">
-              Select a record, inspect the full interface and follow the
-              product state through the image sequence.
+              Select a screenshot, inspect the full interface and follow the
+              product through the image sequence.
             </p>
           </div>
         </header>
@@ -104,12 +104,8 @@ export function ProjectVisualEvidence({
                 id={viewerId}
                 role="tabpanel"
                 aria-labelledby={activeTabId}
-                className="relative overflow-hidden bg-[var(--violet-dark)] lg:col-start-1 lg:row-span-4 lg:row-start-1 lg:border-r lg:border-[var(--line-strong)]"
+                className="relative overflow-hidden bg-[var(--ink-2)] lg:col-start-1 lg:row-span-4 lg:row-start-1 lg:border-r lg:border-[var(--line-strong)]"
               >
-                <div
-                  aria-hidden="true"
-                  className="absolute -left-20 top-1/3 h-px w-72 rotate-45 bg-[var(--signal)]/70"
-                />
                 <button
                   type="button"
                   onClick={() => openScreenshot(activeScreenshot)}
@@ -127,7 +123,7 @@ export function ProjectVisualEvidence({
                     decoding="async"
                     width={activeDimensions?.width}
                     height={activeDimensions?.height}
-                    className="relative max-h-165 w-auto max-w-full object-contain object-bottom shadow-[-22px_22px_0_var(--signal)] lg:max-h-190"
+                    className="relative max-h-165 w-auto max-w-full object-contain object-bottom shadow-[-18px_18px_0_var(--violet)] lg:max-h-190"
                     initial={shouldReduceMotion ? false : { y: 48, rotate: 1.5 }}
                     whileInView={{ y: 0, rotate: 0 }}
                     viewport={{ once: true, amount: 0.25 }}
@@ -141,8 +137,8 @@ export function ProjectVisualEvidence({
 
               <div className="border-t border-[var(--line-strong)] p-7 lg:col-start-2 lg:row-start-1 lg:border-t-0 lg:p-9">
                 <div className="flex items-center justify-between gap-5 font-mono text-[0.67rem] uppercase tracking-[0.18em]">
-                  <span className="text-[var(--signal)]">
-                    IMG—{currentNumber} / {totalNumber}
+                  <span className="text-[var(--violet-text)]">
+                    Screenshot {currentNumber} of {totalNumber}
                   </span>
                   <span>Mobile interface</span>
                 </div>
@@ -157,15 +153,15 @@ export function ProjectVisualEvidence({
               </div>
 
               <p className="border-t border-[var(--line)] px-7 py-5 font-mono text-[0.63rem] uppercase tracking-[0.2em] text-[var(--paper-muted)] lg:col-start-2 lg:row-start-2 lg:px-9">
-                Screenshot execution path
+                Choose another view
               </p>
             </>
           ) : (
             <div className="border border-[var(--line-strong)]">
-              <div className="flex flex-wrap items-center justify-between gap-5 border-b border-[var(--line-strong)] bg-[var(--violet)] px-5 py-4 sm:px-7">
+              <div className="flex flex-wrap items-center justify-between gap-5 border-b border-[var(--line-strong)] bg-[var(--ink-2)] px-5 py-4 sm:px-7">
                 <div className="flex items-center gap-5">
-                  <span className="font-mono text-xs text-[var(--signal)]">
-                    IMG—{currentNumber}
+                  <span className="font-mono text-xs text-[var(--violet-text)]">
+                    {currentNumber} / {totalNumber}
                   </span>
                   <div>
                     <p className="font-mono text-[0.61rem] uppercase tracking-[0.18em] text-[var(--paper)]">
@@ -180,7 +176,7 @@ export function ProjectVisualEvidence({
                 <button
                   type="button"
                   onClick={() => openScreenshot(activeScreenshot)}
-                  className="focus-ring inline-flex items-center gap-3 border-b border-[var(--paper)]/60 pb-2 font-mono text-[0.67rem] uppercase tracking-[0.16em] transition-colors hover:border-[var(--signal)] hover:text-[var(--signal)]"
+                  className="focus-ring inline-flex items-center gap-3 border-b border-[var(--paper)]/60 pb-2 font-mono text-[0.67rem] uppercase tracking-[0.16em] transition-colors hover:border-[var(--violet-text)] hover:text-[var(--violet-text)]"
                 >
                   Open full image
                   <span aria-hidden="true">↗</span>
@@ -227,7 +223,7 @@ export function ProjectVisualEvidence({
 
               <div className="grid gap-4 border-t border-[var(--line-strong)] px-5 py-6 sm:grid-cols-[5rem_minmax(0,1fr)] sm:px-7">
                 <span className="font-mono text-xs text-[var(--violet-text)]">
-                  CAP—{currentNumber}
+                  Caption
                 </span>
 
                 <p className="font-body max-w-4xl leading-7 text-[var(--paper-muted)]">
@@ -256,7 +252,7 @@ export function ProjectVisualEvidence({
               <button
                 type="button"
                 onClick={() => openScreenshot(activeScreenshot)}
-                className="focus-ring inline-flex items-center gap-3 border-b border-[var(--paper-muted)] pb-2 font-mono text-[0.67rem] uppercase tracking-[0.16em] transition-colors hover:border-[var(--signal)] hover:text-[var(--signal)]"
+                className="focus-ring inline-flex items-center gap-3 border-b border-[var(--paper-muted)] pb-2 font-mono text-[0.67rem] uppercase tracking-[0.16em] transition-colors hover:border-[var(--violet-text)] hover:text-[var(--violet-text)]"
               >
                 Open full image
                 <span aria-hidden="true">↗</span>

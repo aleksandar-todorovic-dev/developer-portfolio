@@ -10,7 +10,7 @@ export function TechStackList({ technologies }: TechStackListProps) {
     >
       <div>
         <p className="font-mono text-[0.66rem] uppercase tracking-[0.2em] text-[var(--paper-muted)]">
-          Trace / stack
+          Technology
         </p>
 
         <h2
@@ -22,23 +22,14 @@ export function TechStackList({ technologies }: TechStackListProps) {
       </div>
 
       <ul className="grid border-l border-t border-[var(--line)] sm:grid-cols-2 xl:grid-cols-3">
-        {technologies.map((technology, index) => (
+        {technologies.map((technology) => (
           <li
             key={technology}
-            className="group relative min-h-28 border-b border-r border-[var(--line)] p-5 transition-colors duration-200 hover:bg-[var(--violet)]"
+            className="group flex min-h-24 items-end border-b border-r border-[var(--line)] p-5 transition-colors duration-200 hover:bg-[var(--ink-2)]"
           >
-            <span className="font-mono text-[0.64rem] text-[var(--paper-muted)] transition-colors group-hover:text-[var(--paper)]">
-              NODE—{String(index + 1).padStart(2, "0")}
-            </span>
-
-            <span className="font-display mt-6 block text-xl font-semibold tracking-[-0.035em] text-[var(--paper)]">
+            <span className="font-display text-xl font-semibold tracking-[-0.035em] text-[var(--paper)]">
               {technology}
             </span>
-
-            <span
-              aria-hidden="true"
-              className="absolute bottom-0 right-0 size-2 bg-[var(--violet)] transition-colors group-hover:bg-[var(--signal)]"
-            />
           </li>
         ))}
       </ul>

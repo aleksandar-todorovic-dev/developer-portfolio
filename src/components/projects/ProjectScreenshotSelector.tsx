@@ -123,7 +123,7 @@ export function ProjectScreenshotSelector({
               "focus-ring group relative grid min-h-24 grid-cols-[3rem_minmax(0,1fr)] gap-3 px-4 py-5 text-left transition-colors duration-200",
               isRail && "w-full border-b border-[var(--line)] last:border-b-0",
               isActive
-                ? "bg-[var(--violet)] text-[var(--paper)]"
+                ? "bg-[var(--paper)] text-[var(--ink)]"
                 : "bg-[var(--ink)] text-[var(--paper-muted)] hover:bg-[var(--ink-2)] hover:text-[var(--paper)]",
             )}
           >
@@ -131,11 +131,11 @@ export function ProjectScreenshotSelector({
               className={cn(
                 "font-mono text-xs",
                 isActive
-                  ? "text-[var(--signal)]"
+                  ? "text-[var(--violet-dark)]"
                   : "text-[var(--violet-text)]",
               )}
             >
-              IMG—{number}
+              {number}
             </span>
 
             <span>
@@ -147,7 +147,7 @@ export function ProjectScreenshotSelector({
                 className={cn(
                   "mt-2 block font-mono text-[0.61rem] uppercase tracking-[0.17em]",
                   isActive
-                    ? "text-[var(--paper)]"
+                    ? "text-[var(--ink)]/65"
                     : "text-[var(--paper-muted)]",
                 )}
               >
@@ -160,7 +160,7 @@ export function ProjectScreenshotSelector({
               className={cn(
                 "absolute bottom-0 left-0 h-1 transition-[width] duration-300",
                 isActive
-                  ? "w-full bg-[var(--signal)]"
+                  ? "w-full bg-[var(--violet-dark)]"
                   : "w-0 bg-[var(--violet)] group-hover:w-1/3",
               )}
             />

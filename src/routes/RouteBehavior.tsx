@@ -41,6 +41,23 @@ function scrollToHashTarget(hash: string): boolean {
   return true;
 }
 
+function focusPageStart(): boolean {
+  const pageHeading = document.getElementById(PAGE_HEADING_ID);
+
+  if (!(pageHeading instanceof HTMLElement)) {
+    return false;
+  }
+
+  window.scrollTo({
+    top: 0,
+    left: 0,
+    behavior: "auto",
+  });
+  focusElement(pageHeading);
+
+  return true;
+}
+
 export function RouteBehavior() {
   const location = useLocation();
   const navigationType = useNavigationType();
@@ -79,11 +96,20 @@ export function RouteBehavior() {
             return;
           }
 
+          if (focusPageStart()) {
+            return;
+          }
+
           const routeContent =
             document.getElementById("main-content") ?? document.body;
 
           observer = new MutationObserver(() => {
             if (scrollToHashTarget(hash)) {
+              stopWatchingForTarget();
+              return;
+            }
+
+            if (focusPageStart()) {
               stopWatchingForTarget();
             }
           });
@@ -118,7 +144,21 @@ export function RouteBehavior() {
     }
 
     if (navigationType === "POP") {
-      return;
+      if (!hash) {
+        return;
+      }
+
+      const animationFrameId = window.requestAnimationFrame(() => {
+        if (scrollToHashTarget(hash)) {
+          return;
+        }
+
+        focusPageStart();
+      });
+
+      return () => {
+        window.cancelAnimationFrame(animationFrameId);
+      };
     }
 
     const animationFrameId = window.requestAnimationFrame(() => {
@@ -126,17 +166,7 @@ export function RouteBehavior() {
         return;
       }
 
-      window.scrollTo({
-        top: 0,
-        left: 0,
-        behavior: "auto",
-      });
-
-      const pageHeading = document.getElementById(PAGE_HEADING_ID);
-
-      if (pageHeading instanceof HTMLElement) {
-        focusElement(pageHeading);
-      }
+      focusPageStart();
     });
 
     return () => {

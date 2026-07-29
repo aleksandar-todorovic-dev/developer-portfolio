@@ -17,29 +17,47 @@ export function ProjectDetailPage() {
   if (!project) {
     return (
       <section className="full-bleed min-h-[70vh] bg-[var(--paper)] text-[var(--ink)]">
-        <div className="content-frame py-16 sm:py-24">
-          <Link
-            to="/projects"
-            className="focus-ring inline-flex items-center gap-3 border-b border-[var(--ink)] pb-2 font-mono text-xs uppercase tracking-[0.18em]"
+        <div className="content-frame grid gap-12 py-16 sm:py-24 lg:grid-cols-[minmax(0,1fr)_minmax(14rem,0.38fr)] lg:items-end">
+          <div>
+            <p className="text-sm font-semibold text-[var(--violet-dark)]">
+              Project not found
+            </p>
+            <h1
+              id="page-heading"
+              tabIndex={-1}
+              className="font-display mt-6 max-w-5xl text-[clamp(3.6rem,9vw,8rem)] font-semibold leading-[0.86] tracking-[-0.07em]"
+            >
+              There isn&apos;t a project at this address.
+            </h1>
+
+            <p className="mt-7 max-w-2xl text-lg leading-8 text-[var(--ink-2)]">
+              The URL may be incomplete or mistyped. All published work is
+              available from the projects page.
+            </p>
+
+            <div className="mt-9 flex flex-wrap gap-3">
+              <Link
+                to="/projects"
+                style={{ color: "var(--paper)" }}
+                className="focus-ring inline-flex min-h-12 items-center gap-7 bg-[var(--violet)] px-5 py-3 text-sm font-semibold text-[var(--paper)] transition-colors hover:bg-[var(--violet-dark)]"
+              >
+                View all projects <span aria-hidden="true">→</span>
+              </Link>
+              <Link
+                to="/"
+                className="focus-ring inline-flex min-h-12 items-center gap-7 border border-[var(--ink)] px-5 py-3 text-sm font-semibold transition-colors hover:bg-[var(--ink)] hover:text-[var(--paper)]"
+              >
+                Return home
+              </Link>
+            </div>
+          </div>
+
+          <p
+            aria-hidden="true"
+            className="font-display select-none text-[clamp(7rem,18vw,15rem)] font-semibold leading-[0.72] tracking-[-0.1em] text-transparent lg:text-right"
+            style={{ WebkitTextStroke: "1px var(--violet)" }}
           >
-            <span aria-hidden="true">←</span>
-            Project register
-          </Link>
-
-          <p className="signal-label mt-16 w-fit bg-[var(--signal)] text-[var(--ink)]">
-            Resolve error / 404
-          </p>
-
-          <h1
-            id="page-heading"
-            tabIndex={-1}
-            className="font-display mt-7 max-w-5xl text-[clamp(3.8rem,10vw,9rem)] leading-[0.82] font-semibold tracking-[-0.07em]"
-          >
-            This project does not exist.
-          </h1>
-
-          <p className="font-body mt-8 max-w-2xl border-l-2 border-[var(--violet)] pl-5 text-lg leading-8 text-[var(--ink)]/70">
-            Check the project URL or return to the projects page.
+            404
           </p>
         </div>
       </section>
@@ -51,25 +69,16 @@ export function ProjectDetailPage() {
       <div className="mb-8 flex items-center justify-between gap-5">
         <Link
           to="/projects"
-          className="focus-ring inline-flex items-center gap-3 border-b border-[var(--line-strong)] pb-2 font-mono text-xs uppercase tracking-[0.18em] text-[var(--paper-muted)] transition-colors hover:border-[var(--signal)] hover:text-[var(--paper)]"
+          className="focus-ring inline-flex items-center gap-3 border-b border-[var(--line-strong)] pb-2 text-sm font-semibold text-[var(--paper-muted)] transition-colors hover:border-[var(--paper)] hover:text-[var(--paper)]"
         >
           <span aria-hidden="true">←</span>
-          Project register
+          All projects
         </Link>
-
-        <span
-          aria-hidden="true"
-          className="hidden font-mono text-[0.65rem] uppercase tracking-[0.18em] text-[var(--paper-muted)] sm:block"
-        >
-          TRACE / {project.slug}
-        </span>
       </div>
 
       <ProjectHero
-        proofLabel={project.proofLabel}
         title={project.title}
         shortDescription={project.shortDescription}
-        slug={project.slug}
         category={project.category}
         sectionCount={project.caseStudySections.length}
       />
@@ -97,12 +106,12 @@ export function ProjectDetailPage() {
         <div className="mt-24 sm:mt-32">
           <header className="grid gap-8 border-y border-[var(--line-strong)] py-10 lg:grid-cols-[12rem_minmax(0,1fr)] lg:py-14">
             <div>
-              <p className="signal-label w-fit bg-[var(--violet)] text-[var(--paper)]">
+              <p className="font-mono text-[0.68rem] uppercase tracking-[0.18em] text-[var(--violet-text)]">
                 Case study
               </p>
               <p className="mt-4 font-mono text-[0.68rem] uppercase tracking-[0.18em] text-[var(--paper-muted)]">
                 {String(project.caseStudySections.length).padStart(2, "0")}{" "}
-                records
+                sections
               </p>
             </div>
 
@@ -124,6 +133,7 @@ export function ProjectDetailPage() {
                 section={section}
                 index={index}
                 total={project.caseStudySections.length}
+                projectSlug={project.slug}
               />
             ))}
           </div>

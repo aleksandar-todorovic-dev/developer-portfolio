@@ -29,7 +29,7 @@ export function ProjectSectionIndex({ sections }: ProjectSectionIndexProps) {
       <div className="content-frame grid lg:grid-cols-[16rem_minmax(0,1fr)]">
         <div className="border-b border-[var(--ink)]/25 py-10 lg:border-b-0 lg:border-r lg:pr-10">
           <p className="font-mono text-[0.66rem] uppercase tracking-[0.2em] text-[var(--ink)]/70">
-            Jump path
+            On this page
           </p>
 
           <h2 className="font-display mt-5 text-4xl leading-[0.9] font-semibold tracking-[-0.05em]">
@@ -37,7 +37,7 @@ export function ProjectSectionIndex({ sections }: ProjectSectionIndexProps) {
           </h2>
 
           <p className="font-body mt-5 max-w-48 text-sm leading-6 text-[var(--ink)]/65">
-            Select a record to move directly into the trace.
+            Jump directly to any section of the case study.
           </p>
         </div>
 
