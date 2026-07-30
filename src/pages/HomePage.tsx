@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router";
 
 import { BackgroundCredibilitySection } from "../components/home/BackgroundCredibilitySection";
@@ -7,6 +8,83 @@ import { FeaturedProjectChapter } from "../components/home/FeaturedProjectChapte
 import { ProjectStackSection } from "../components/home/ProjectStackSection";
 import { ProjectProofPanel } from "../components/projects/ProjectProofPanel";
 import { projects } from "../data/projects";
+
+const clarityResolveSessionKey = "resolved-field-clarity-resolved";
+let hasResolvedClarity = false;
+
+function ClarityResolve() {
+  const [isResolveActive, setIsResolveActive] = useState(() => {
+    let wasResolved = hasResolvedClarity;
+
+    try {
+      wasResolved =
+        wasResolved ||
+        window.sessionStorage.getItem(clarityResolveSessionKey) === "true";
+    } catch {
+      // The finite resolve still works when session storage is unavailable.
+    }
+
+    try {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        return false;
+      }
+    } catch {
+      // The CSS reduced-motion fallback still presents the final state.
+    }
+
+    return !wasResolved;
+  });
+
+  useEffect(() => {
+    hasResolvedClarity = true;
+
+    try {
+      window.sessionStorage.setItem(clarityResolveSessionKey, "true");
+    } catch {
+      // Module state still prevents repeat playback during this app session.
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!isResolveActive) {
+      return;
+    }
+
+    const reducedMotionQuery = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    );
+    const finishResolve = () => {
+      setIsResolveActive(false);
+    };
+    const handleReducedMotionChange = (event: MediaQueryListEvent) => {
+      if (event.matches) {
+        finishResolve();
+      }
+    };
+    const resolveTimeoutId = window.setTimeout(finishResolve, 700);
+
+    reducedMotionQuery.addEventListener("change", handleReducedMotionChange);
+
+    return () => {
+      reducedMotionQuery.removeEventListener(
+        "change",
+        handleReducedMotionChange,
+      );
+      window.clearTimeout(resolveTimeoutId);
+    };
+  }, [isResolveActive]);
+
+  return (
+    <span
+      className={`clarity-resolve ${
+        isResolveActive ? "clarity-resolve--active" : ""
+      }`}
+      onAnimationEnd={() => setIsResolveActive(false)}
+    >
+      CLARITY.
+    </span>
+  );
+}
 
 export function HomePage() {
   return (
@@ -27,8 +105,7 @@ export function HomePage() {
             <span className="block">I BUILD FRONTEND</span>
             <span className="block">FROM UNCERTAINTY</span>
             <span className="block">
-              TO{" "}
-              <span className="text-[var(--violet)]">CLARITY.</span>
+              TO <ClarityResolve />
             </span>
           </h1>
 

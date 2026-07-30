@@ -1,6 +1,10 @@
+import { motion, useReducedMotion } from "motion/react";
+
 import { buildSteps } from "../../data/buildSteps";
 
 export function BuildProcessSection() {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <section className="full-bleed bg-[var(--paper)] py-20 text-[var(--ink)] sm:py-28">
       <div className="content-frame">
@@ -29,7 +33,33 @@ export function BuildProcessSection() {
           </div>
         </div>
 
-        <ol className="mt-12 grid border-t border-[var(--ink)]/20 md:grid-cols-2 xl:grid-cols-4">
+        <div className="relative mt-12 border-y border-[var(--ink)]/20">
+          <div className="grid grid-cols-3 xl:grid-cols-[1fr_2fr_1fr]">
+            <p className="flex min-h-14 items-center border-r border-[var(--ink)]/20 px-3 py-3 font-mono text-[0.58rem] font-semibold uppercase tracking-[0.1em] text-[var(--ink)]/60 sm:px-5">
+              Unclear input
+            </p>
+            <p className="flex min-h-14 items-center border-r border-[var(--ink)]/20 px-3 py-3 font-mono text-[0.58rem] font-semibold uppercase tracking-[0.1em] text-[var(--violet-dark)] sm:px-5">
+              Practical decisions
+            </p>
+            <p className="flex min-h-14 items-center justify-end px-3 py-3 text-right font-mono text-[0.58rem] font-semibold uppercase tracking-[0.1em] text-[var(--ink)]/60 sm:px-5">
+              Inspectable result
+            </p>
+          </div>
+
+          <motion.span
+            aria-hidden="true"
+            className="absolute inset-x-0 -bottom-px h-0.5 origin-left bg-[var(--violet-dark)]"
+            initial={shouldReduceMotion ? false : { scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true, amount: 0.8 }}
+            transition={{
+              duration: shouldReduceMotion ? 0 : 0.62,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+          />
+        </div>
+
+        <ol className="grid md:grid-cols-2 xl:grid-cols-4">
           {buildSteps.map((step, index) => (
             <li
               key={step.number}

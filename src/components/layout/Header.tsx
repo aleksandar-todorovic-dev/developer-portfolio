@@ -8,6 +8,7 @@ type NavItem = {
   to: string;
   label: string;
   note: string;
+  desktopOrder: number;
   end?: boolean;
 };
 
@@ -16,30 +17,41 @@ const navLinks: NavItem[] = [
     to: "/",
     label: "Home",
     note: "Portfolio overview",
+    desktopOrder: 0,
     end: true,
   },
   {
     to: "/projects",
     label: "Projects",
     note: "Selected case studies",
+    desktopOrder: 2,
   },
   {
     to: "/about",
     label: "About",
     note: "Background and approach",
+    desktopOrder: 1,
   },
   {
     to: "/contact",
     label: "Contact",
     note: "Email and professional links",
+    desktopOrder: 3,
   },
 ];
 
-function desktopLinkClass(isActive: boolean) {
+const desktopNavLinks = [...navLinks].sort(
+  (firstLink, secondLink) =>
+    firstLink.desktopOrder - secondLink.desktopOrder,
+);
+
+function desktopLinkClass(isActive: boolean, index: number) {
   return cn(
-    "relative flex min-h-12 items-center border-l border-[var(--line)] px-5 text-sm font-semibold tracking-[-0.01em] transition-colors last:border-r",
+    "focus-ring group relative z-0 grid min-h-0 grid-cols-[minmax(0,1fr)_auto] items-center gap-5 border-l border-[var(--line)] px-5 py-2 text-sm font-semibold tracking-[-0.01em] transition-colors focus-visible:z-10",
+    index >= 2 && "border-t",
+    index % 2 === 1 && "border-r",
     isActive
-      ? "bg-[var(--ink-2)] text-[var(--paper)] after:absolute after:inset-x-5 after:bottom-0 after:h-0.5 after:bg-[var(--violet)]"
+      ? "bg-[var(--ink-2)] text-[var(--paper)] before:absolute before:inset-y-3 before:left-0 before:w-0.5 before:bg-[var(--violet)]"
       : "text-[var(--paper-muted)] hover:bg-[var(--ink-2)] hover:text-[var(--paper)]",
   );
 }
@@ -142,36 +154,42 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 h-[var(--header-height)] border-b border-[var(--line)] bg-[var(--ink)] text-[var(--paper)]">
-      <div className="content-frame flex h-full items-stretch justify-between">
+      <div className="content-frame flex h-full items-stretch justify-between md:grid md:grid-cols-[minmax(14rem,1fr)_minmax(30rem,46rem)]">
         <NavLink
           to="/"
           onClick={closeMenu}
-          className="focus-ring group flex min-w-0 items-center pr-3 sm:pr-4"
+          className="focus-ring group flex min-w-0 items-center pr-3 sm:pr-4 md:w-56 md:justify-self-start md:pr-8"
           aria-label="Aleksandar Todorovic, home"
         >
           <span className="min-w-0">
-            <span className="block whitespace-nowrap font-display text-[clamp(0.82rem,4vw,1rem)] font-bold tracking-[-0.015em]">
-              Aleksandar Todorovic
+            <span className="block whitespace-nowrap font-display text-[clamp(0.82rem,4vw,1rem)] font-bold tracking-[-0.015em] md:whitespace-normal md:text-[1.35rem] md:leading-[0.9] md:tracking-[-0.025em]">
+              <span className="md:block">Aleksandar</span>{" "}
+              <span className="md:block">Todorovic</span>
             </span>
 
-            <span className="mt-0.5 hidden text-[0.68rem] text-[var(--paper-muted)] sm:block">
+            <span className="mt-0.5 hidden text-[0.68rem] text-[var(--paper-muted)] sm:block md:mt-2">
               Frontend developer
             </span>
           </span>
         </NavLink>
 
         <nav
-          className="hidden items-stretch md:flex"
+          className="hidden h-full grid-cols-2 grid-rows-2 md:grid"
           aria-label="Main navigation"
         >
-          {navLinks.map((link) => (
+          {desktopNavLinks.map((link, index) => (
             <NavLink
               key={link.to}
               to={link.to}
               end={link.end}
-              className={({ isActive }) => desktopLinkClass(isActive)}
+              className={({ isActive }) =>
+                desktopLinkClass(isActive, index)
+              }
             >
-              {link.label}
+              <span>{link.label}</span>
+              {link.to === "/contact" ? (
+                <span aria-hidden="true">→</span>
+              ) : null}
             </NavLink>
           ))}
         </nav>

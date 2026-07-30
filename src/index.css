@@ -32,7 +32,7 @@
   --frame-gutter: clamp(1rem, 3.2vw, 3rem);
   --frame-width: 86rem;
   --frame-edge: max(var(--frame-gutter), calc(50cqw - 43rem));
-  --header-height: 4.75rem;
+  --header-height: 6rem;
 
   font-family: "Manrope Variable", Arial, sans-serif;
   color: var(--paper);
@@ -179,16 +179,63 @@ section[tabindex="-1"]:focus {
   hyphens: manual;
 }
 
+.clarity-resolve {
+  position: relative;
+  display: inline-block;
+  color: var(--violet);
+}
+
+.clarity-resolve::after {
+  position: absolute;
+  right: 0;
+  bottom: 0.03em;
+  left: 0;
+  height: 0.05em;
+  content: "";
+  background: var(--signal);
+  opacity: 0;
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.clarity-resolve--active::after {
+  animation: clarity-resolve-edge 580ms cubic-bezier(0.22, 1, 0.36, 1) 1
+    both;
+}
+
+@keyframes clarity-resolve-edge {
+  0% {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+
+  14% {
+    opacity: 1;
+  }
+
+  72% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scaleX(1);
+  }
+}
+
 .route-stage {
   position: relative;
   isolation: isolate;
 }
 
-@media (max-width: 639px) {
+@media (max-width: 767px) {
   :root {
     --header-height: 4.25rem;
   }
+}
 
+@media (max-width: 639px) {
   .signal-label {
     font-size: 0.65rem;
     letter-spacing: 0.13em;
@@ -208,5 +255,11 @@ section[tabindex="-1"]:focus {
     scroll-behavior: auto !important;
     transition-delay: 0ms !important;
     transition-duration: 0.01ms !important;
+  }
+
+  .clarity-resolve--active::after {
+    animation: none;
+    opacity: 0;
+    transform: scaleX(1);
   }
 }

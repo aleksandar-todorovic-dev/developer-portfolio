@@ -22,7 +22,7 @@ export function ProjectProofPanel({ projects }: ProjectProofPanelProps) {
             >
               <Link
                 to={`/projects/${project.slug}`}
-                className="focus-ring group grid min-h-24 grid-cols-[minmax(0,1fr)_auto] items-center gap-5 py-4 md:min-h-32 md:px-6"
+                className="focus-ring group relative grid min-h-24 grid-cols-[minmax(0,1fr)_auto] items-center gap-5 py-4 md:min-h-32 md:px-6"
               >
                 <span>
                   <span className="font-mono text-[0.61rem] uppercase tracking-[0.1em] text-[var(--violet-dark)]">
@@ -39,6 +39,11 @@ export function ProjectProofPanel({ projects }: ProjectProofPanelProps) {
                 >
                   →
                 </span>
+
+                <span
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-x-0 bottom-0 h-0.5 origin-left scale-x-0 bg-[var(--violet-dark)] transition-transform duration-200 ease-out group-hover:scale-x-100 group-focus-visible:scale-x-100 motion-reduce:transition-none"
+                />
               </Link>
             </li>
           ))}

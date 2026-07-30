@@ -176,6 +176,32 @@ export function FeaturedProjectChapter({
               />
             </div>
 
+            {project.slug === "taskflow" ? (
+              <ol
+                aria-label="TaskFlow board order"
+                className={`grid grid-cols-2 border-l border-t md:grid-cols-4 ${styles.line}`}
+              >
+                {["Backlog", "In progress", "Review", "Done"].map(
+                  (column, columnIndex) => (
+                    <li
+                      key={column}
+                      className={`border-b border-r px-3 py-3 ${styles.line}`}
+                    >
+                      <span
+                        aria-hidden="true"
+                        className={`font-mono text-[0.58rem] ${styles.accent}`}
+                      >
+                        {String(columnIndex + 1).padStart(2, "0")}
+                      </span>
+                      <span className="mt-1 block text-xs font-semibold">
+                        {column}
+                      </span>
+                    </li>
+                  ),
+                )}
+              </ol>
+            ) : null}
+
             <figcaption
               className={`mt-4 max-w-3xl text-sm leading-6 ${styles.muted}`}
             >
