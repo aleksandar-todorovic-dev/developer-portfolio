@@ -45,14 +45,12 @@ const desktopNavLinks = [...navLinks].sort(
     firstLink.desktopOrder - secondLink.desktopOrder,
 );
 
-function desktopLinkClass(isActive: boolean, index: number) {
+function desktopLinkClass(isActive: boolean) {
   return cn(
-    "focus-ring group relative z-0 grid min-h-0 grid-cols-[minmax(0,1fr)_auto] items-center gap-5 border-l border-[var(--line)] px-5 py-2 text-sm font-semibold tracking-[-0.01em] transition-colors focus-visible:z-10",
-    index >= 2 && "border-t",
-    index % 2 === 1 && "border-r",
+    "focus-ring group relative z-0 grid min-h-0 grid-cols-[minmax(0,1fr)_auto] items-center gap-5 px-4 py-2 text-sm font-semibold tracking-[-0.01em] transition-colors focus-visible:z-10 lg:px-5",
     isActive
-      ? "bg-[var(--ink-2)] text-[var(--paper)] before:absolute before:inset-y-3 before:left-0 before:w-0.5 before:bg-[var(--violet)]"
-      : "text-[var(--paper-muted)] hover:bg-[var(--ink-2)] hover:text-[var(--paper)]",
+      ? "text-[var(--paper)]"
+      : "text-[var(--paper-muted)] hover:text-[var(--paper)]",
   );
 }
 
@@ -154,11 +152,11 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 h-[var(--header-height)] border-b border-[var(--line)] bg-[var(--ink)] text-[var(--paper)]">
-      <div className="content-frame flex h-full items-stretch justify-between md:grid md:grid-cols-[minmax(14rem,1fr)_minmax(30rem,46rem)]">
+      <div className="content-frame flex h-full items-stretch justify-between md:grid md:grid-cols-[15rem_minmax(1.5rem,1fr)_minmax(27rem,42rem)]">
         <NavLink
           to="/"
           onClick={closeMenu}
-          className="focus-ring group flex min-w-0 items-center pr-3 sm:pr-4 md:w-56 md:justify-self-start md:pr-8"
+          className="focus-ring group flex min-w-0 items-center pr-3 sm:pr-4 md:w-60 md:justify-self-start md:pr-8"
           aria-label="Aleksandar Todorovic, home"
         >
           <span className="min-w-0">
@@ -174,22 +172,38 @@ export function Header() {
         </NavLink>
 
         <nav
-          className="hidden h-full grid-cols-2 grid-rows-2 md:grid"
+          className="relative hidden h-full grid-cols-[minmax(0,1.08fr)_minmax(10rem,0.92fr)] grid-rows-2 border-l border-[var(--line)] before:pointer-events-none before:absolute before:inset-x-0 before:top-1/2 before:h-px before:bg-[var(--line)] md:col-start-3 md:grid"
           aria-label="Main navigation"
         >
-          {desktopNavLinks.map((link, index) => (
+          {desktopNavLinks.map((link) => (
             <NavLink
               key={link.to}
               to={link.to}
               end={link.end}
               className={({ isActive }) =>
-                desktopLinkClass(isActive, index)
+                desktopLinkClass(isActive)
               }
             >
-              <span>{link.label}</span>
-              {link.to === "/contact" ? (
-                <span aria-hidden="true">→</span>
-              ) : null}
+              {({ isActive }) => (
+                <>
+                  <span className="relative w-fit">
+                    {link.label}
+                    <span
+                      aria-hidden="true"
+                      className={cn(
+                        "absolute -bottom-1 left-0 h-0.5 w-8 origin-left bg-[var(--violet)] transition-transform duration-200 ease-out motion-reduce:transition-none",
+                        isActive
+                          ? "scale-x-100"
+                          : "scale-x-0 group-hover:scale-x-100 group-focus-visible:scale-x-100",
+                      )}
+                    />
+                  </span>
+
+                  {link.to === "/contact" ? (
+                    <span aria-hidden="true">→</span>
+                  ) : null}
+                </>
+              )}
             </NavLink>
           ))}
         </nav>

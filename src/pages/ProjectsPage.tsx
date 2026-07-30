@@ -31,29 +31,34 @@ export function ProjectsPage() {
             </p>
           </div>
 
-          <ol className="mt-9 grid border-l border-t border-[var(--ink)]/25 md:grid-cols-3">
+          <ol className="mt-9 grid border-l border-t border-[var(--ink)]/25 md:grid-cols-3 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)_minmax(0,0.85fr)]">
             {projects.map((project, index) => (
               <li key={project.slug}>
                 <Link
                   to={`/projects/${project.slug}`}
-                  className="focus-ring group grid min-h-24 grid-cols-[minmax(0,1fr)_auto] items-center gap-5 border-b border-r border-[var(--ink)]/25 p-4 md:min-h-36 md:p-5"
+                  className="focus-ring group relative grid min-h-24 grid-cols-[minmax(0,1fr)_auto] items-center gap-5 border-b border-r border-[var(--ink)]/25 p-4 md:min-h-36 md:p-5"
                 >
                   <span>
                     <span className="font-mono text-[0.6rem] uppercase tracking-[0.1em] text-[var(--violet-dark)]">
                       {String(index + 1).padStart(2, "0")} ·{" "}
                       {project.proofLabel}
                     </span>
-                    <span className="project-word mt-3 block font-display text-[clamp(1.55rem,3vw,2.4rem)] font-semibold leading-none tracking-[-0.025em] [font-stretch:100%]">
+                    <span className="project-word mt-3 block font-display text-[clamp(1.55rem,3vw,2.4rem)] font-semibold leading-none tracking-[-0.025em] transition-colors duration-200 group-hover:text-[var(--violet-dark)] group-focus-visible:text-[var(--violet-dark)] motion-reduce:transition-none [font-stretch:100%]">
                       <ProjectTitleText title={project.title} />
                     </span>
                   </span>
 
                   <span
                     aria-hidden="true"
-                    className="text-xl text-[var(--violet-dark)] transition-transform group-hover:translate-x-1 motion-reduce:group-hover:translate-x-0"
+                    className="text-xl text-[var(--violet-dark)] transition-transform duration-200 group-hover:translate-x-1 group-focus-visible:translate-x-1 motion-reduce:group-hover:translate-x-0 motion-reduce:group-focus-visible:translate-x-0"
                   >
                     →
                   </span>
+
+                  <span
+                    aria-hidden="true"
+                    className="pointer-events-none absolute left-4 top-0 h-0.5 w-12 origin-left scale-x-0 bg-[var(--violet-dark)] transition-transform duration-200 ease-out group-hover:scale-x-100 group-focus-visible:scale-x-100 motion-reduce:transition-none md:left-5"
+                  />
                 </Link>
               </li>
             ))}

@@ -1,4 +1,5 @@
 import { Link } from "react-router";
+import { motion, useReducedMotion } from "motion/react";
 
 import type { Project, ProjectSlug } from "../../types/project";
 import { getProjectScreenshotDimensions } from "../projects/projectScreenshotDimensions";
@@ -14,6 +15,7 @@ type ChapterStyle = {
   line: string;
   muted: string;
   accent: string;
+  headerGrid: string;
   grid: string;
   contentOrder: string;
   mediaOrder: string;
@@ -26,7 +28,9 @@ const chapterStyles: Record<ProjectSlug, ChapterStyle> = {
     line: "border-[var(--ink)]/25",
     muted: "text-[var(--ink)]/70",
     accent: "text-[var(--violet-dark)]",
-    grid: "xl:grid-cols-[minmax(20rem,0.74fr)_minmax(0,1.26fr)]",
+    headerGrid:
+      "lg:grid-cols-[12rem_minmax(0,1fr)] xl:grid-cols-[minmax(20rem,0.68fr)_minmax(0,1.32fr)] xl:gap-14",
+    grid: "xl:grid-cols-[minmax(20rem,0.68fr)_minmax(0,1.32fr)]",
     contentOrder: "",
     mediaOrder: "",
     stage:
@@ -37,8 +41,9 @@ const chapterStyles: Record<ProjectSlug, ChapterStyle> = {
     line: "border-[var(--line-strong)]",
     muted: "text-[var(--paper-muted)]",
     accent: "text-[var(--violet-text)]",
-    grid: "xl:grid-cols-[minmax(0,1.12fr)_minmax(20rem,0.88fr)]",
-    contentOrder: "xl:order-2",
+    headerGrid: "lg:grid-cols-[12rem_minmax(0,1fr)]",
+    grid: "xl:grid-cols-[minmax(19rem,0.72fr)_minmax(24rem,1.28fr)]",
+    contentOrder: "xl:order-2 xl:max-w-[34rem]",
     mediaOrder: "xl:order-1",
     stage:
       "flex min-h-128 items-end justify-center overflow-hidden border border-[var(--line-strong)] bg-[var(--ink)] px-6 pt-10 sm:min-h-152 sm:px-10",
@@ -48,11 +53,12 @@ const chapterStyles: Record<ProjectSlug, ChapterStyle> = {
     line: "border-[var(--ink)]/25",
     muted: "text-[var(--ink)]/70",
     accent: "text-[var(--violet-dark)]",
+    headerGrid: "lg:grid-cols-[12rem_minmax(0,1fr)]",
     grid: "xl:grid-cols-[minmax(0,1.16fr)_minmax(20rem,0.84fr)]",
     contentOrder: "xl:order-2",
     mediaOrder: "xl:order-1",
     stage:
-      "overflow-hidden border border-[var(--ink)]/25 bg-[var(--ink-2)] p-2 sm:p-3",
+      "overflow-hidden border-x border-t border-[var(--ink)]/25 bg-[var(--ink-2)] p-2 sm:p-3",
   },
 };
 
@@ -69,6 +75,7 @@ export function FeaturedProjectChapter({
   const [screenshot] = project.screenshots;
   const number = String(index + 1).padStart(2, "0");
   const styles = chapterStyles[project.slug];
+  const shouldReduceMotion = useReducedMotion();
 
   if (!screenshot) {
     return null;
@@ -83,7 +90,7 @@ export function FeaturedProjectChapter({
     >
       <div className="content-frame py-12 sm:py-16 lg:py-22">
         <header
-          className={`grid gap-5 border-b pb-8 ${styles.line} lg:grid-cols-[12rem_minmax(0,1fr)] lg:items-start`}
+          className={`grid gap-5 border-b pb-8 ${styles.line} lg:items-start ${styles.headerGrid}`}
         >
           <div className="flex items-center justify-between gap-5 font-mono text-[0.63rem] uppercase tracking-[0.11em] lg:block">
             <p>{project.proofLabel}</p>
@@ -106,12 +113,18 @@ export function FeaturedProjectChapter({
             </h3>
 
             <p
-              className={`mt-6 max-w-2xl text-base leading-7 sm:text-lg sm:leading-8 ${styles.muted}`}
+              className={`max-w-2xl text-base leading-7 sm:text-lg sm:leading-8 ${
+                project.slug === "training-app" ? "mt-8" : "mt-6"
+              } ${styles.muted}`}
             >
               {project.shortDescription}
             </p>
 
-            <dl className={`mt-8 border-y ${styles.line}`}>
+            <dl
+              className={`border-y ${
+                project.slug === "training-app" ? "mt-10" : "mt-8"
+              } ${styles.line}`}
+            >
               <div
                 className={`grid gap-3 border-b py-5 sm:grid-cols-[7rem_minmax(0,1fr)] ${styles.line}`}
               >
@@ -134,7 +147,11 @@ export function FeaturedProjectChapter({
               </div>
             </dl>
 
-            <ul className="mt-6 flex flex-wrap gap-x-5 gap-y-2 font-mono text-[0.61rem] uppercase tracking-[0.08em]">
+            <ul
+              className={`flex flex-wrap gap-x-5 gap-y-2 font-mono text-[0.61rem] uppercase tracking-[0.08em] ${
+                project.slug === "training-app" ? "mt-8" : "mt-6"
+              }`}
+            >
               {project.techStack.map((technology) => (
                 <li key={technology}>{technology}</li>
               ))}
@@ -142,7 +159,9 @@ export function FeaturedProjectChapter({
 
             <Link
               to={`/projects/${project.slug}`}
-              className={`focus-ring mt-8 inline-flex min-h-12 items-center gap-8 border-b pb-2 text-sm font-semibold transition-colors ${styles.accent}`}
+              className={`focus-ring inline-flex min-h-12 items-center gap-8 border-b pb-2 text-sm font-semibold transition-colors ${
+                project.slug === "training-app" ? "mt-10" : "mt-8"
+              } ${styles.accent}`}
             >
               Read the case study
               <span aria-hidden="true">→</span>
@@ -150,7 +169,32 @@ export function FeaturedProjectChapter({
           </div>
 
           <figure className={styles.mediaOrder}>
-            <div className={`relative ${styles.stage}`}>
+            <motion.div
+              className={`relative ${styles.stage}`}
+              initial={
+                project.slug === "liferecompiled" && !shouldReduceMotion
+                  ? { x: -10, opacity: 0.92 }
+                  : false
+              }
+              whileInView={
+                project.slug === "liferecompiled"
+                  ? { x: 0, opacity: 1 }
+                  : undefined
+              }
+              viewport={
+                project.slug === "liferecompiled"
+                  ? { once: true, amount: 0.3 }
+                  : undefined
+              }
+              transition={{
+                duration:
+                  project.slug === "liferecompiled" &&
+                  !shouldReduceMotion
+                    ? 0.42
+                    : 0,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+            >
               <div
                 className={`absolute left-0 top-0 z-10 border-b border-r px-3 py-2 font-mono text-[0.56rem] uppercase tracking-[0.1em] ${
                   project.slug === "training-app"
@@ -174,22 +218,22 @@ export function FeaturedProjectChapter({
                     : "block h-auto w-full"
                 }
               />
-            </div>
+            </motion.div>
 
             {project.slug === "taskflow" ? (
               <ol
                 aria-label="TaskFlow board order"
-                className={`grid grid-cols-2 border-l border-t md:grid-cols-4 ${styles.line}`}
+                className="grid grid-cols-2 border-l border-t border-[var(--line-strong)] bg-[var(--ink-2)] text-[var(--paper)] md:grid-cols-4"
               >
                 {["Backlog", "In progress", "Review", "Done"].map(
                   (column, columnIndex) => (
                     <li
                       key={column}
-                      className={`border-b border-r px-3 py-3 ${styles.line}`}
+                      className="border-b border-r border-[var(--line-strong)] px-3 py-3"
                     >
                       <span
                         aria-hidden="true"
-                        className={`font-mono text-[0.58rem] ${styles.accent}`}
+                        className="font-mono text-[0.58rem] text-[var(--violet-text)]"
                       >
                         {String(columnIndex + 1).padStart(2, "0")}
                       </span>

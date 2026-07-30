@@ -1,4 +1,5 @@
 import { useCallback, useId, useState } from "react";
+import { motion, useReducedMotion } from "motion/react";
 
 import type { ProjectScreenshot } from "../../types/project";
 import { cn } from "../../utils/cn";
@@ -14,6 +15,7 @@ type ProjectVisualEvidenceProps = {
 export function ProjectVisualEvidence({
   screenshots,
 }: ProjectVisualEvidenceProps) {
+  const shouldReduceMotion = useReducedMotion();
   const [activeIndex, setActiveIndex] = useState(0);
   const [lightboxScreenshot, setLightboxScreenshot] =
     useState<ProjectScreenshot | null>(null);
@@ -63,7 +65,19 @@ export function ProjectVisualEvidence({
       className="full-bleed overflow-hidden bg-[var(--ink)] py-10 text-[var(--paper)] sm:py-14"
     >
       <div className="content-frame">
-        <header className="grid gap-3 border-b border-[var(--line-strong)] pb-5 sm:grid-cols-[10rem_minmax(0,1fr)] sm:items-end">
+        <motion.span
+          aria-hidden="true"
+          className="pointer-events-none block h-0.5 origin-left bg-[var(--violet)]"
+          initial={shouldReduceMotion ? false : { scaleX: 0.16 }}
+          whileInView={{ scaleX: 1 }}
+          viewport={{ once: true, amount: 0.8 }}
+          transition={{
+            duration: shouldReduceMotion ? 0 : 0.42,
+            ease: [0.22, 1, 0.36, 1],
+          }}
+        />
+
+        <header className="grid gap-3 border-b border-[var(--line-strong)] pb-5 pt-6 sm:grid-cols-[10rem_minmax(0,1fr)] sm:items-end">
           <p className="text-sm font-semibold text-[var(--violet-text)]">
             Lead evidence
           </p>

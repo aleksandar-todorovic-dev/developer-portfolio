@@ -198,9 +198,64 @@ section[tabindex="-1"]:focus {
   transform-origin: left;
 }
 
-.clarity-resolve--active::after {
-  animation: clarity-resolve-edge 580ms cubic-bezier(0.22, 1, 0.36, 1) 1
-    both;
+.hero-settle-line {
+  --hero-settle-delay: 0ms;
+  --hero-settle-duration: 540ms;
+  --hero-settle-opacity: 0.94;
+  --hero-settle-scale: 0.995;
+  --hero-settle-tracking: -0.035em;
+  --hero-settle-x: 0px;
+  --hero-settle-y: -3px;
+
+  transform-origin: left center;
+}
+
+.hero-settle-line--two {
+  --hero-settle-delay: 85ms;
+  --hero-settle-duration: 560ms;
+  --hero-settle-opacity: 0.92;
+  --hero-settle-scale: 1.004;
+  --hero-settle-tracking: -0.045em;
+  --hero-settle-y: 6px;
+}
+
+.hero-settle-line--three {
+  --hero-settle-delay: 170ms;
+  --hero-settle-duration: 580ms;
+  --hero-settle-opacity: 0.94;
+  --hero-settle-scale: 0.992;
+  --hero-settle-tracking: -0.033em;
+  --hero-settle-y: 2px;
+}
+
+.hero-settle--active .hero-settle-line {
+  animation: hero-line-settle var(--hero-settle-duration)
+    cubic-bezier(0.22, 1, 0.36, 1) var(--hero-settle-delay) both;
+  will-change: opacity, transform, letter-spacing;
+}
+
+.hero-settle--active .clarity-resolve::after {
+  animation: clarity-resolve-edge 360ms cubic-bezier(0.22, 1, 0.36, 1)
+    340ms both;
+}
+
+@keyframes hero-line-settle {
+  0% {
+    letter-spacing: var(--hero-settle-tracking);
+    opacity: var(--hero-settle-opacity);
+    transform: translate3d(
+        var(--hero-settle-x),
+        var(--hero-settle-y),
+        0
+      )
+      scaleX(var(--hero-settle-scale));
+  }
+
+  100% {
+    letter-spacing: -0.04em;
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scaleX(1);
+  }
 }
 
 @keyframes clarity-resolve-edge {
@@ -221,6 +276,20 @@ section[tabindex="-1"]:focus {
   100% {
     opacity: 0;
     transform: scaleX(1);
+  }
+}
+
+@media (min-width: 640px) {
+  .hero-settle-line--one {
+    --hero-settle-x: 10px;
+  }
+
+  .hero-settle-line--two {
+    --hero-settle-x: 2px;
+  }
+
+  .hero-settle-line--three {
+    --hero-settle-x: 12px;
   }
 }
 
@@ -257,7 +326,14 @@ section[tabindex="-1"]:focus {
     transition-duration: 0.01ms !important;
   }
 
-  .clarity-resolve--active::after {
+  .hero-settle--active .hero-settle-line {
+    animation: none;
+    letter-spacing: inherit;
+    opacity: 1;
+    transform: none;
+  }
+
+  .hero-settle--active .clarity-resolve::after {
     animation: none;
     opacity: 0;
     transform: scaleX(1);

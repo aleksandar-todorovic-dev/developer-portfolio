@@ -34,14 +34,14 @@ export function BuildProcessSection() {
         </div>
 
         <div className="relative mt-12 border-y border-[var(--ink)]/20">
-          <div className="grid grid-cols-3 xl:grid-cols-[1fr_2fr_1fr]">
-            <p className="flex min-h-14 items-center border-r border-[var(--ink)]/20 px-3 py-3 font-mono text-[0.58rem] font-semibold uppercase tracking-[0.1em] text-[var(--ink)]/60 sm:px-5">
+          <div className="grid md:min-h-28 md:grid-cols-[minmax(0,0.78fr)_minmax(0,1.42fr)_minmax(0,0.8fr)]">
+            <p className="flex min-h-14 items-center px-3 py-4 font-mono text-[0.58rem] font-semibold uppercase tracking-[0.1em] text-[var(--ink)]/60 sm:px-5 md:items-start md:pt-5">
               Unclear input
             </p>
-            <p className="flex min-h-14 items-center border-r border-[var(--ink)]/20 px-3 py-3 font-mono text-[0.58rem] font-semibold uppercase tracking-[0.1em] text-[var(--violet-dark)] sm:px-5">
+            <p className="flex min-h-14 items-center border-t border-[var(--ink)]/15 px-3 py-4 font-mono text-[0.58rem] font-semibold uppercase tracking-[0.1em] text-[var(--violet-dark)] sm:px-5 md:items-start md:border-t-0 md:pt-8">
               Practical decisions
             </p>
-            <p className="flex min-h-14 items-center justify-end px-3 py-3 text-right font-mono text-[0.58rem] font-semibold uppercase tracking-[0.1em] text-[var(--ink)]/60 sm:px-5">
+            <p className="flex min-h-14 items-center border-t border-[var(--ink)]/15 px-3 py-4 font-mono text-[0.58rem] font-semibold uppercase tracking-[0.1em] text-[var(--ink)]/60 sm:px-5 md:items-start md:justify-end md:border-t-0 md:pt-11 md:text-right">
               Inspectable result
             </p>
           </div>
@@ -53,13 +53,13 @@ export function BuildProcessSection() {
             whileInView={{ scaleX: 1 }}
             viewport={{ once: true, amount: 0.8 }}
             transition={{
-              duration: shouldReduceMotion ? 0 : 0.62,
+              duration: shouldReduceMotion ? 0 : 0.56,
               ease: [0.22, 1, 0.36, 1],
             }}
           />
         </div>
 
-        <ol className="grid md:grid-cols-2 xl:grid-cols-4">
+        <ol className="mt-8 grid border-t border-[var(--ink)]/20 md:grid-cols-2 xl:grid-cols-4">
           {buildSteps.map((step, index) => (
             <li
               key={step.number}

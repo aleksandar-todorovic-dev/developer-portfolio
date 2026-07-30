@@ -9,19 +9,22 @@ import { ProjectStackSection } from "../components/home/ProjectStackSection";
 import { ProjectProofPanel } from "../components/projects/ProjectProofPanel";
 import { projects } from "../data/projects";
 
-const clarityResolveSessionKey = "resolved-field-clarity-resolved";
-let hasResolvedClarity = false;
+const heroSettleSessionKey = "resolved-field-hero-settle-v1";
+let hasSettledHero = false;
 
-function ClarityResolve() {
-  const [isResolveActive, setIsResolveActive] = useState(() => {
-    let wasResolved = hasResolvedClarity;
+function HomeHeroHeading() {
+  const [isSettleActive, setIsSettleActive] = useState(() => {
+    let wasSettled = hasSettledHero;
+    const forceMotionReview =
+      new URLSearchParams(window.location.search).get("motion-review") ===
+      "hero";
 
     try {
-      wasResolved =
-        wasResolved ||
-        window.sessionStorage.getItem(clarityResolveSessionKey) === "true";
+      wasSettled =
+        wasSettled ||
+        window.sessionStorage.getItem(heroSettleSessionKey) === "true";
     } catch {
-      // The finite resolve still works when session storage is unavailable.
+      // The finite settle still works when session storage is unavailable.
     }
 
     try {
@@ -32,36 +35,36 @@ function ClarityResolve() {
       // The CSS reduced-motion fallback still presents the final state.
     }
 
-    return !wasResolved;
+    return forceMotionReview || !wasSettled;
   });
 
   useEffect(() => {
-    hasResolvedClarity = true;
+    hasSettledHero = true;
 
     try {
-      window.sessionStorage.setItem(clarityResolveSessionKey, "true");
+      window.sessionStorage.setItem(heroSettleSessionKey, "true");
     } catch {
       // Module state still prevents repeat playback during this app session.
     }
   }, []);
 
   useEffect(() => {
-    if (!isResolveActive) {
+    if (!isSettleActive) {
       return;
     }
 
     const reducedMotionQuery = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
     );
-    const finishResolve = () => {
-      setIsResolveActive(false);
+    const finishSettle = () => {
+      setIsSettleActive(false);
     };
     const handleReducedMotionChange = (event: MediaQueryListEvent) => {
       if (event.matches) {
-        finishResolve();
+        finishSettle();
       }
     };
-    const resolveTimeoutId = window.setTimeout(finishResolve, 700);
+    const settleTimeoutId = window.setTimeout(finishSettle, 820);
 
     reducedMotionQuery.addEventListener("change", handleReducedMotionChange);
 
@@ -70,19 +73,28 @@ function ClarityResolve() {
         "change",
         handleReducedMotionChange,
       );
-      window.clearTimeout(resolveTimeoutId);
+      window.clearTimeout(settleTimeoutId);
     };
-  }, [isResolveActive]);
+  }, [isSettleActive]);
 
   return (
-    <span
-      className={`clarity-resolve ${
-        isResolveActive ? "clarity-resolve--active" : ""
+    <h1
+      id="page-heading"
+      tabIndex={-1}
+      className={`hero-settle font-display text-[clamp(3rem,9.4vw,9rem)] font-semibold leading-[0.92] tracking-[-0.04em] [font-stretch:100%] ${
+        isSettleActive ? "hero-settle--active" : ""
       }`}
-      onAnimationEnd={() => setIsResolveActive(false)}
     >
-      CLARITY.
-    </span>
+      <span className="hero-settle-line hero-settle-line--one block">
+        I BUILD FRONTEND
+      </span>
+      <span className="hero-settle-line hero-settle-line--two block">
+        FROM UNCERTAINTY
+      </span>
+      <span className="hero-settle-line hero-settle-line--three block">
+        TO <span className="clarity-resolve">CLARITY.</span>
+      </span>
+    </h1>
   );
 }
 
@@ -97,17 +109,7 @@ export function HomePage() {
         </div>
 
         <div className="py-10 sm:py-12 lg:py-14">
-          <h1
-            id="page-heading"
-            tabIndex={-1}
-            className="font-display text-[clamp(3rem,9.4vw,9rem)] font-semibold leading-[0.92] tracking-[-0.04em] [font-stretch:100%]"
-          >
-            <span className="block">I BUILD FRONTEND</span>
-            <span className="block">FROM UNCERTAINTY</span>
-            <span className="block">
-              TO <ClarityResolve />
-            </span>
-          </h1>
+          <HomeHeroHeading />
 
           <div className="mt-9 grid gap-6 border-t border-[var(--line-strong)] pt-6 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end">
             <p className="max-w-[56ch] text-base leading-7 text-[var(--paper-muted)] sm:text-lg sm:leading-8">
