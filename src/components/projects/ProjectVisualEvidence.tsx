@@ -65,19 +65,18 @@ export function ProjectVisualEvidence({
       className="full-bleed overflow-hidden bg-[var(--ink)] py-10 text-[var(--paper)] sm:py-14"
     >
       <div className="content-frame">
-        <motion.span
-          aria-hidden="true"
-          className="pointer-events-none block h-0.5 origin-left bg-[var(--violet)]"
-          initial={shouldReduceMotion ? false : { scaleX: 0.16 }}
-          whileInView={{ scaleX: 1 }}
-          viewport={{ once: true, amount: 0.8 }}
+        <motion.header
+          className="grid gap-3 border-b border-[var(--line-strong)] pb-5 sm:grid-cols-[10rem_minmax(0,1fr)] sm:items-end"
+          initial={
+            shouldReduceMotion ? false : { opacity: 0.9, y: 10 }
+          }
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.45 }}
           transition={{
-            duration: shouldReduceMotion ? 0 : 0.42,
+            duration: shouldReduceMotion ? 0 : 0.48,
             ease: [0.22, 1, 0.36, 1],
           }}
-        />
-
-        <header className="grid gap-3 border-b border-[var(--line-strong)] pb-5 pt-6 sm:grid-cols-[10rem_minmax(0,1fr)] sm:items-end">
+        >
           <p className="text-sm font-semibold text-[var(--violet-text)]">
             Lead evidence
           </p>
@@ -93,7 +92,7 @@ export function ProjectVisualEvidence({
               product through the verified image sequence.
             </p>
           </div>
-        </header>
+        </motion.header>
 
         <div
           className={cn(

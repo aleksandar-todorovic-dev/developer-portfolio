@@ -47,7 +47,7 @@ const desktopNavLinks = [...navLinks].sort(
 
 function desktopLinkClass(isActive: boolean) {
   return cn(
-    "focus-ring group relative z-0 grid min-h-0 grid-cols-[minmax(0,1fr)_auto] items-center gap-5 px-4 py-2 text-sm font-semibold tracking-[-0.01em] transition-colors focus-visible:z-10 lg:px-5",
+    "focus-ring group relative z-0 grid min-h-0 grid-cols-[minmax(0,1fr)_auto] items-center gap-5 px-4 py-2 text-sm font-semibold tracking-[-0.01em] transition-colors duration-200 focus-visible:z-10 lg:px-5",
     isActive
       ? "text-[var(--paper)]"
       : "text-[var(--paper-muted)] hover:text-[var(--paper)]",
@@ -152,11 +152,11 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 h-[var(--header-height)] border-b border-[var(--line)] bg-[var(--ink)] text-[var(--paper)]">
-      <div className="content-frame flex h-full items-stretch justify-between md:grid md:grid-cols-[15rem_minmax(1.5rem,1fr)_minmax(27rem,42rem)]">
+      <div className="content-frame flex h-full items-stretch justify-between md:grid md:grid-cols-[minmax(15rem,22rem)_minmax(1.5rem,1fr)_minmax(27rem,42rem)]">
         <NavLink
           to="/"
           onClick={closeMenu}
-          className="focus-ring group flex min-w-0 items-center pr-3 sm:pr-4 md:w-60 md:justify-self-start md:pr-8"
+          className="focus-ring group flex min-w-0 items-center pr-3 sm:pr-4 md:w-full md:justify-self-start md:pr-8"
           aria-label="Aleksandar Todorovic, home"
         >
           <span className="min-w-0">
@@ -172,7 +172,7 @@ export function Header() {
         </NavLink>
 
         <nav
-          className="relative hidden h-full grid-cols-[minmax(0,1.08fr)_minmax(10rem,0.92fr)] grid-rows-2 border-l border-[var(--line)] before:pointer-events-none before:absolute before:inset-x-0 before:top-1/2 before:h-px before:bg-[var(--line)] md:col-start-3 md:grid"
+          className="relative hidden h-full grid-cols-[minmax(0,1.18fr)_minmax(10rem,0.82fr)] grid-rows-2 border-l border-[var(--line)] before:pointer-events-none before:absolute before:inset-x-0 before:top-1/2 before:h-px before:bg-[var(--line)] md:col-start-3 md:grid"
           aria-label="Main navigation"
         >
           {desktopNavLinks.map((link) => (
@@ -186,7 +186,7 @@ export function Header() {
             >
               {({ isActive }) => (
                 <>
-                  <span className="relative w-fit">
+                  <span className="relative w-fit transition-transform duration-200 group-hover:translate-x-1 group-focus-visible:translate-x-1 motion-reduce:transform-none motion-reduce:transition-none">
                     {link.label}
                     <span
                       aria-hidden="true"

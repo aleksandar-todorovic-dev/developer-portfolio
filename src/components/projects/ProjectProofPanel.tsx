@@ -14,7 +14,7 @@ export function ProjectProofPanel({ projects }: ProjectProofPanelProps) {
       className="full-bleed border-y border-[var(--ink)]/25 bg-[var(--paper)] text-[var(--ink)]"
     >
       <div className="content-frame">
-        <ol className="relative grid md:grid-cols-3 md:gap-x-5 lg:grid-cols-[minmax(0,1.12fr)_minmax(0,1fr)_minmax(0,0.88fr)] lg:gap-x-8">
+        <ol className="relative grid after:pointer-events-none after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-[var(--ink)]/20 md:grid-cols-3 md:gap-x-5 lg:grid-cols-[minmax(0,1.18fr)_minmax(0,1fr)_minmax(0,0.82fr)] lg:gap-x-8">
           {projects.map((project, index) => (
             <li
               key={project.slug}
@@ -45,7 +45,7 @@ export function ProjectProofPanel({ projects }: ProjectProofPanelProps) {
 
                 <span
                   aria-hidden="true"
-                  className="pointer-events-none absolute bottom-0 left-0 h-0.5 w-12 origin-left scale-x-0 bg-[var(--violet-dark)] transition-transform duration-200 ease-out group-hover:scale-x-100 group-focus-visible:scale-x-100 motion-reduce:transition-none md:left-2 lg:left-4"
+                  className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-0.5 origin-left scale-x-0 bg-[var(--violet-dark)] transition-transform duration-200 ease-out group-hover:scale-x-100 group-focus-visible:scale-x-100 motion-reduce:transition-none"
                 />
               </Link>
             </li>

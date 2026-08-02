@@ -9,7 +9,7 @@ import { ProjectStackSection } from "../components/home/ProjectStackSection";
 import { ProjectProofPanel } from "../components/projects/ProjectProofPanel";
 import { projects } from "../data/projects";
 
-const heroSettleSessionKey = "resolved-field-hero-settle-v1";
+const heroSettleSessionKey = "resolved-field-hero-settle-v2";
 let hasSettledHero = false;
 
 function HomeHeroHeading() {
@@ -64,7 +64,7 @@ function HomeHeroHeading() {
         finishSettle();
       }
     };
-    const settleTimeoutId = window.setTimeout(finishSettle, 820);
+    const settleTimeoutId = window.setTimeout(finishSettle, 1100);
 
     reducedMotionQuery.addEventListener("change", handleReducedMotionChange);
 
@@ -81,7 +81,7 @@ function HomeHeroHeading() {
     <h1
       id="page-heading"
       tabIndex={-1}
-      className={`hero-settle font-display text-[clamp(3rem,9.4vw,9rem)] font-semibold leading-[0.92] tracking-[-0.04em] [font-stretch:100%] ${
+      className={`hero-settle font-display text-[clamp(3rem,9.7vw,9.4rem)] font-semibold leading-[0.92] tracking-[-0.04em] [font-stretch:100%] ${
         isSettleActive ? "hero-settle--active" : ""
       }`}
     >
@@ -90,6 +90,25 @@ function HomeHeroHeading() {
       </span>
       <span className="hero-settle-line hero-settle-line--two block">
         FROM UNCERTAINTY
+      </span>
+      <span className="hero-settle-trace block" aria-hidden="true">
+        <svg
+          viewBox="0 0 1000 64"
+          preserveAspectRatio="none"
+          focusable="false"
+        >
+          <path
+            className="hero-settle-trace-guide"
+            d="M996 8C840 8 792 56 640 56H4"
+            pathLength={1}
+          />
+          <path
+            data-local-trace="hero"
+            className="hero-settle-trace-line"
+            d="M996 8C840 8 792 56 640 56H4"
+            pathLength={1}
+          />
+        </svg>
       </span>
       <span className="hero-settle-line hero-settle-line--three block">
         TO <span className="clarity-resolve">CLARITY.</span>
@@ -101,14 +120,14 @@ function HomeHeroHeading() {
 export function HomePage() {
   return (
     <>
-      <section className="relative overflow-hidden pb-10 pt-8 sm:pb-12 sm:pt-10">
+      <section className="relative overflow-hidden pb-10 pt-8 sm:pb-12 sm:pt-10 lg:flex lg:min-h-[calc(100svh-var(--header-height))] lg:flex-col lg:pb-14">
         <div className="border-b border-[var(--line)] pb-4">
           <p className="font-mono text-[0.68rem] uppercase tracking-[0.13em] text-[var(--paper-muted)]">
             Aleksandar Todorovic — Frontend developer
           </p>
         </div>
 
-        <div className="py-10 sm:py-12 lg:py-14">
+        <div className="py-10 sm:py-12 lg:flex lg:flex-1 lg:flex-col lg:justify-center lg:py-12">
           <HomeHeroHeading />
 
           <div className="mt-9 grid gap-6 border-t border-[var(--line-strong)] pt-6 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end">

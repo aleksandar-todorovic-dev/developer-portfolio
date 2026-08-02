@@ -42,14 +42,11 @@ const baseSectionIntensities = {
   future: "quiet",
 } satisfies Record<CaseStudySectionType, SectionIntensity>;
 
-const projectStrongSceneIds = {
-  liferecompiled: [
-    "backend-boundary-decision",
-    "validation-and-delivery",
-  ],
-  "training-app": ["core-product-decision"],
-  taskflow: ["typed-board-architecture", "validation-and-delivery"],
-} satisfies Record<ProjectSlug, readonly string[]>;
+const projectMiddleSceneIds = {
+  liferecompiled: "reaction-correctness",
+  "training-app": "core-product-decision",
+  taskflow: "drag-and-drop-state-updates",
+} satisfies Record<ProjectSlug, string>;
 
 const sectionSpacing: Record<SectionIntensity, string> = {
   strong: "py-16 sm:py-22 lg:py-24",
@@ -73,6 +70,144 @@ function Paragraphs({
   );
 }
 
+function MiddleSceneList({
+  items,
+  className = "",
+}: {
+  items: string[];
+  className?: string;
+}) {
+  return (
+    <ul className={`space-y-3 ${className}`}>
+      {items.map((item) => (
+        <li
+          key={item}
+          className="border-t border-current/20 pt-3 text-sm leading-6 first:border-t-0 first:pt-0"
+        >
+          {item}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function ProjectMiddleScene({
+  projectSlug,
+  bullets,
+  evidence,
+}: {
+  projectSlug: ProjectSlug;
+  bullets: string[];
+  evidence: ProjectEvidence;
+}) {
+  if (projectSlug === "liferecompiled") {
+    return (
+      <div className="mt-12 border-y border-[var(--line-strong)]">
+        <div className="grid lg:grid-cols-[minmax(0,1.35fr)_minmax(18rem,0.65fr)]">
+          <div className="grid sm:grid-cols-2 lg:border-r lg:border-[var(--line)]">
+            <div className="px-5 py-7 lg:px-7">
+              <h3 className="max-w-[24ch] text-sm font-semibold leading-6">
+                {bullets[0]}
+              </h3>
+              <MiddleSceneList
+                items={bullets.slice(1, 3)}
+                className="mt-5"
+              />
+            </div>
+            <div className="border-t border-[var(--line)] px-5 py-7 sm:border-l sm:border-t-0 lg:px-7">
+              <h3 className="max-w-[24ch] text-sm font-semibold leading-6">
+                {bullets[3]}
+              </h3>
+              <MiddleSceneList
+                items={bullets.slice(4)}
+                className="mt-5"
+              />
+            </div>
+          </div>
+          <div className="border-t border-[var(--line)] bg-[var(--violet-dark)] px-5 py-7 text-[var(--paper)] lg:border-t-0 lg:px-7">
+            <h3 className="font-mono text-[0.62rem] uppercase tracking-[0.11em] text-[var(--paper)]">
+              {evidence.label}
+            </h3>
+            <p className="mt-4 text-sm leading-7 text-[var(--paper)]/80">
+              {evidence.detail}
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (projectSlug === "training-app") {
+    return (
+      <div className="mt-12 border-y border-[var(--line-strong)]">
+        <div className="grid items-stretch sm:grid-cols-[minmax(0,0.72fr)_3rem_minmax(0,1.28fr)]">
+          <div className="px-5 py-7 sm:px-7">
+            <p className="font-mono text-[0.62rem] uppercase tracking-[0.11em] text-[var(--paper-muted)]">
+              Current
+            </p>
+            <MiddleSceneList
+              items={bullets.slice(0, 2)}
+              className="mt-5"
+            />
+          </div>
+
+          <span
+            aria-hidden="true"
+            className="flex items-center justify-center border-y border-[var(--line)] py-3 text-2xl text-[var(--violet-text)] sm:border-x sm:border-y-0 sm:py-0"
+          >
+            →
+          </span>
+
+          <div className="px-5 py-7 sm:px-7">
+            <p className="font-mono text-[0.62rem] uppercase tracking-[0.11em] text-[var(--violet-text)]">
+              Next
+            </p>
+            <MiddleSceneList
+              items={bullets.slice(2)}
+              className="mt-5"
+            />
+          </div>
+        </div>
+
+        <div className="border-t border-[var(--line-strong)] px-5 py-7 sm:grid sm:grid-cols-[10rem_minmax(0,1fr)] sm:gap-8 sm:px-7">
+          <h3 className="font-mono text-[0.62rem] uppercase tracking-[0.11em] text-[var(--violet-text)]">
+            {evidence.label}
+          </h3>
+          <p className="mt-4 max-w-3xl text-sm leading-7 text-[var(--paper-muted)] sm:mt-0">
+            {evidence.detail}
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="mt-12 border-y border-[var(--ink)]/25">
+      <div className="grid lg:grid-cols-[minmax(0,0.75fr)_minmax(0,1.35fr)_minmax(15rem,0.9fr)]">
+        <MiddleSceneList
+          items={bullets.slice(0, 2)}
+          className="px-5 py-7 lg:border-r lg:border-[var(--ink)]/20 lg:px-7"
+        />
+        <MiddleSceneList
+          items={bullets.slice(2, 5)}
+          className="border-t border-[var(--ink)]/20 px-5 py-7 lg:border-r lg:border-t-0 lg:px-7"
+        />
+        <div className="border-t border-[var(--ink)]/20 px-5 py-7 lg:border-t-0 lg:px-7">
+          <MiddleSceneList items={bullets.slice(5)} />
+          <div className="mt-6 border-t border-[var(--ink)]/25 pt-5">
+            <h3 className="font-mono text-[0.62rem] uppercase tracking-[0.11em] text-[var(--violet-dark)]">
+              {evidence.label}
+            </h3>
+            <p className="mt-4 text-sm leading-7 text-[var(--ink)]/70">
+              {evidence.detail}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function CaseStudySection({
   section,
   evidence = [],
@@ -82,22 +217,26 @@ export function CaseStudySection({
 }: CaseStudySectionProps) {
   const headingId = `${section.id}-heading`;
   const isStrongScene =
-    projectStrongSceneIds[projectSlug].includes(section.id);
+    projectMiddleSceneIds[projectSlug] === section.id;
+  const middleSceneEvidence = isStrongScene ? evidence[0] : undefined;
+  const sidebarEvidence = middleSceneEvidence ? [] : evidence;
   const intensity = isStrongScene
     ? "strong"
     : baseSectionIntensities[section.type];
   const bullets = section.bullets ?? [];
-  const isDark = isStrongScene;
+  const isDark = isStrongScene && projectSlug !== "taskflow";
   const isProcess = section.type === "product-flow";
   const isSplit =
     section.type === "overview" ||
     section.type === "architecture" ||
     section.type === "product-flow";
 
-  const sectionSurface = isDark
-    ? section.type === "validation"
-      ? "border-[var(--line-strong)] bg-[var(--ink-2)] text-[var(--paper)]"
-      : "border-[var(--line-strong)] bg-[var(--ink)] text-[var(--paper)]"
+  const sectionSurface = isStrongScene
+    ? projectSlug === "liferecompiled"
+      ? "border-[var(--line-strong)] bg-[var(--ink)] text-[var(--paper)]"
+      : projectSlug === "training-app"
+        ? "border-[var(--line-strong)] bg-[var(--ink-2)] text-[var(--paper)]"
+        : "border-[var(--ink)]/20 bg-[var(--paper)] text-[var(--ink)]"
     : "border-[var(--ink)]/20 bg-[var(--paper)] text-[var(--ink)]";
 
   const mutedText = isDark
@@ -126,7 +265,7 @@ export function CaseStudySection({
 
         <div
           className={`mt-8 grid gap-10 ${
-            evidence.length
+            sidebarEvidence.length
               ? "xl:grid-cols-[minmax(0,1fr)_minmax(17rem,0.34fr)] xl:gap-14"
               : ""
           }`}
@@ -156,7 +295,7 @@ export function CaseStudySection({
               />
             </div>
 
-            {bullets.length ? (
+            {bullets.length && !middleSceneEvidence ? (
               isProcess ? (
                 <ol
                   aria-label={`${section.title} steps`}
@@ -215,13 +354,21 @@ export function CaseStudySection({
             ) : null}
           </div>
 
-          {evidence.length ? (
+          {sidebarEvidence.length ? (
             <ProjectEvidenceList
-              evidence={evidence}
+              evidence={sidebarEvidence}
               tone={isDark ? "dark" : "light"}
             />
           ) : null}
         </div>
+
+        {middleSceneEvidence ? (
+          <ProjectMiddleScene
+            projectSlug={projectSlug}
+            bullets={bullets}
+            evidence={middleSceneEvidence}
+          />
+        ) : null}
       </div>
     </section>
   );
