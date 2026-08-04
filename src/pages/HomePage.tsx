@@ -1,168 +1,17 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router";
-
+import { AuthoredHero } from "../components/home/AuthoredHero";
 import { BackgroundCredibilitySection } from "../components/home/BackgroundCredibilitySection";
 import { BuildProcessSection } from "../components/home/BuildProcessSection";
 import { ContactVerificationSection } from "../components/home/ContactVerificationSection";
 import { FeaturedProjectChapter } from "../components/home/FeaturedProjectChapter";
+import { ProjectLaunchStrip } from "../components/home/ProjectLaunchStrip";
 import { ProjectStackSection } from "../components/home/ProjectStackSection";
-import { ProjectProofPanel } from "../components/projects/ProjectProofPanel";
 import { projects } from "../data/projects";
-
-const heroSettleSessionKey = "resolved-field-hero-settle-v2";
-let hasSettledHero = false;
-
-function HomeHeroHeading() {
-  const [isSettleActive, setIsSettleActive] = useState(() => {
-    let wasSettled = hasSettledHero;
-    const forceMotionReview =
-      new URLSearchParams(window.location.search).get("motion-review") ===
-      "hero";
-
-    try {
-      wasSettled =
-        wasSettled ||
-        window.sessionStorage.getItem(heroSettleSessionKey) === "true";
-    } catch {
-      // The finite settle still works when session storage is unavailable.
-    }
-
-    try {
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        return false;
-      }
-    } catch {
-      // The CSS reduced-motion fallback still presents the final state.
-    }
-
-    return forceMotionReview || !wasSettled;
-  });
-
-  useEffect(() => {
-    hasSettledHero = true;
-
-    try {
-      window.sessionStorage.setItem(heroSettleSessionKey, "true");
-    } catch {
-      // Module state still prevents repeat playback during this app session.
-    }
-  }, []);
-
-  useEffect(() => {
-    if (!isSettleActive) {
-      return;
-    }
-
-    const reducedMotionQuery = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    );
-    const finishSettle = () => {
-      setIsSettleActive(false);
-    };
-    const handleReducedMotionChange = (event: MediaQueryListEvent) => {
-      if (event.matches) {
-        finishSettle();
-      }
-    };
-    const settleTimeoutId = window.setTimeout(finishSettle, 1100);
-
-    reducedMotionQuery.addEventListener("change", handleReducedMotionChange);
-
-    return () => {
-      reducedMotionQuery.removeEventListener(
-        "change",
-        handleReducedMotionChange,
-      );
-      window.clearTimeout(settleTimeoutId);
-    };
-  }, [isSettleActive]);
-
-  return (
-    <h1
-      id="page-heading"
-      tabIndex={-1}
-      className={`hero-settle font-display text-[clamp(3rem,9.7vw,9.4rem)] font-semibold leading-[0.92] tracking-[-0.04em] [font-stretch:100%] ${
-        isSettleActive ? "hero-settle--active" : ""
-      }`}
-    >
-      <span className="hero-settle-line hero-settle-line--one block">
-        I BUILD FRONTEND
-      </span>
-      <span className="hero-settle-line hero-settle-line--two block">
-        FROM UNCERTAINTY
-      </span>
-      <span className="hero-settle-trace block" aria-hidden="true">
-        <svg
-          viewBox="0 0 1000 64"
-          preserveAspectRatio="none"
-          focusable="false"
-        >
-          <path
-            className="hero-settle-trace-guide"
-            d="M996 8C840 8 792 56 640 56H4"
-            pathLength={1}
-          />
-          <path
-            data-local-trace="hero"
-            className="hero-settle-trace-line"
-            d="M996 8C840 8 792 56 640 56H4"
-            pathLength={1}
-          />
-        </svg>
-      </span>
-      <span className="hero-settle-line hero-settle-line--three block">
-        TO <span className="clarity-resolve">CLARITY.</span>
-      </span>
-    </h1>
-  );
-}
 
 export function HomePage() {
   return (
     <>
-      <section className="relative overflow-hidden pb-10 pt-8 sm:pb-12 sm:pt-10 lg:flex lg:min-h-[calc(100svh-var(--header-height))] lg:flex-col lg:pb-14">
-        <div className="border-b border-[var(--line)] pb-4">
-          <p className="font-mono text-[0.68rem] uppercase tracking-[0.13em] text-[var(--paper-muted)]">
-            Aleksandar Todorovic — Frontend developer
-          </p>
-        </div>
-
-        <div className="py-10 sm:py-12 lg:flex lg:flex-1 lg:flex-col lg:justify-center lg:py-12">
-          <HomeHeroHeading />
-
-          <div className="mt-9 grid gap-6 border-t border-[var(--line-strong)] pt-6 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end">
-            <p className="max-w-[56ch] text-base leading-7 text-[var(--paper-muted)] sm:text-lg sm:leading-8">
-              I trace the relevant flow, make a practical decision, and test
-              the result through real project evidence.
-            </p>
-
-            <Link
-              to="/projects"
-              className="focus-ring inline-flex min-h-12 items-center justify-between gap-8 border-b border-[var(--paper)] pb-2 text-sm font-semibold text-[var(--paper)] transition-colors hover:border-[var(--violet-text)] hover:text-[var(--violet-text)]"
-            >
-              Inspect selected work
-              <span aria-hidden="true">→</span>
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      <ProjectProofPanel projects={projects} />
-
-      <section className="pb-12 pt-18 sm:pb-16 sm:pt-24">
-        <div className="grid gap-6 lg:grid-cols-[13rem_minmax(0,1fr)]">
-          <p className="font-mono text-[0.68rem] uppercase tracking-[0.13em] text-[var(--paper-muted)]">
-            Selected work
-          </p>
-
-          <h2 className="max-w-5xl font-display text-[clamp(2.8rem,6vw,6.4rem)] font-semibold leading-[1.02] tracking-[-0.025em] md:leading-[1.01] [font-stretch:100%]">
-            Three projects.
-            <span className="block text-[var(--violet-text)]">
-              Three different problems.
-            </span>
-          </h2>
-        </div>
-      </section>
+      <AuthoredHero />
+      <ProjectLaunchStrip projects={projects} />
 
       <section aria-label="Selected project chapters">
         {projects.map((project, index) => (

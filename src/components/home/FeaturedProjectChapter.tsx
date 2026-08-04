@@ -3,6 +3,7 @@ import { motion, useReducedMotion } from "motion/react";
 
 import type { Project, ProjectSlug } from "../../types/project";
 import { getProjectScreenshotDimensions } from "../projects/projectScreenshotDimensions";
+import { LifeRecompiledScene } from "./LifeRecompiledScene";
 import { ProjectTitleText } from "../projects/ProjectTitleText";
 
 type FeaturedProjectChapterProps = {
@@ -82,6 +83,16 @@ export function FeaturedProjectChapter({
     ? project.screenshots[1]
     : undefined;
 
+  if (isLifeRecompiled) {
+    return (
+      <LifeRecompiledScene
+        project={project}
+        index={index}
+        shouldReduceMotion={Boolean(shouldReduceMotion)}
+      />
+    );
+  }
+
   if (!screenshot) {
     return null;
   }
@@ -91,7 +102,9 @@ export function FeaturedProjectChapter({
 
   return (
     <article
-      className={`full-bleed overflow-hidden border-t ${styles.line} ${styles.scene}`}
+      id={`project-${project.slug}`}
+      tabIndex={-1}
+      className={`full-bleed scroll-mt-[calc(var(--header-height)+1rem)] overflow-hidden border-t focus:outline-none ${styles.line} ${styles.scene}`}
     >
       <div className="content-frame py-12 sm:py-16 lg:py-22">
         <header
