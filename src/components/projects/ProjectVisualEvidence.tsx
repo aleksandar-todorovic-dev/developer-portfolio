@@ -51,9 +51,7 @@ export function ProjectVisualEvidence({
   }
 
   const activeScreenshot = screenshots[activeIndex] ?? initialScreenshot;
-  const activeDimensions = getProjectScreenshotDimensions(
-    activeScreenshot.src,
-  );
+  const activeDimensions = getProjectScreenshotDimensions(activeScreenshot.src);
   const isMobileScreenshot = activeScreenshot.format === "mobile";
   const currentNumber = String(activeIndex + 1).padStart(2, "0");
   const totalNumber = String(screenshots.length).padStart(2, "0");
@@ -62,14 +60,12 @@ export function ProjectVisualEvidence({
   return (
     <section
       aria-labelledby="visual-evidence-heading"
-      className="full-bleed overflow-hidden bg-[var(--ink)] py-10 text-[var(--paper)] sm:py-14"
+      className="full-bleed overflow-hidden bg-[var(--ink)] py-7 text-[var(--paper)] sm:py-10"
     >
       <div className="content-frame">
         <motion.header
-          className="grid gap-3 border-b border-[var(--line-strong)] pb-5 sm:grid-cols-[10rem_minmax(0,1fr)] sm:items-end"
-          initial={
-            shouldReduceMotion ? false : { opacity: 0.9, y: 10 }
-          }
+          className="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--line-strong)] pb-4"
+          initial={shouldReduceMotion ? false : { opacity: 0.9, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.45 }}
           transition={{
@@ -77,26 +73,22 @@ export function ProjectVisualEvidence({
             ease: [0.22, 1, 0.36, 1],
           }}
         >
-          <p className="text-sm font-semibold text-[var(--violet-text)]">
-            Lead evidence
-          </p>
           <div>
             <h2
               id="visual-evidence-heading"
-              className="font-display text-3xl font-semibold leading-[1.04] tracking-[-0.025em] sm:text-4xl"
+              className="font-display text-2xl font-semibold leading-[1.04] tracking-[-0.025em] sm:text-3xl"
             >
-              Real project screens.
+              The working interface.
             </h2>
             <p className="mt-3 max-w-2xl text-sm leading-6 text-[var(--paper-muted)]">
-              Select a screenshot, inspect the full interface and follow the
-              product through the verified image sequence.
+              Choose a screen. Open it at full size.
             </p>
           </div>
         </motion.header>
 
         <div
           className={cn(
-            "mt-8",
+            "mt-6",
             isMobileScreenshot &&
               "border border-[var(--line-strong)] lg:grid lg:grid-cols-[minmax(23rem,0.95fr)_minmax(0,1.05fr)] lg:grid-rows-[auto_1fr_auto]",
           )}

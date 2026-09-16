@@ -5,7 +5,7 @@ export const projects: Project[] = [
     slug: "liferecompiled",
     title: "LifeRecompiled",
     shortDescription:
-      "A production-style React and Firebase case study built around a community and blog application.",
+      "A React and Firebase community application connecting posts, reactions, saved content and a staged deletion lifecycle.",
     category: "firebase-engineering",
     proofLabel: "Firebase engineering",
     proofSummary:
@@ -53,8 +53,8 @@ export const projects: Project[] = [
         type: "overview",
         title: "What this project is",
         paragraphs: [
-          "LifeRecompiled explores how a community-style product can be structured across a React frontend and Firebase services.",
-          "The project combines authentication, posts, comments, reactions, saved content, profiles, dashboards, moderation, reporting, and deletion lifecycles inside one connected application.",
+          "LifeRecompiled is a community-style React and Firebase application built around connected user and content flows.",
+          "It brings authentication, posts, comments, reactions, saved content, profiles, dashboards, moderation, reporting and deletion lifecycles into one application.",
         ],
       },
       {
@@ -63,7 +63,7 @@ export const projects: Project[] = [
         title: "My role and project scope",
         paragraphs: [
           "I designed and implemented the frontend architecture, Firebase data flows, protected routes, dashboard experiences, interaction systems, and several serverless backend operations.",
-          "The project was built as an engineering case study rather than a commercial social platform, with backend correctness concentrated on the highest-risk flows and known MVP limitations documented openly.",
+          "The project is an engineering case study rather than a commercial social platform. Backend hardening was concentrated on the highest-risk flows, while lower-risk MVP limitations remain explicit.",
         ],
         bullets: [
           "React application architecture",
@@ -133,8 +133,8 @@ export const projects: Project[] = [
         type: "product-flow",
         title: "Saved content that remains useful",
         paragraphs: [
-          "Saved posts were designed as more than references to live source documents. Snapshot metadata allows the dashboard to preserve useful context even when the original post changes or becomes unavailable.",
-          "Optimistic removal with Undo, stable feedback, and ghost-card states help the saved-content flow remain understandable during deletion, restoration, and missing-source scenarios.",
+          "Saved posts were designed as more than references to live source documents. Snapshot metadata preserves useful context even when the original post changes or becomes unavailable.",
+          "Optimistic removal with Undo, stable feedback and ghost-card states keep the saved-content flow understandable during deletion, restoration and missing-source scenarios.",
         ],
         bullets: [
           "Private saved-post records per user",
@@ -167,8 +167,8 @@ export const projects: Project[] = [
         type: "tradeoff",
         title: "Where the MVP still needs hardening",
         paragraphs: [
-          "Backend correctness was concentrated on the flows with the highest risk, including reactions, statistics, privileged deletion, and scheduled cleanup.",
-          "Some product policies still rely partly on frontend behavior or broader Firestore rules and would need stricter rules or callable functions before the application could be treated as a real production community platform.",
+          "Backend correctness was concentrated on the flows with the highest risk, including reactions, statistics, privileged deletion and scheduled cleanup.",
+          "Some lower-risk policies still rely partly on frontend behavior or broader Firestore rules. A production release would need stricter enforcement for those paths through security rules or backend functions.",
         ],
         bullets: [
           "Some post-owner update permissions remain broader than ideal",
@@ -290,7 +290,7 @@ export const projects: Project[] = [
     slug: "training-app",
     title: "Training App",
     shortDescription:
-      "A mobile-first structured training system that combines guided workout execution with stable cycle continuity.",
+      "A mobile-first training product built around guided workouts, logged progress and a cycle that keeps its order when the calendar changes.",
     category: "product-mvp",
     proofLabel: "Product-focused MVP",
     proofSummary:
@@ -339,8 +339,8 @@ export const projects: Project[] = [
         type: "overview",
         title: "What this project is",
         paragraphs: [
-          "Training App is a mobile-first structured training system designed to make workout execution clearer and training continuity easier to maintain.",
-          "It combines two plan options, guided workout screens, contextual support, progress logging, previous values, and partial-day behavior inside one connected flow.",
+          "Training App is a mobile-first workout product designed to keep the current session clear without losing the order of the wider training plan.",
+          "It combines two plan options, guided workout screens, contextual support, progress logging, previous values and partial-day behavior inside one connected flow.",
         ],
       },
       {
@@ -361,21 +361,6 @@ export const projects: Project[] = [
         ],
       },
       {
-        id: "core-product-decision",
-        type: "decision",
-        title: "The decision that shaped the product",
-        paragraphs: [
-          "The product was designed around two connected values: clarity during the workout and continuity across the training cycle.",
-          "Instead of treating the plan as a static schedule, the application preserves a stable workout order while allowing the calendar to move when real life interrupts the routine.",
-        ],
-        bullets: [
-          "Show the next meaningful action clearly",
-          "Keep prescribed training structure visible",
-          "Allow partial completion without pretending the day was finished",
-          "Preserve workout order when the calendar changes",
-        ],
-      },
-      {
         id: "guided-workout-flow",
         type: "product-flow",
         title: "Guided workout execution",
@@ -391,6 +376,21 @@ export const projects: Project[] = [
           "Contextual guidance",
           "Previous-value continuity",
           "Finish-day and cycle progression",
+        ],
+      },
+      {
+        id: "core-product-decision",
+        type: "decision",
+        title: "Continuity despite imperfect days",
+        paragraphs: [
+          "The plan is not tied to a Monday-to-Sunday reset. Training and rest days follow their own sequence, so missing or interrupting a session does not break the order of the cycle.",
+          "Completed work stays completed, unfinished work remains partial and the next session continues from the actual state of the plan.",
+        ],
+        bullets: [
+          "Show the next meaningful action clearly",
+          "Keep prescribed training structure visible",
+          "Allow partial completion without pretending the day was finished",
+          "Preserve workout order when the calendar changes",
         ],
       },
       {
@@ -466,7 +466,7 @@ export const projects: Project[] = [
         title: "What I learned",
         paragraphs: [
           "The project reinforced that application state should represent what actually happened, not only the ideal path the user was expected to follow.",
-          "It also showed that product scope, information hierarchy, and technical architecture are closely connected. A simpler backend scope made it possible to focus more deeply on the workout flow and the rules that protect training continuity.",
+          "It also showed how closely product scope, information hierarchy and technical architecture are connected. Keeping V1 local-first made it possible to focus more deeply on the workout flow and the state rules that protect training continuity.",
         ],
         bullets: [
           "Model partial completion honestly",
@@ -542,7 +542,7 @@ export const projects: Project[] = [
     slug: "taskflow",
     title: "TaskFlow",
     shortDescription:
-      "A polished React and TypeScript Kanban board with drag-and-drop interactions and local persistence.",
+      "A React and TypeScript Kanban board with draggable columns and cards, immutable state updates and local persistence.",
     category: "typescript-ui",
     proofLabel: "TypeScript UI",
     proofSummary:
@@ -590,8 +590,8 @@ export const projects: Project[] = [
         type: "overview",
         title: "What this project is",
         paragraphs: [
-          "TaskFlow is a polished React and TypeScript Kanban board built around draggable columns, task cards, and local browser persistence.",
-          "The project started from a guided course structure and was then completed, cleaned, documented, and redesigned into a more focused portfolio product.",
+          "TaskFlow is a React and TypeScript Kanban board built around draggable columns, task cards and local browser persistence.",
+          "The project started from a guided course foundation, then grew through the remaining implementation, technical cleanup, documentation and a focused portfolio redesign.",
         ],
       },
       {
@@ -611,24 +611,6 @@ export const projects: Project[] = [
           "localStorage persistence",
           "Responsive interface polish",
           "Deployment and documentation",
-        ],
-      },
-      {
-        id: "typed-board-architecture",
-        type: "architecture",
-        title: "Typed board architecture",
-        paragraphs: [
-          "The board is modeled through explicit TypeScript contracts for columns, cards, component props, Context values, events, refs, and reusable helper functions.",
-          "Shared board state is kept inside React Context, while focused components consume named actions for creating, updating, deleting, and rendering board data.",
-        ],
-        bullets: [
-          "Typed Column and Card data models",
-          "Typed component props",
-          "Typed React Context value",
-          "Typed keyboard and drag events",
-          "Typed textarea refs",
-          "Generic localStorage hook",
-          "Reusable immutable update helpers",
         ],
       },
       {
@@ -662,6 +644,24 @@ export const projects: Project[] = [
           "Reorder cards inside one column",
           "Move cards between different columns",
           "Persist the updated board after every valid drop",
+        ],
+      },
+      {
+        id: "typed-board-architecture",
+        type: "architecture",
+        title: "Typed board architecture",
+        paragraphs: [
+          "The board is modeled through explicit TypeScript contracts for columns, cards, component props, Context values, events, refs, and reusable helper functions.",
+          "Shared board state is kept inside React Context, while focused components consume named actions for creating, updating, deleting, and rendering board data.",
+        ],
+        bullets: [
+          "Typed Column and Card data models",
+          "Typed component props",
+          "Typed React Context value",
+          "Typed keyboard and drag events",
+          "Typed textarea refs",
+          "Generic localStorage hook",
+          "Reusable immutable update helpers",
         ],
       },
       {
@@ -739,16 +739,14 @@ export const projects: Project[] = [
         type: "future",
         title: "Future improvements",
         paragraphs: [
-          "The current version is complete for its portfolio goal, so future additions should solve a real product or accessibility need rather than expand the project without a clear reason.",
-          "A larger version could introduce shared persistence and more explicit editing controls, but those changes would also require a broader data model and interaction architecture.",
+          "The current version is complete for its portfolio goal, so future work should solve a real product or accessibility need rather than expand the project without a clear reason.",
+          "The most useful next steps would be stronger keyboard-accessible editing, better mobile drag-and-drop handling, automated tests for state helpers and explicit status metadata instead of relying on a column title such as Done.",
         ],
         bullets: [
           "Keyboard-accessible explicit edit controls",
-          "Improved mobile drag-and-drop review",
+          "Improved mobile drag-and-drop handling",
           "Automated tests for state helpers",
-          "Cloud persistence and user accounts",
-          "Shared boards and collaboration",
-          "Explicit status metadata instead of title-based Done logic",
+          "Explicit status metadata",
         ],
       },
     ],

@@ -1,113 +1,42 @@
 import { Link } from "react-router";
-
-import { NewTabNotice } from "../ui";
-
-const footerLinks = [
-  {
-    label: "GitHub",
-    href: "https://github.com/aleksandar-todorovic-dev",
-    external: true,
-  },
-  {
-    label: "LinkedIn",
-    href: "https://www.linkedin.com/in/aleksandar-todorovic-dev",
-    external: true,
-  },
-  {
-    label: "CV",
-    href: "/Aleksandar_Todorovic_CV.pdf",
-    download: true,
-  },
-];
+import { profile } from "../../data/profile";
+import { NewTabNotice } from "../ui/NewTabNotice";
 
 export function Footer() {
   return (
-    <footer className="mt-24 border-t border-[var(--line-strong)] bg-[var(--ink)] text-[var(--paper)] sm:mt-32">
-      <div className="content-frame py-10 sm:py-14">
-        <div className="border-b border-[var(--line-strong)] pb-12">
-          <p className="text-sm text-[var(--paper-muted)]">
-            Aleksandar Todorovic · Frontend developer
-          </p>
-
-          <h2 className="mt-5 max-w-5xl font-display text-[clamp(2.75rem,5.8vw,5.4rem)] font-semibold leading-[1.02] tracking-[-0.025em] md:leading-none md:tracking-[-0.035em]">
-            From an unclear problem
-            <span className="block text-[var(--violet-text)]">
-              to a result you can inspect.
-            </span>
-          </h2>
-        </div>
-
-        <div className="grid border-l border-t border-[var(--line-strong)] sm:grid-cols-2">
-          <Link
-            to="/projects"
-            className="focus-ring group flex min-h-36 flex-col justify-between gap-8 border-b border-r border-[var(--line-strong)] p-5 transition-colors hover:bg-[var(--ink-2)] sm:p-7"
-          >
-            <span className="text-sm text-[var(--paper-muted)]">
-              See the decisions and the finished work
-            </span>
-            <span className="flex items-end justify-between gap-6">
-              <span className="font-display text-[clamp(2.2rem,4vw,4rem)] font-semibold leading-[1.02] tracking-[-0.03em]">
-                Projects
-              </span>
-              <span
-                aria-hidden="true"
-                className="text-2xl text-[var(--violet-text)] transition-transform group-hover:translate-x-1 motion-reduce:group-hover:translate-x-0"
-              >
-                →
-              </span>
-            </span>
-          </Link>
-
+    <footer className="border-t border-[var(--line)] bg-[var(--ink)] text-[var(--paper)]">
+      <div className="content-frame flex flex-wrap items-center justify-between gap-x-8 gap-y-3 py-6">
+        <p className="text-sm leading-6 text-[var(--paper-muted)]">
+          © {new Date().getFullYear()} {profile.name}
+          <span className="block sm:inline"> · {profile.location}</span>
+        </p>
+        <nav
+          aria-label="Footer navigation"
+          className="flex flex-wrap gap-x-6 gap-y-1 text-sm font-semibold"
+        >
           <Link
             to="/contact"
-            className="focus-ring group flex min-h-36 flex-col justify-between gap-8 border-b border-r border-[var(--line-strong)] p-5 transition-colors hover:bg-[var(--ink-2)] sm:p-7"
+            className="focus-ring inline-flex min-h-11 items-center"
           >
-            <span className="text-sm text-[var(--paper-muted)]">
-              Share a role, project or clearly defined task
-            </span>
-            <span className="flex items-end justify-between gap-6">
-              <span className="font-display text-[clamp(2.2rem,4vw,4rem)] font-semibold leading-[1.02] tracking-[-0.03em]">
-                Contact
-              </span>
-              <span
-                aria-hidden="true"
-                className="text-2xl text-[var(--violet-text)] transition-transform group-hover:translate-x-1 motion-reduce:group-hover:translate-x-0"
-              >
-                →
-              </span>
-            </span>
+            Contact
           </Link>
-        </div>
-
-        <div className="grid gap-7 pt-7 sm:grid-cols-[1fr_auto] sm:items-center">
-          <nav aria-label="Footer navigation">
-            <ul className="flex flex-wrap gap-x-6 gap-y-3">
-              {footerLinks.map((item) => (
-                <li key={item.label}>
-                  <a
-                    href={item.href}
-                    target={item.external ? "_blank" : undefined}
-                    rel={item.external ? "noreferrer" : undefined}
-                    download={item.download}
-                    className="focus-ring border-b border-transparent py-2 text-sm font-semibold hover:border-[var(--paper)]"
-                  >
-                    <span className="inline-flex items-center gap-2">
-                      {item.label}
-                      <span aria-hidden="true">
-                        {item.download ? "↓" : "↗"}
-                      </span>
-                    </span>
-                    {item.external ? <NewTabNotice /> : null}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </nav>
-
-          <p className="text-sm text-[var(--paper-muted)] sm:text-right">
-            © 2026 Aleksandar Todorovic · Built with React and TypeScript
-          </p>
-        </div>
+          <a
+            href={profile.linkedin}
+            target="_blank"
+            rel="noreferrer"
+            className="focus-ring inline-flex min-h-11 items-center gap-2"
+          >
+            LinkedIn <span aria-hidden="true">↗</span>
+            <NewTabNotice />
+          </a>
+          <a
+            href={profile.cv}
+            download
+            className="focus-ring inline-flex min-h-11 items-center gap-2"
+          >
+            CV <span aria-hidden="true">↓</span>
+          </a>
+        </nav>
       </div>
     </footer>
   );

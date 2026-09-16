@@ -261,7 +261,8 @@ export function Header() {
 
             <div className="grid gap-4 border-t border-[var(--ink)]/25 pt-5 text-sm sm:grid-cols-2 sm:items-center">
               <p className="text-[var(--ink)]/62">
-                Based in Kragujevac, Serbia. Open to remote and local work.
+                Based in Kragujevac, Serbia. Open to remote work from Serbia and
+                local opportunities in Kragujevac.
               </p>
               <a
                 href="mailto:aleksandar.todorovic.rs@gmail.com"

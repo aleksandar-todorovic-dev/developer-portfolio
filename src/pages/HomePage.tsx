@@ -4,7 +4,6 @@ import { BuildProcessSection } from "../components/home/BuildProcessSection";
 import { ContactVerificationSection } from "../components/home/ContactVerificationSection";
 import { FeaturedProjectChapter } from "../components/home/FeaturedProjectChapter";
 import { ProjectLaunchStrip } from "../components/home/ProjectLaunchStrip";
-import { ProjectStackSection } from "../components/home/ProjectStackSection";
 import { projects } from "../data/projects";
 
 export function HomePage() {
@@ -23,7 +22,6 @@ export function HomePage() {
         ))}
       </section>
 
-      <ProjectStackSection />
       <BuildProcessSection />
       <BackgroundCredibilitySection />
       <ContactVerificationSection />

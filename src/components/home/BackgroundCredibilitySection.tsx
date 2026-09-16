@@ -1,53 +1,27 @@
-import { backgroundCredibilityItems } from "../../data/backgroundCredibility";
+import { Link } from "react-router";
 
 export function BackgroundCredibilitySection() {
   return (
-    <section className="full-bleed bg-[var(--paper-deep)] py-20 text-[var(--ink)] sm:py-28">
-      <div className="content-frame">
-        <div className="grid gap-9 lg:grid-cols-[13rem_minmax(0,1fr)]">
-          <p className="font-mono text-[0.68rem] uppercase tracking-[0.15em] text-[var(--violet-dark)]">
-            Background
+    <section
+      aria-labelledby="about-bridge-heading"
+      className="full-bleed bg-[var(--paper)] text-[var(--ink)]"
+    >
+      <div className="content-frame grid gap-7 py-14 sm:py-20 lg:grid-cols-[0.35fr_1.1fr_0.75fr] lg:gap-12 lg:py-24">
+        <p className="eyebrow text-[var(--violet-dark)]">How I got here</p>
+        <h2
+          id="about-bridge-heading"
+          className="max-w-[21ch] font-display text-[clamp(2.25rem,4.5vw,4.5rem)] font-semibold leading-[1.02] tracking-[-0.035em]"
+        >
+          Frontend is a change of direction, not a clean restart.
+        </h2>
+        <div className="lg:pt-2">
+          <p className="max-w-lg leading-8 text-[var(--ink)]/75">
+            Earlier IT support and years of operational responsibility still
+            shape how I troubleshoot, prioritize and follow work through today.
           </p>
-
-          <div>
-            <h2 className="display-balance max-w-5xl font-display text-[clamp(2.8rem,6vw,6rem)] font-semibold leading-[1.04] tracking-[-0.025em] md:leading-[1] md:tracking-[-0.035em]">
-              The way I work
-              <span className="block text-[var(--violet-dark)]">
-                started before code.
-              </span>
-            </h2>
-
-            <p className="mt-6 max-w-2xl text-lg leading-8 text-black/65">
-              Responsibility, troubleshooting and independent project work now
-              meet in the same practical engineering approach.
-            </p>
-          </div>
-        </div>
-
-        <div className="mt-14 border-t border-black/40">
-          {backgroundCredibilityItems.map((item, index) => (
-            <article
-              key={item.label}
-              className="grid gap-5 border-b border-black/25 py-7 sm:py-9 lg:grid-cols-[3rem_minmax(15rem,0.8fr)_minmax(0,1.25fr)] lg:gap-10"
-            >
-              <p className="font-mono text-xs font-semibold text-[var(--violet-dark)]">
-                {String(index + 1).padStart(2, "0")}
-              </p>
-
-              <div>
-                <p className="font-mono text-[0.62rem] uppercase tracking-[0.12em] text-[var(--ink)]/60">
-                  {item.label}
-                </p>
-                <h3 className="mt-3 font-display text-2xl font-semibold leading-tight tracking-[-0.035em] sm:text-3xl">
-                  {item.title}
-                </h3>
-              </div>
-
-              <p className="max-w-3xl leading-7 text-black/65">
-                {item.description}
-              </p>
-            </article>
-          ))}
+          <Link to="/about" className="text-action mt-6">
+            Read the story <span aria-hidden="true">→</span>
+          </Link>
         </div>
       </div>
     </section>

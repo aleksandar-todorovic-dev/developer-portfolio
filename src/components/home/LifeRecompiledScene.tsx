@@ -4,6 +4,7 @@ import { Link } from "react-router";
 import type { Project } from "../../types/project";
 import { NewTabNotice } from "../ui";
 import { getProjectScreenshotDimensions } from "../projects/projectScreenshotDimensions";
+import { ProjectTitleText } from "../projects/ProjectTitleText";
 
 type LifeRecompiledSceneProps = {
   project: Project;
@@ -53,16 +54,16 @@ export function LifeRecompiledScene({
             <p className="text-[var(--ink)]/60 lg:mt-2">Firebase engineering</p>
           </div>
 
-          <div className="lg:max-w-[65rem]">
+          <div className="min-w-0 lg:max-w-[65rem]">
             <p className="font-mono text-[0.62rem] font-semibold uppercase tracking-[0.13em] text-[var(--violet-dark)]">
               React + Firebase community product
             </p>
             <h2 className="project-word mt-4 font-display text-[clamp(3.4rem,8vw,8.8rem)] font-semibold leading-[0.82] tracking-[-0.065em] [font-stretch:100%]">
-              LifeRecompiled
+              <ProjectTitleText title={project.title} />
             </h2>
             <p className="body-pretty mt-6 max-w-[42rem] text-[clamp(1.25rem,2.2vw,2rem)] font-medium leading-[1.18] tracking-[-0.025em] text-[var(--ink)]/80">
               A connected community product where reactions, saved content and
-              deletion still behave when the data changes.
+              deletion flows stay coherent as the underlying data changes.
             </p>
           </div>
         </header>
@@ -76,8 +77,8 @@ export function LifeRecompiledScene({
             <p className="body-pretty mt-6 max-w-[34rem] text-base leading-7 text-[var(--ink)]/70 sm:text-lg sm:leading-8 xl:max-w-[29rem]">
               Cloud Functions own aggregate reactions, privileged deletion and
               scheduled cleanup. Snapshot metadata and reversible interface
-              states keep saved content understandable when source posts move
-              or disappear.
+              states keep saved content understandable when source posts move or
+              disappear.
             </p>
 
             <div className="mt-9 border-l-2 border-[var(--violet-dark)] pl-5">
@@ -96,7 +97,7 @@ export function LifeRecompiledScene({
               </p>
               <p className="mt-2 max-w-[31rem] text-sm leading-6 text-[var(--ink)]/70">
                 Snapshot context, ghost states and Undo keep the reading list
-                useful when the original document is no longer available.
+                useful when the original post is no longer available.
               </p>
             </div>
 
@@ -140,9 +141,7 @@ export function LifeRecompiledScene({
 
             <motion.figure
               className="relative z-10 overflow-hidden border border-[var(--line-strong)] bg-[var(--ink-2)] lg:-rotate-[0.25deg]"
-              initial={
-                shouldReduceMotion ? false : { x: 22, opacity: 0.86 }
-              }
+              initial={shouldReduceMotion ? false : { x: 22, opacity: 0.86 }}
               whileInView={{ x: 0, opacity: 1 }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{
@@ -167,9 +166,7 @@ export function LifeRecompiledScene({
             <div className="relative mt-4 grid gap-5 lg:grid-cols-[minmax(0,1.35fr)_minmax(11rem,0.65fr)] lg:items-start xl:mt-6 xl:grid-cols-[minmax(0,1.58fr)_minmax(12rem,0.42fr)]">
               <motion.figure
                 className="overflow-hidden border border-[var(--line-strong)] bg-[var(--ink-2)] lg:translate-x-4 lg:rotate-[0.25deg] xl:translate-x-7"
-                initial={
-                  shouldReduceMotion ? false : { y: 18, opacity: 0.84 }
-                }
+                initial={shouldReduceMotion ? false : { y: 18, opacity: 0.84 }}
                 whileInView={{ y: 0, opacity: 1 }}
                 viewport={{ once: true, amount: 0.25 }}
                 transition={{
@@ -195,9 +192,7 @@ export function LifeRecompiledScene({
 
               <motion.figure
                 className="relative z-20 mx-auto w-[62%] min-w-40 max-w-64 overflow-hidden border border-[var(--line-strong)] bg-[var(--ink-2)] ring-1 ring-[rgba(243,239,230,0.58)] ring-offset-4 ring-offset-[var(--ink)] lg:w-full lg:max-w-none lg:justify-self-end lg:rotate-[0.8deg] xl:-ml-5 xl:-mt-20"
-                initial={
-                  shouldReduceMotion ? false : { y: 26, opacity: 0.82 }
-                }
+                initial={shouldReduceMotion ? false : { y: 26, opacity: 0.82 }}
                 whileInView={{ y: 0, opacity: 1 }}
                 viewport={{ once: true, amount: 0.2 }}
                 transition={{

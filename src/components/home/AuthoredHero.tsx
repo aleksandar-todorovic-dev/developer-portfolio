@@ -5,8 +5,7 @@ let hasPlayedHeroMotion = false;
 
 function shouldPlayHeroMotion() {
   const forceMotionReview =
-    new URLSearchParams(window.location.search).get("motion-review") ===
-    "hero";
+    new URLSearchParams(window.location.search).get("motion-review") === "hero";
 
   if (forceMotionReview) {
     return true;
@@ -79,13 +78,13 @@ export function AuthoredHero() {
     >
       <HeroFieldTexture />
 
-      <div className="content-frame relative z-10 flex flex-col py-7 sm:min-h-[calc(100svh-var(--header-height))] sm:py-9 lg:py-10">
+      <div className="content-frame relative z-10 flex flex-col py-7 sm:py-9 lg:min-h-[calc(100svh-var(--header-height))] lg:py-10">
         <div className="grid gap-3 border-b border-[var(--line)] pb-4 text-sm text-[var(--paper-muted)] sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center">
           <p>Frontend developer · Kragujevac, Serbia</p>
           <p className="sm:text-right">React · TypeScript · Firebase</p>
         </div>
 
-        <div className="grid gap-7 py-10 sm:flex-1 sm:-translate-y-4 sm:content-center sm:gap-9 sm:py-10 lg:-translate-y-7 lg:grid-cols-[minmax(0,1fr)_minmax(18rem,24rem)] lg:content-stretch lg:items-end lg:gap-12 lg:py-16">
+        <div className="grid gap-7 py-10 sm:gap-9 lg:flex-1 lg:-translate-y-7 lg:grid-cols-[minmax(0,1fr)_minmax(18rem,24rem)] lg:content-stretch lg:items-end lg:gap-12 lg:py-16">
           <h1
             id="page-heading"
             tabIndex={-1}
@@ -134,7 +133,7 @@ export function AuthoredHero() {
                   to="/about"
                   className="focus-ring authored-text-link authored-text-link--muted text-sm font-semibold"
                 >
-                  About the route here
+                  How I got here
                 </Link>
               </div>
             </div>

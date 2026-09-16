@@ -1,37 +1,33 @@
+import type { Project } from "../../types/project";
+import { projectFacts } from "../../data/projectFacts";
 import { ProjectTitleText } from "./ProjectTitleText";
+import { ProjectLinks } from "./ProjectLinks";
 
-type ProjectHeroProps = {
-  title: string;
-  shortDescription: string;
-  proofLabel: string;
-};
-
-export function ProjectHero({
-  title,
-  shortDescription,
-  proofLabel,
-}: ProjectHeroProps) {
+export function ProjectHero({ project }: { project: Project }) {
   return (
     <header className="full-bleed border-y border-[var(--ink)]/25 bg-[var(--paper)] text-[var(--ink)]">
-      <div className="content-frame py-12 sm:py-18 lg:py-22">
-        <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[var(--ink)]/25 pb-4">
-          <p className="text-sm font-semibold text-[var(--violet-dark)]">
-            Project case study
-          </p>
-          <p className="text-sm text-[var(--ink)]/65">{proofLabel}</p>
-        </div>
-
+      <div className="content-frame py-8 sm:py-10 lg:py-12">
+        <p className="eyebrow text-[var(--violet-dark)]">
+          Project case study / {projectFacts[project.slug].role}
+        </p>
         <h1
           id="page-heading"
           tabIndex={-1}
-          className="project-word mt-10 max-w-[11ch] font-display text-[clamp(3rem,11vw,8.75rem)] font-semibold leading-[0.96] tracking-[-0.028em] md:leading-[0.92] md:tracking-[-0.04em]"
+          className="project-word mt-5 font-display text-[clamp(2.7rem,8.5vw,7rem)] font-semibold leading-[0.96] tracking-[-0.04em]"
         >
-          <ProjectTitleText title={title} />
+          <ProjectTitleText title={project.title} />
         </h1>
-
-        <p className="mt-8 max-w-[54ch] text-lg leading-8 text-[var(--ink)]/72 sm:text-xl">
-          {shortDescription}
-        </p>
+        <div className="mt-6 grid gap-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-end lg:gap-12">
+          <p className="max-w-[54ch] text-base leading-7 text-[var(--ink)]/75 sm:text-lg sm:leading-8">
+            {project.shortDescription}
+          </p>
+          <div>
+            <p className="eyebrow text-[var(--ink)]/65">
+              {project.techStack.join(" · ")}
+            </p>
+            <ProjectLinks links={project.links} />
+          </div>
+        </div>
       </div>
     </header>
   );

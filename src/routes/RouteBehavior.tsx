@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useLocation, useNavigationType } from "react-router";
 
-import { getDocumentTitle } from "./getDocumentTitle";
+import { updateDocumentMetadata } from "./updateDocumentMetadata";
 
 const PAGE_HEADING_ID = "page-heading";
 
@@ -66,7 +66,7 @@ export function RouteBehavior() {
   const { pathname } = location;
 
   useEffect(() => {
-    document.title = getDocumentTitle(pathname);
+    updateDocumentMetadata(pathname);
   }, [pathname]);
 
   useEffect(() => {
