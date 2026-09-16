@@ -13,7 +13,7 @@ The site presents three focused case studies that show different parts of my fro
 > **Status:** V1 implementation, public copy and automated QA are complete. Final production deployment verification is the remaining release step.
 
 **Repository:** [github.com/aleksandar-todorovic-dev/developer-portfolio](https://github.com/aleksandar-todorovic-dev/developer-portfolio)<br>
-**Live portfolio:** _add the verified production URL after final Vercel deployment_<br>
+**Live portfolio:** [developer-portfolio-two-rho.vercel.app](https://developer-portfolio-two-rho.vercel.app)<br>
 **LinkedIn:** [linkedin.com/in/aleksandar-todorovic-dev](https://www.linkedin.com/in/aleksandar-todorovic-dev)<br>
 **CV:** [Aleksandar_Todorovic_CV.pdf](./public/Aleksandar_Todorovic_CV.pdf)
 
