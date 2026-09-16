@@ -1,6 +1,6 @@
 # Developer Portfolio — Aleksandar Todorovic
 
-A React + TypeScript portfolio built around inspectable project evidence rather than a generic project gallery.
+A React + TypeScript portfolio built around real project work, implementation decisions and focused case studies.
 
 The site presents three focused case studies that show different parts of my frontend work:
 
@@ -10,11 +10,11 @@ The site presents three focused case studies that show different parts of my fro
 
 ![Portfolio preview](./public/social-preview.png)
 
-> **Status:** V1 implementation, public copy and automated QA are complete. Final production deployment verification is the remaining release step.
+> **Status:** V1 is live. Implementation, public copy, automated QA and production route/metadata checks are complete.
 
-**Repository:** [github.com/aleksandar-todorovic-dev/developer-portfolio](https://github.com/aleksandar-todorovic-dev/developer-portfolio)<br>
-**Live portfolio:** [developer-portfolio-two-rho.vercel.app](https://developer-portfolio-two-rho.vercel.app)<br>
-**LinkedIn:** [linkedin.com/in/aleksandar-todorovic-dev](https://www.linkedin.com/in/aleksandar-todorovic-dev)<br>
+**Repository:** [github.com/aleksandar-todorovic-dev/developer-portfolio](https://github.com/aleksandar-todorovic-dev/developer-portfolio)  
+**Live portfolio:** [developer-portfolio-two-rho.vercel.app](https://developer-portfolio-two-rho.vercel.app)  
+**LinkedIn:** [linkedin.com/in/aleksandar-todorovic-dev](https://www.linkedin.com/in/aleksandar-todorovic-dev)  
 **CV:** [Aleksandar_Todorovic_CV.pdf](./public/Aleksandar_Todorovic_CV.pdf)
 
 ---
@@ -23,9 +23,9 @@ The site presents three focused case studies that show different parts of my fro
 
 The goal of this project is not to list every exercise or repository I have built.
 
-It is a focused frontend portfolio that makes the work inspectable: real interfaces, implementation decisions, limitations, responsive behavior, accessibility details and the reasoning behind three selected projects.
+It is a focused frontend portfolio built around real interfaces, implementation decisions, known limitations, responsive behavior, accessibility details and the reasoning behind three selected projects.
 
-The visual direction is intentionally strongest on the Home route, while Projects, case studies, About and Contact become calmer where reading and inspection matter more.
+Home carries the strongest visual identity, while Projects, case studies, About and Contact stay quieter so the work is easier to read and inspect.
 
 ---
 
@@ -59,7 +59,7 @@ The application remains **client-rendered React**. The build-time route document
 
 ### LifeRecompiled
 
-LifeRecompiled is the strongest engineering case study in the portfolio.
+LifeRecompiled is the portfolio's deepest engineering case study.
 
 Its case study focuses on where backend authority matters most, including higher-risk operations, reaction correctness, saved-content resilience and a staged deletion lifecycle. It also keeps remaining MVP hardening needs visible instead of presenting the project as a finished commercial platform.
 
@@ -73,7 +73,7 @@ The project emphasizes product structure, progressive disclosure, reducer-manage
 
 TaskFlow is a focused React + TypeScript Kanban board.
 
-It began from a guided course foundation and was completed and independently refined into a portfolio project. Its main technical proof is practical TypeScript inside real React interaction: typed component contracts, Context, reusable update helpers, drag-and-drop state changes and a generic `useLocalStorage<T>` pattern.
+It began from a guided course foundation and was completed and independently refined into a portfolio project. Its main technical focus is practical TypeScript inside real React interaction: typed component contracts, Context, reusable update helpers, drag-and-drop state changes and a generic `useLocalStorage<T>` pattern.
 
 ---
 
@@ -120,8 +120,8 @@ Unknown page and project routes render dedicated Not Found states.
 
 ### Route roles
 
-- **Home** — the most authored route; introduces the work through project-specific evidence scenes.
-- **Projects** — a fast comparison route across the three proof roles.
+- **Home** — introduces the work through project-specific visual scenes.
+- **Projects** — a fast comparison across the three selected projects.
 - **Project details** — calmer case studies with screenshots, decisions, validation, limitations and project-specific technical evidence.
 - **About** — connects earlier IT support and operational responsibility with current frontend work.
 - **Contact** — direct email-first contact with professional links.
@@ -139,11 +139,11 @@ Repeated project facts and canonical short descriptions live in typed shared pro
 That shared model handles information such as:
 
 - project identity
-- portfolio proof role
+- project role
 - technology summary
 - role and scope
 - key decision
-- central constraint
+- key constraint
 - current status
 - screenshots
 - case-study content
@@ -151,11 +151,11 @@ That shared model handles information such as:
 - live/source links
 - next-project navigation
 
-Project-specific visual scenes stay local where a shared abstraction would flatten the composition.
+Project-specific visual scenes stay local instead of being forced into one shared template.
 
 ### Centralized route behavior
 
-Scroll, focus and hash navigation have one owner.
+Scroll, focus and hash navigation are centralized in one route-behavior layer.
 
 The intended behavior is:
 
@@ -205,7 +205,7 @@ Implemented behavior includes:
 - CV download semantics
 - complete reduced-motion states
 
-Automated axe checks reported no violations in the tested WCAG A/AA rule set across the checked routes and interactions. This is regression evidence, not a claim of complete accessibility certification across every browser and assistive technology.
+Automated axe checks reported no violations in the tested WCAG A/AA rule set across the checked routes and interactions. These checks provide useful regression coverage, but they do not replace testing across every browser and assistive technology.
 
 ---
 
@@ -224,7 +224,7 @@ The rules for V1 are:
 - no looping identity animation
 - reduced motion renders the complete usable state immediately
 
-The goal is to give the interface temporal character without turning the portfolio into a showreel.
+The goal is to make motion feel intentional without turning the portfolio into a showreel.
 
 ---
 
@@ -281,9 +281,9 @@ The project includes:
 - `noindex` behavior for Not Found states
 - Vercel clean-URL and custom-404 support
 
-Production-origin-dependent values use `VITE_SITE_URL` or the production Vercel origin and must be verified after deployment.
+Production-origin-dependent values use `VITE_SITE_URL` or the Vercel production origin.
 
-Again, this metadata approach does **not** turn the React application into SSR.
+The site remains client-rendered; the generated route documents only provide route metadata before JavaScript runs.
 
 ---
 
@@ -402,72 +402,36 @@ The browser suite covers:
 
 ## Deployment
 
-Vercel is the target host for the portfolio.
+The portfolio is deployed on Vercel:
 
-The repository includes configuration for:
+**Production:** [developer-portfolio-two-rho.vercel.app](https://developer-portfolio-two-rho.vercel.app)
+
+Production deploys from `main`. The repository includes configuration for:
 
 - clean URLs
 - generated route documents
 - custom 404 handling
 - production metadata support
 
-After the final production deployment, verify:
-
-- Home and all public routes
-- direct deep links
-- production 404 behavior
-- canonical URLs
-- social preview
-- sitemap and robots output
-- CV download
-- email action
-- LinkedIn and GitHub links
-- all three project live links
-- final production portfolio URL
+The V1 production deployment has been checked for public route responses, direct deep links, 404 / `noindex` behavior, canonical and social metadata, robots output and sitemap generation.
 
 ---
 
 ## Deliberate V1 scope
 
-The portfolio is intentionally focused.
+The portfolio deliberately stays frontend-focused.
 
-V1 does **not** add features simply to look more complete.
-
-Current non-goals include:
-
-- portfolio backend
-- authentication
-- CMS
-- blog engine
-- contact-form backend
-- theme toggle
-- multilingual system
-- 3D/WebGL
-- canvas-heavy effects
-- project filtering for only three projects
-- large analytics system
-- SSR migration
-- another broad visual redesign
-
-The V1 priority is a clear, inspectable and reliable frontend portfolio.
+V1 does not add a portfolio backend, authentication, a CMS or blog engine, a contact-form backend, a theme system, a multilingual layer or SSR. With three selected projects, filtering and other large feature systems would add complexity without improving the core job of the site: showing the work clearly and reliably.
 
 ---
 
 ## Author
 
-**Aleksandar Todorovic**<br>
-Frontend Developer — React, TypeScript, JavaScript & Firebase
+**Aleksandar Todorovic**  
+Frontend Developer — React, TypeScript, JavaScript & Firebase  
 Kragujevac, Serbia
 
 - GitHub: [aleksandar-todorovic-dev](https://github.com/aleksandar-todorovic-dev)
 - LinkedIn: [aleksandar-todorovic-dev](https://www.linkedin.com/in/aleksandar-todorovic-dev)
 - Email: [aleksandar.todorovic.rs@gmail.com](mailto:aleksandar.todorovic.rs@gmail.com)
 - CV: [Download PDF](./public/Aleksandar_Todorovic_CV.pdf)
-
----
-
-## Release note
-
-The implementation, public copy, internal documentation and automated QA are approved for V1.
-
-The remaining release work is limited to the final Git review, commit/push and production deployment verification.
